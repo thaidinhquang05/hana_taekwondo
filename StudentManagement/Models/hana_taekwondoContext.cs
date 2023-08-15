@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace StudentManagement.Models
 {
@@ -20,6 +23,7 @@ namespace StudentManagement.Models
         public virtual DbSet<StudentTimeTable> StudentTimeTables { get; set; } = null!;
         public virtual DbSet<TimeTable> TimeTables { get; set; } = null!;
         public virtual DbSet<Tuition> Tuitions { get; set; } = null!;
+        public virtual DbSet<User> Users { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -216,6 +220,28 @@ namespace StudentManagement.Models
                     .HasColumnName("paid_date");
 
                 entity.Property(e => e.StudentId).HasColumnName("student_id");
+            });
+
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.ToTable("user");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Email)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("email");
+
+                entity.Property(e => e.Password)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("password");
+
+                entity.Property(e => e.UserName)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("user_name");
             });
 
             OnModelCreatingPartial(modelBuilder);
