@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using StudentManagement.DTOs.Input;
+using StudentManagement.Models;
 using StudentManagement.Services.Interfaces;
 
 namespace StudentManagement.Controllers;
@@ -14,8 +16,22 @@ public class AuthController : Controller
         _authService = authService;
     }
 
-    public IActionResult Login()
+    [HttpPost]
+    public ActionResult<APIResponseModel> Login([FromBody] UserLogin model)
     {
-        return Ok();
+        try
+        {
+            var result = _authService.Login(model);
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return Conflict(new APIResponseModel
+            {
+                Code = StatusCodes.Status400BadRequest,
+                Message = ex.Message,
+                IsSuccess = false
+            });
+        }
     }
 }

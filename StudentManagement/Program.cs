@@ -5,6 +5,12 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using StudentManagement.Mapper;
 using StudentManagement.Models;
+using StudentManagement.Repository;
+using StudentManagement.Repository.Interfaces;
+using StudentManagement.Services;
+using StudentManagement.Services.Interfaces;
+using StudentManagement.Utils;
+using StudentManagement.Utils.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -65,9 +71,11 @@ builder.Services.AddDbContext<hana_taekwondoContext>(opt =>
     opt.UseSqlServer(builder.Configuration.GetConnectionString("ConStr")));
 
 // Add Service
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<ILogicHandler, LogicHandler>();
 
 // Add Repository
-
+builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 
 var app = builder.Build();
 
