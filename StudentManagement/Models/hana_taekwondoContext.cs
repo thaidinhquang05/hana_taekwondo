@@ -17,11 +17,12 @@ namespace StudentManagement.Models
         }
 
         public virtual DbSet<Class> Classes { get; set; } = null!;
-        public virtual DbSet<ClassTimeTable> ClassTimeTables { get; set; } = null!;
+        public virtual DbSet<ClassTimetable> ClassTimetables { get; set; } = null!;
+        public virtual DbSet<Slot> Slots { get; set; } = null!;
         public virtual DbSet<Student> Students { get; set; } = null!;
         public virtual DbSet<StudentClass> StudentClasses { get; set; } = null!;
-        public virtual DbSet<StudentTimeTable> StudentTimeTables { get; set; } = null!;
-        public virtual DbSet<TimeTable> TimeTables { get; set; } = null!;
+        public virtual DbSet<StudentTimetable> StudentTimetables { get; set; } = null!;
+        public virtual DbSet<Timetable> Timetables { get; set; } = null!;
         public virtual DbSet<Tuition> Tuitions { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
 
@@ -29,6 +30,8 @@ namespace StudentManagement.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("server = localhost; database = hana_taekwondo; uid = sa; password = 123456789;TrustServerCertificate=True");
             }
         }
 
@@ -46,6 +49,10 @@ namespace StudentManagement.Models
 
                 entity.Property(e => e.Desc).HasColumnName("desc");
 
+                entity.Property(e => e.DueDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("due_date");
+
                 entity.Property(e => e.ModifiedAt)
                     .HasColumnType("datetime")
                     .HasColumnName("modified_at");
@@ -53,14 +60,18 @@ namespace StudentManagement.Models
                 entity.Property(e => e.Name)
                     .HasMaxLength(255)
                     .HasColumnName("name");
+
+                entity.Property(e => e.StartDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("start_date");
             });
 
-            modelBuilder.Entity<ClassTimeTable>(entity =>
+            modelBuilder.Entity<ClassTimetable>(entity =>
             {
                 entity.HasKey(e => new { e.ClassId, e.TimeTableId })
                     .HasName("class_time_table_pk");
 
-                entity.ToTable("class_time_table");
+                entity.ToTable("class_timetable");
 
                 entity.Property(e => e.ClassId).HasColumnName("class_id");
 
@@ -73,6 +84,29 @@ namespace StudentManagement.Models
                 entity.Property(e => e.ModifiedAt)
                     .HasColumnType("datetime")
                     .HasColumnName("modified_at");
+
+                entity.HasOne(d => d.Class)
+                    .WithMany(p => p.ClassTimetables)
+                    .HasForeignKey(d => d.ClassId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("class_time_table___fk_class");
+
+                entity.HasOne(d => d.TimeTable)
+                    .WithMany(p => p.ClassTimetables)
+                    .HasForeignKey(d => d.TimeTableId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("class_time_table___fk_time");
+            });
+
+            modelBuilder.Entity<Slot>(entity =>
+            {
+                entity.ToTable("slot");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Desc)
+                    .HasMaxLength(255)
+                    .HasColumnName("desc");
             });
 
             modelBuilder.Entity<Student>(entity =>
@@ -140,12 +174,12 @@ namespace StudentManagement.Models
                     .HasConstraintName("student_class___fk_student");
             });
 
-            modelBuilder.Entity<StudentTimeTable>(entity =>
+            modelBuilder.Entity<StudentTimetable>(entity =>
             {
                 entity.HasKey(e => new { e.StudentId, e.TimeTableId })
                     .HasName("student_time_table_pk");
 
-                entity.ToTable("student_time_table");
+                entity.ToTable("student_timetable");
 
                 entity.Property(e => e.StudentId).HasColumnName("student_id");
 
@@ -160,29 +194,35 @@ namespace StudentManagement.Models
                     .HasColumnName("modified_at");
 
                 entity.HasOne(d => d.Student)
-                    .WithMany(p => p.StudentTimeTables)
+                    .WithMany(p => p.StudentTimetables)
                     .HasForeignKey(d => d.StudentId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("student_time_table___fk_student");
 
                 entity.HasOne(d => d.TimeTable)
-                    .WithMany(p => p.StudentTimeTables)
+                    .WithMany(p => p.StudentTimetables)
                     .HasForeignKey(d => d.TimeTableId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("student_time_table___fk_time");
             });
 
-            modelBuilder.Entity<TimeTable>(entity =>
+            modelBuilder.Entity<Timetable>(entity =>
             {
-                entity.ToTable("time_table");
+                entity.ToTable("timetable");
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Slot).HasColumnName("slot");
+                entity.Property(e => e.SlotId).HasColumnName("slot_id");
 
                 entity.Property(e => e.WeekDay)
                     .HasMaxLength(255)
                     .HasColumnName("week_day");
+
+                entity.HasOne(d => d.Slot)
+                    .WithMany(p => p.Timetables)
+                    .HasForeignKey(d => d.SlotId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("time_table_slot_id_fk");
             });
 
             modelBuilder.Entity<Tuition>(entity =>

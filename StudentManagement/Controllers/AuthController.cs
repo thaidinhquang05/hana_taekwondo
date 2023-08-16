@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StudentManagement.DTOs.Input;
-using StudentManagement.Models;
+using StudentManagement.DTOs.Output;
 using StudentManagement.Services.Interfaces;
 
 namespace StudentManagement.Controllers;
@@ -17,7 +17,7 @@ public class AuthController : Controller
     }
 
     [HttpPost]
-    public ActionResult<APIResponseModel> Login([FromBody] UserLogin model)
+    public ActionResult<ApiResponseModel> Login([FromBody] UserLogin model)
     {
         try
         {
@@ -26,7 +26,7 @@ public class AuthController : Controller
         }
         catch (Exception ex)
         {
-            return Conflict(new APIResponseModel
+            return Conflict(new ApiResponseModel
             {
                 Code = StatusCodes.Status400BadRequest,
                 Message = ex.Message,

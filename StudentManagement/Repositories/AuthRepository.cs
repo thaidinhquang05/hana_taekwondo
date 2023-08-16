@@ -1,7 +1,7 @@
 ﻿using StudentManagement.Models;
-using StudentManagement.Repository.Interfaces;
+using StudentManagement.Repositories.Interfaces;
 
-namespace StudentManagement.Repository;
+namespace StudentManagement.Repositories;
 
 public class AuthRepository : IAuthRepository
 {

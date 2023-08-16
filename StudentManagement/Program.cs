@@ -5,8 +5,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using StudentManagement.Mapper;
 using StudentManagement.Models;
-using StudentManagement.Repository;
-using StudentManagement.Repository.Interfaces;
+using StudentManagement.Repositories;
+using StudentManagement.Repositories.Interfaces;
 using StudentManagement.Services;
 using StudentManagement.Services.Interfaces;
 using StudentManagement.Utils;
@@ -72,10 +72,13 @@ builder.Services.AddDbContext<hana_taekwondoContext>(opt =>
 
 // Add Service
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IStudentService, StudentService>();
+
 builder.Services.AddScoped<ILogicHandler, LogicHandler>();
 
 // Add Repository
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 
 var app = builder.Build();
 
