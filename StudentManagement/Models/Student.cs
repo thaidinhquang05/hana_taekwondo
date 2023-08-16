@@ -8,7 +8,7 @@ namespace StudentManagement.Models
         public Student()
         {
             StudentClasses = new HashSet<StudentClass>();
-            StudentTimeTables = new HashSet<StudentTimeTable>();
+            StudentTimetables = new HashSet<StudentTimetable>();
         }
 
         public int Id { get; set; }
@@ -21,6 +21,6 @@ namespace StudentManagement.Models
         public DateTime? ModifiedAt { get; set; }
 
         public virtual ICollection<StudentClass> StudentClasses { get; set; }
-        public virtual ICollection<StudentTimeTable> StudentTimeTables { get; set; }
+        public virtual ICollection<StudentTimetable> StudentTimetables { get; set; }
     }
 }

@@ -20,8 +20,5 @@
 
 
 
-  <ItemGroup>
-    <Folder Include="DTOs\Output\" />
-  </ItemGroup>
 
 </Project>

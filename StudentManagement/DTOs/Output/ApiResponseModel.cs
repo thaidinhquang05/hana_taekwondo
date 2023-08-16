@@ -1,6 +1,6 @@
-﻿namespace StudentManagement.Models;
+﻿namespace StudentManagement.DTOs.Output;
 
-public class APIResponseModel
+public class ApiResponseModel
 {
     public int Code { get; set; }
 

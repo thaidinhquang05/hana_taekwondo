@@ -1,8 +1,8 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using StudentManagement.DTOs.Input;
-using StudentManagement.Models;
-using StudentManagement.Repository.Interfaces;
+using StudentManagement.DTOs.Output;
+using StudentManagement.Repositories.Interfaces;
 using StudentManagement.Services.Interfaces;
 using StudentManagement.Utils.Interfaces;
 
@@ -19,7 +19,7 @@ public class AuthService : IAuthService
         _logicHandler = logicHandler;
     }
     
-    public APIResponseModel Login(UserLogin model)
+    public ApiResponseModel Login(UserLogin model)
     {
         var user = _repo.GetUserByUsernameAndPassword(model.Username, model.Password);
         if (user is null)
@@ -33,7 +33,7 @@ public class AuthService : IAuthService
             new Claim(ClaimTypes.Name, user.UserName)
         };
         var token = _logicHandler.GenerateJsonWebToken(claims);
-        return new APIResponseModel
+        return new ApiResponseModel
         {
             Code = 200,
             Message = "Login successfully!",
