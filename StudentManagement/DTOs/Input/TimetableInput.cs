@@ -2,7 +2,5 @@
 
 public class TimetableInput
 {
-    public string WeekDay { get; set; }
-    
-    public int Slot { get; set; }
+    public int TimetableId { get; set; }
 }

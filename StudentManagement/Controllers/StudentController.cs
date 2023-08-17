@@ -46,7 +46,8 @@ public class StudentController : Controller
     {
         try
         {
-            return Ok();
+            var response = _studentService.AddNewStudent(input);
+            return Ok(response);
         }
         catch (Exception ex)
         {

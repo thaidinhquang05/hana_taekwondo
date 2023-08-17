@@ -12,17 +12,23 @@ public class StudentRepository : Repository<Student>, IStudentRepository
     {
         _context = context;
     }
-    
+
     public override Task<List<Student>> GetAll()
     {
         var results = _context.Students.ToListAsync();
         return results;
     }
-    
-    public override Task Add(Student entity)
+
+    public int AddNewStudent(Student student)
     {
-        _context.Students.Add(entity);
-        _context.SaveChangesAsync();
-        throw new Exception("Have something wrong when add new student!");
+        _context.Students.Add(student);
+        var result = _context.SaveChanges();
+        return result;
+    }
+
+    public void AddStudentTimetables(List<StudentTimetable> items)
+    {
+        _context.StudentTimetables.AddRange(items);
+        _context.SaveChanges();
     }
 }
