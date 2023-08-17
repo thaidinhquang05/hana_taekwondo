@@ -8,5 +8,7 @@ public interface IStudentService
 {
     Task<List<Student>> GetAll();
 
+    StudentInfoOutput GetStudentInfo(int studentId);
+
     ApiResponseModel AddNewStudent(NewStudentInput input);
 }

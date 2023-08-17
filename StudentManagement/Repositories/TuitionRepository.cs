@@ -1,4 +1,5 @@
-﻿using StudentManagement.Models;
+﻿using StudentManagement.DTOs.Output;
+using StudentManagement.Models;
 using StudentManagement.Repositories.Interfaces;
 
 namespace StudentManagement.Repositories;
@@ -11,11 +12,28 @@ public class TuitionRepository : ITuitionRepository
     {
         _context = context;
     }
-    
+
     public int AddNewTuition(Tuition tuition)
     {
         _context.Tuitions.Add(tuition);
         var result = _context.SaveChanges();
+        return result;
+    }
+
+    public List<TuitionInfoOutput> GetTuitionByStudentId(int studentId)
+    {
+        var result = _context.Tuitions
+            .Where(x => x.StudentId == studentId)
+            .Select(x => new TuitionInfoOutput
+            {
+                PaidDate = x.PaidDate,
+                DueDate = x.DueDate,
+                Amount = x.Amount,
+                ActualAmount = x.ActualAmount,
+                Content = x.Content,
+                Note = x.Note
+            })
+            .ToList();
         return result;
     }
 }

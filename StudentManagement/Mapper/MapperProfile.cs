@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using StudentManagement.DTOs.Input;
+using StudentManagement.DTOs.Output;
 using StudentManagement.Models;
 
 namespace StudentManagement.Mapper;
@@ -23,5 +24,7 @@ public class MapperProfile : Profile
                 opt => opt.MapFrom(src => DateTime.Now))
             .ForMember(des => des.ModifiedAt,
                 opt => opt.MapFrom(src => DateTime.Now));
+
+        CreateMap<Student, StudentInfoOutput>();
     }
 }

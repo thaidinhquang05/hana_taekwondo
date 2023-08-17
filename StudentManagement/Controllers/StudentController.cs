@@ -41,6 +41,32 @@ public class StudentController : Controller
         }
     }
 
+    [HttpGet("{studentId:int}")]
+    public ActionResult<ApiResponseModel> GetStudentInfo(int studentId)
+    {
+        try
+        {
+            var studentInfo = _studentService.GetStudentInfo(studentId);
+            
+            return Ok(new ApiResponseModel
+            {
+                Code = StatusCodes.Status200OK,
+                Message = "Student Information",
+                IsSuccess = true,
+                Data = studentInfo
+            });
+        }
+        catch (Exception ex)
+        {
+            return Conflict(new ApiResponseModel
+            {
+                Code = StatusCodes.Status409Conflict,
+                Message = ex.Message,
+                IsSuccess = false
+            });
+        }
+    }
+
     [HttpPost]
     public ActionResult<ApiResponseModel> AddNewStudent([FromBody] NewStudentInput input)
     {
