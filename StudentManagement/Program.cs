@@ -73,12 +73,14 @@ builder.Services.AddDbContext<hana_taekwondoContext>(opt =>
 // Add Service
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
+builder.Services.AddScoped<IClassService, ClassService>();
 
 builder.Services.AddScoped<ILogicHandler, LogicHandler>();
 
 // Add Repository
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+builder.Services.AddScoped<IClassRepository, ClassRepository>();
 builder.Services.AddScoped<ITuitionRepository, TuitionRepository>();
 
 var app = builder.Build();
