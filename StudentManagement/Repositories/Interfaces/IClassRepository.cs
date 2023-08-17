@@ -1,8 +1,13 @@
 ﻿using StudentManagement.DTOs.Output;
+using StudentManagement.Models;
 
-namespace StudentManagement.Repositories.Interfaces;
-
-public interface IClassRepository
+namespace StudentManagement.Repositories.Interfaces
 {
-    List<ClassInfoOutput> GetClassesByStudentId(int studentId);
+    public interface IClassRepository : IRepository<Class>
+    {
+        public void addStudentToClass(Student _student, Class _class);
+        public void removeStudentFromClass(Student _student);
+
+        List<ClassInfoOutput> GetClassesByStudentId(int studentId);
+    }
 }
