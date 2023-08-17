@@ -28,24 +28,26 @@ public class ClassRepository : Repository<Class>, IClassRepository
         _context.SaveChanges();
     }
 
-    public void removeStudentFromClass(Student _student)
+    public void removeStudentFromClass(Student _student) {
         var studentClass = _context.StudentClasses.Where(sc => sc.StudentId == _student.Id).ToList() ?? throw new NullReferenceException("Record not found!");
         _context.StudentClasses.RemoveRange(studentClass);
         _context.SaveChanges();
     }
 
-               
-    public List<ClassInfoOutput> GetClassesByStudentId(int studentId) {
-            var result = _context.StudentClasses
-            .Include(x => x.Class)
-            .Where(x => x.StudentId == studentId)
-            .Select(x => new ClassInfoOutput
-            {
-                Name = x.Class.Name,
-                Desc = x.Class.Desc,
-                StartDate = x.Class.StartDate,
-                DueDate = x.Class.DueDate
-            })
-            .ToList();
 
+    public List<ClassInfoOutput> GetClassesByStudentId(int studentId)
+    {
+        var result = _context.StudentClasses
+        .Include(x => x.Class)
+        .Where(x => x.StudentId == studentId)
+        .Select(x => new ClassInfoOutput
+        {
+            Name = x.Class.Name,
+            Desc = x.Class.Desc,
+            StartDate = x.Class.StartDate,
+            DueDate = x.Class.DueDate
+        })
+        .ToList();
+        return result;
+    }
 }
