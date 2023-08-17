@@ -79,6 +79,7 @@ builder.Services.AddScoped<ILogicHandler, LogicHandler>();
 // Add Repository
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+builder.Services.AddScoped<ITuitionRepository, TuitionRepository>();
 
 var app = builder.Build();
 
