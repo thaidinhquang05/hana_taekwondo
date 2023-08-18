@@ -2,9 +2,9 @@
 
 public class TuitionInfoOutput
 {
-    public DateTime PaidDate { get; set; }
+    public string PaidDate { get; set; }
     
-    public DateTime DueDate { get; set; }
+    public string DueDate { get; set; }
     
     public decimal Amount { get; set; }
     

@@ -32,9 +32,29 @@ public class StudentRepository : Repository<Student>, IStudentRepository
         return result;
     }
 
-    public void AddStudentTimetables(List<StudentTimetable> items)
+    public int UpdateStudent(Student student)
+    {
+        _context.Students.Update(student);
+        var result = _context.SaveChanges();
+        return result;
+    }
+
+    public List<StudentTimetable> GetStudentTimetablesByStudentId(int studentId)
+    {
+        var result = _context.StudentTimetables
+            .Where(x => x.StudentId == studentId).ToList();
+        return result;
+    }
+
+    public void AddStudentTimetables(IEnumerable<StudentTimetable> items)
     {
         _context.StudentTimetables.AddRange(items);
+        _context.SaveChanges();
+    }
+
+    public void DeleteStudentTimetables(List<StudentTimetable> items)
+    {
+        _context.StudentTimetables.RemoveRange(items);
         _context.SaveChanges();
     }
 }
