@@ -11,4 +11,6 @@ public interface IStudentService
     StudentInfoOutput GetStudentInfo(int studentId);
 
     ApiResponseModel AddNewStudent(NewStudentInput input);
+
+    ApiResponseModel UpdateStudent(int studentId, UpdateStudentInput input);
 }

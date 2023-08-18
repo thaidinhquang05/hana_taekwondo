@@ -3,7 +3,7 @@ using StudentManagement.Models;
 
 namespace StudentManagement.Repositories.Interfaces;
 
-public interface ITuitionRepository
+public interface ITuitionRepository : IRepository<Tuition>
 {
     int AddNewTuition(Tuition tuition);
 

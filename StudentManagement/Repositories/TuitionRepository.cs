@@ -4,11 +4,11 @@ using StudentManagement.Repositories.Interfaces;
 
 namespace StudentManagement.Repositories;
 
-public class TuitionRepository : ITuitionRepository
+public class TuitionRepository : Repository<Tuition>, ITuitionRepository
 {
     private readonly hana_taekwondoContext _context;
 
-    public TuitionRepository(hana_taekwondoContext context)
+    public TuitionRepository(hana_taekwondoContext context) : base(context)
     {
         _context = context;
     }
@@ -26,8 +26,8 @@ public class TuitionRepository : ITuitionRepository
             .Where(x => x.StudentId == studentId)
             .Select(x => new TuitionInfoOutput
             {
-                PaidDate = x.PaidDate,
-                DueDate = x.DueDate,
+                PaidDate = $"{x.PaidDate:dd/MM/yyyy}",
+                DueDate = $"{x.DueDate:dd/MM/yyyy}",
                 Amount = x.Amount,
                 ActualAmount = x.ActualAmount,
                 Content = x.Content,

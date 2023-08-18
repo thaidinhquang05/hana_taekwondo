@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StudentManagement.DTOs.Input;
-using StudentManagement.Services.Interfaces;
 using StudentManagement.DTOs.Output;
+using StudentManagement.Services.Interfaces;
 
 namespace StudentManagement.Controllers;
 
@@ -47,7 +47,7 @@ public class StudentController : Controller
         try
         {
             var studentInfo = _studentService.GetStudentInfo(studentId);
-            
+
             return Ok(new ApiResponseModel
             {
                 Code = StatusCodes.Status200OK,
@@ -74,6 +74,25 @@ public class StudentController : Controller
         {
             var response = _studentService.AddNewStudent(input);
             return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            return Conflict(new ApiResponseModel
+            {
+                Code = StatusCodes.Status409Conflict,
+                Message = ex.Message,
+                IsSuccess = false
+            });
+        }
+    }
+
+    [HttpPut("{studentId:int}")]
+    public ActionResult<ApiResponseModel> UpdateStudent([FromBody] UpdateStudentInput input, int studentId)
+    {
+        try
+        {
+            var result = _studentService.UpdateStudent(studentId, input);
+            return Ok(result);
         }
         catch (Exception ex)
         {
