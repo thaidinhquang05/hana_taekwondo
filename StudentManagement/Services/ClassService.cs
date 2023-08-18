@@ -20,7 +20,7 @@ namespace StudentManagement.Services
         {
             try
             {
-                _classRepository.addStudentToClass(_student, _class);
+                _classRepository.AddStudentToClass(_student, _class);
             }
             catch
             {
@@ -31,6 +31,26 @@ namespace StudentManagement.Services
             {
                 Code = StatusCodes.Status200OK,
                 Message = "Add new student successfully!",
+                Data = _student,
+                IsSuccess = true
+            };
+        }
+
+        public ApiResponseModel RemoveStudentFromClass(Student _student)
+        {
+            try
+            {
+                _classRepository.RemoveStudentFromClass(_student);
+            }
+            catch
+            {
+                new Exception("Have something wrong when remove new student!");
+            }
+
+            return new ApiResponseModel
+            {
+                Code = StatusCodes.Status200OK,
+                Message = "remove student successfully!",
                 Data = _student,
                 IsSuccess = true
             };

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using StudentManagement.DTOs.Input;
 using StudentManagement.DTOs.Output;
 using StudentManagement.Models;
 using StudentManagement.Repositories.Interfaces;
@@ -13,7 +14,7 @@ public class TimetableRepository : ITimetableRepository
     {
         _context = context;
     }
-    
+
     public List<TimetableOutput> GetTimetableByStudentId(int studentId)
     {
         var result = _context.StudentTimetables
@@ -28,5 +29,26 @@ public class TimetableRepository : ITimetableRepository
             .ToList();
 
         return result;
+    }
+
+    public void ChooseTimeTable(Student student, List<TimetableSelectionInput> timetables)
+    {
+        foreach(var item in timetables)
+        {
+            Timetable timetable = new Timetable();
+            StudentTimetable studentTimetable = new StudentTimetable();
+            foreach(var slot in item.SlotIds)
+            {
+                timetable.WeekDay = item.Day;
+                timetable.SlotId = slot;
+
+                studentTimetable.Student = student;
+                studentTimetable.StudentId  = student.Id;
+
+                timetable.StudentTimetables.Add(studentTimetable);
+                _context.Timetables.Add(timetable);
+                _context.SaveChanges();
+            }
+        }
     }
 }
