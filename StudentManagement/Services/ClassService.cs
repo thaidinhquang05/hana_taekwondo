@@ -16,11 +16,11 @@ namespace StudentManagement.Services
             _classRepository = classRepository;
         }
 
-        public ApiResponseModel AddNewStudentToClass(Student _student, Class _class)
+        public ApiResponseModel AddNewStudentToClass(int _studentId, int _classId)
         {
             try
             {
-                _classRepository.AddStudentToClass(_student, _class);
+                _classRepository.AddStudentToClass(_studentId, _classId);
             }
             catch
             {
@@ -31,7 +31,6 @@ namespace StudentManagement.Services
             {
                 Code = StatusCodes.Status200OK,
                 Message = "Add new student successfully!",
-                Data = _student,
                 IsSuccess = true
             };
         }

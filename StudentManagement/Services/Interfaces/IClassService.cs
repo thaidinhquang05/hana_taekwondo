@@ -5,7 +5,7 @@ namespace StudentManagement.Services.Interfaces
 {
     public interface IClassService
     {
-        public ApiResponseModel AddNewStudentToClass(Student _student, Class _class);
+        public ApiResponseModel AddNewStudentToClass(int _studentId, int _classId);
         public ApiResponseModel RemoveStudentFromClass(Student _student);
     }
 }

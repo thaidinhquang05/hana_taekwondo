@@ -15,8 +15,11 @@ public class ClassRepository : Repository<Class>, IClassRepository
         _context = context;
     }
 
-    public void AddStudentToClass(Student _student, Class _class)
+    public void AddStudentToClass(int _studentId, int _classId)
     {
+        var _student = _context.Students.Where(s => s.Id == _studentId).FirstOrDefault() ?? throw new Exception("Not found student!");
+        var _class = _context.Classes.Where(s => s.Id == _classId).FirstOrDefault() ?? throw new Exception("Not found class!");
+
         StudentClass studentClass = new StudentClass();
         studentClass.Student = _student;
         studentClass.Class = _class;

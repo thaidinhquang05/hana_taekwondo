@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using StudentManagement.DTOs.Input;
 using StudentManagement.DTOs.Output;
 using StudentManagement.Models;
 using StudentManagement.Services;
@@ -18,11 +19,11 @@ namespace StudentManagement.Controllers
         }
 
         [HttpPost]
-        public ActionResult<ApiResponseModel> AddStudentToClass(Student _student, Class _class)
+        public ActionResult<ApiResponseModel> AddStudentToClass([FromBody]StudentClassInput studentClass)
         {
             try
             {
-                var students = _classService.AddNewStudentToClass(_student, _class);
+                var students = _classService.AddNewStudentToClass(studentClass.StudentId, studentClass.ClassId);
                 return Ok(new ApiResponseModel
                 {
                     Code = StatusCodes.Status200OK,
