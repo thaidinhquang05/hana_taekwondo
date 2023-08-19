@@ -84,4 +84,62 @@ public class StudentService : IStudentService
             IsSuccess = true
         };
     }
+
+    public ApiResponseModel UpdateStudent(int studentId, UpdateStudentInput input)
+    {
+        var existedStudent = _studentRepository.GetStudentInfoByStudentId(studentId);
+        if (existedStudent is null)
+        {
+            throw new Exception($"Student with id {studentId} is not exist!");
+        }
+
+        // update student
+        existedStudent.FullName = input.FullName;
+        existedStudent.Dob = input.Dob;
+        existedStudent.Gender = input.Gender;
+        existedStudent.ParentName = input.ParentName;
+        existedStudent.Phone = input.Phone;
+        existedStudent.ModifiedAt = DateTime.Now;
+        var updateStudentResult = _studentRepository.UpdateStudent(existedStudent);
+        if (updateStudentResult == 0)
+        {
+            throw new Exception("Have some error while update student!");
+        }
+
+        // update student timetables
+        var studentTimetables = _studentRepository.GetStudentTimetablesByStudentId(studentId);
+        List<StudentTimetable> newStuTimes;
+        if (studentTimetables.Count > 0)
+        {
+            newStuTimes = input.Timetables
+                .Select(timetable => new StudentTimetable
+                {
+                    StudentId = studentId,
+                    TimeTableId = timetable.TimetableId,
+                    CreatedAt = studentTimetables[0].CreatedAt,
+                    ModifiedAt = DateTime.Now
+                }).ToList();
+        }
+        else
+        {
+            newStuTimes = input.Timetables
+                .Select(timetable => new StudentTimetable
+                {
+                    StudentId = studentId,
+                    TimeTableId = timetable.TimetableId,
+                    CreatedAt = DateTime.Now,
+                    ModifiedAt = DateTime.Now
+                }).ToList();
+        }
+        _studentRepository.DeleteStudentTimetables(studentTimetables);
+        _studentRepository.AddStudentTimetables(newStuTimes);
+
+        return new ApiResponseModel
+        {
+            Code = StatusCodes.Status200OK,
+            Message = "Update student information successfully!",
+            Data = input,
+            IsSuccess = true
+        };
+    }
 }

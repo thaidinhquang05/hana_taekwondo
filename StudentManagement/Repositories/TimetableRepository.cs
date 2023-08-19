@@ -6,11 +6,11 @@ using StudentManagement.Repositories.Interfaces;
 
 namespace StudentManagement.Repositories;
 
-public class TimetableRepository : ITimetableRepository
+public class TimetableRepository : Repository<Timetable>, ITimetableRepository
 {
     private readonly hana_taekwondoContext _context;
 
-    public TimetableRepository(hana_taekwondoContext context)
+    public TimetableRepository(hana_taekwondoContext context) : base(context)
     {
         _context = context;
     }

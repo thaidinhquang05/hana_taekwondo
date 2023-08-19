@@ -6,7 +6,7 @@ public class StudentInfoOutput
     
     public string FullName { get; set; }
     
-    public DateTime Dob { get; set; }
+    public string Dob { get; set; }
     
     public bool Gender { get; set; }
     

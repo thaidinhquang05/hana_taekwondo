@@ -25,6 +25,12 @@ public class MapperProfile : Profile
             .ForMember(des => des.ModifiedAt,
                 opt => opt.MapFrom(src => DateTime.Now));
 
-        CreateMap<Student, StudentInfoOutput>();
+        CreateMap<Student, StudentInfoOutput>()
+            .ForMember(des => des.Dob,
+                opt => opt.MapFrom(src => $"{src.Dob:dd/MM/yyyy}"));
+
+        CreateMap<UpdateStudentInput, Student>()
+            .ForMember(des => des.ModifiedAt,
+                opt => opt.MapFrom(src => DateTime.Now));
     }
 }
