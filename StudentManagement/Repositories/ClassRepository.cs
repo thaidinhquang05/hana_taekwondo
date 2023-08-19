@@ -14,9 +14,12 @@ public class ClassRepository : Repository<Class>, IClassRepository
     {
         _context = context;
     }
-    
-    public void addStudentToClass(Student _student, Class _class)
+
+    public void AddStudentToClass(int _studentId, int _classId)
     {
+        var _student = _context.Students.Where(s => s.Id == _studentId).FirstOrDefault() ?? throw new Exception("Not found student!");
+        var _class = _context.Classes.Where(s => s.Id == _classId).FirstOrDefault() ?? throw new Exception("Not found class!");
+
         StudentClass studentClass = new StudentClass();
         studentClass.Student = _student;
         studentClass.Class = _class;
@@ -28,12 +31,17 @@ public class ClassRepository : Repository<Class>, IClassRepository
         _context.SaveChanges();
     }
 
-    public void removeStudentFromClass(Student _student) {
+    public void RemoveStudentFromClass(Student _student)
+    {
         var studentClass = _context.StudentClasses.Where(sc => sc.StudentId == _student.Id).ToList() ?? throw new NullReferenceException("Record not found!");
         _context.StudentClasses.RemoveRange(studentClass);
         _context.SaveChanges();
     }
 
+    public List<Class> FindClassByKeyWord(string keyword)
+    {
+        return _context.Classes.Where(c => c.Name.Contains(keyword)).ToList() ?? throw new NullReferenceException("Class not found!");
+    }
 
     public List<ClassInfoOutput> GetClassesByStudentId(int studentId)
     {
