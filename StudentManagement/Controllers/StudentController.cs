@@ -17,11 +17,11 @@ public class StudentController : Controller
     }
 
     [HttpGet]
-    public async Task<ActionResult<ApiResponseModel>> GetAllStudents()
+    public ActionResult<ApiResponseModel> GetAllStudents()
     {
         try
         {
-            var students = await _studentService.GetAll();
+            var students = _studentService.GetAll();
             return Ok(new ApiResponseModel
             {
                 Code = StatusCodes.Status200OK,
