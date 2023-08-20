@@ -25,9 +25,10 @@ public class StudentService : IStudentService
         _mapper = mapper;
     }
 
-    public Task<List<Student>> GetAll()
+    public List<StudentOutput> GetAll()
     {
-        var result = _studentRepository.GetAll();
+        var studentList = _studentRepository.GetAllStudents();
+        var result = _mapper.Map<List<StudentOutput>>(studentList);
         return result;
     }
 

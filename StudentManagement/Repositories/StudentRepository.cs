@@ -19,6 +19,12 @@ public class StudentRepository : Repository<Student>, IStudentRepository
         return results;
     }
 
+    public List<Student> GetAllStudents()
+    {
+        var result = _context.Students.ToList();
+        return result;
+    }
+
     public Student GetStudentInfoByStudentId(int studentId)
     {
         var student = _context.Students.FirstOrDefault(s => s.Id == studentId);

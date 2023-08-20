@@ -8,7 +8,7 @@ class Footer extends HTMLElement {
             `<footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website </span>
+                        <span>Copyright &copy; Hana Taekwondo </span>
                     </div>
                 </div>
             </footer>`;

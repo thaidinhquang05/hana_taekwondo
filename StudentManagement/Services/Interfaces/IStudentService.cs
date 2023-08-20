@@ -6,7 +6,7 @@ namespace StudentManagement.Services.Interfaces;
 
 public interface IStudentService
 {
-    Task<List<Student>> GetAll();
+    List<StudentOutput> GetAll();
 
     StudentInfoOutput GetStudentInfo(int studentId);
 
