@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1, shrink-to-fit=no"
+		/>
+		<meta name="description" content="" />
+		<meta name="author" content="" />
+
+		<title>Hana Taekwondo - Student List</title>
+
+		<!-- Custom fonts for this template -->
+		<link
+			href="vendor/fontawesome-free/css/all.min.css"
+			rel="stylesheet"
+			type="text/css"
+		/>
+		<link
+			href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+			rel="stylesheet"
+		/>
+
+		<!-- Custom styles for this template -->
+		<link href="css/sb-admin-2.min.css" rel="stylesheet" />
+
+		<!-- Custom styles for this page -->
+		<link
+			href="vendor/datatables/dataTables.bootstrap4.min.css"
+			rel="stylesheet"
+		/>
+		<link href="vendor/toaster/jquery.toast.min.css" rel="stylesheet" />
+	</head>
+
+	<body id="page-top">
+		<!-- Page Wrapper -->
+		<div id="wrapper">
+			<!-- Sidebar -->
+			<sidebar-component></sidebar-component>
+			<!-- End of Sidebar -->
+
+			<!-- Content Wrapper -->
+			<div id="content-wrapper" class="d-flex flex-column">
+				<!-- Main Content -->
+				<div id="content">
+					<!-- Topbar -->
+					<topbar-component></topbar-component>
+					<!-- End of Topbar -->
+
+					<!-- Begin Page Content -->
+					<div class="container-fluid">
+						<!-- Page Heading -->
+						<h1 class="h3 mb-2 text-gray-800">Add New Student</h1>
+
+						<div class="col-xl-12">
+							<!-- Account details card-->
+							<div class="card mb-4">
+								<div class="card-header">
+									<h6
+										class="m-0 font-weight-bold text-primary"
+									>
+										Student Information
+									</h6>
+								</div>
+								<div class="card-body">
+									<form>
+                                        <span style="color: red;">(*): The field needs to be filled out</span>
+										<!-- Form Group -->
+										<div class="mb-3">
+											<label
+												class="small mb-1"
+												for="inputStudentName"
+												>Student Name <span style="color: red;">(*)</span></label
+											>
+											<input
+												class="form-control"
+												id="inputStudentName"
+												type="text"
+												placeholder="Enter student's name..."
+											/>
+										</div>
+										<!-- Form Group -->
+										<div class="mb-3">
+											<label
+												class="small mb-1"
+												for="inputParent"
+												>Parent <span style="color: red;">(*)</span></label
+											>
+											<input
+												class="form-control"
+												id="inputParent"
+												type="text"
+												placeholder="Enter student's parent name..."
+											/>
+										</div>
+										<!-- Form Row-->
+										<div class="row gx-3 mb-3">
+											<!-- Form Group (phone number)-->
+											<div class="col-md-4">
+												<label
+													class="small mb-1"
+													for="inputPhone"
+													>Phone number</label
+												>
+												<input
+													class="form-control"
+													id="inputPhone"
+													type="tel"
+													placeholder="Enter phone number..."
+												/>
+											</div>
+											<!-- Form Group (birthday)-->
+											<div class="col-md-4">
+												<label
+													class="small mb-1"
+													for="inputBirthday"
+													>Birthday <span style="color: red;">(*)</span></label
+												>
+												<input
+													class="form-control"
+													id="inputBirthday"
+													type="date"
+													name="birthday"
+													placeholder="Enter your birthday"
+												/>
+											</div>
+											<div class="col-md-4">
+												<label
+													class="small mb-1"
+													for="inputGender"
+													>Gender</label
+												>
+												<div>
+													<div
+														class="form-check form-check-inline"
+													>
+														<input
+															class="form-check-input"
+															type="radio"
+															name="inlineRadioOptions"
+															id="inlineRadio1"
+															value="Male"
+                                                            checked
+														/>
+														<label
+															class="form-check-label"
+															for="inlineRadio1"
+															>Male</label
+														>
+													</div>
+													<div
+														class="form-check form-check-inline"
+													>
+														<input
+															class="form-check-input"
+															type="radio"
+															name="inlineRadioOptions"
+															id="inlineRadio2"
+															value="Female"
+														/>
+														<label
+															class="form-check-label"
+															for="inlineRadio2"
+															>Female</label
+														>
+													</div>
+												</div>
+											</div>
+										</div>
+                                        <div class="card-header">
+                                            <h6
+                                                class="m-0 font-weight-bold text-primary"
+                                            >
+                                                Tuition Information
+                                            </h6>
+                                        </div>
+                                        <!-- Form Row-->
+										<div class="row gx-3 mb-3">
+											<!-- Form Group -->
+											<div class="col-md-6">
+												<label
+													class="small mb-1"
+													for="inputPaidDate"
+													>Paid Date</label
+												>
+												<input
+													class="form-control"
+													id="inputPaidDate"
+													type="date"
+												/>
+											</div>
+											<!-- Form Group -->
+											<div class="col-md-6">
+												<label
+													class="small mb-1"
+													for="inputDueDate"
+													>Due Date</label
+												>
+												<input
+													class="form-control"
+													id="inputDueDate"
+													type="date"
+												/>
+											</div>
+										</div>
+                                        <!-- Form Row-->
+										<div class="row gx-3 mb-3">
+											<!-- Form Group -->
+											<div class="col-md-6">
+												<label
+													class="small mb-1"
+													for="inputAmount"
+													>Amount</label
+												>
+												<input
+													class="form-control"
+													id="inputAmount"
+													type="number"
+                                                    placeholder="Enter amount..."
+												/>
+											</div>
+											<!-- Form Group -->
+											<div class="col-md-6">
+												<label
+													class="small mb-1"
+													for="inputActualAmount"
+													>Actual Amount</label
+												>
+												<input
+													class="form-control"
+													id="inputActualAmount"
+													type="number"
+                                                    placeholder="Enter actual amount..."
+												/>
+											</div>
+										</div>
+                                        <!-- Form Group -->
+                                        <div class="mb-3">
+                                            <label
+                                                class="small mb-1"
+                                                for="content-text"
+                                                >Content</label
+                                            >
+                                            <textarea class="form-control" id="content-text"></textarea>
+                                        </div>
+                                        <!-- Form Group -->
+                                        <div class="mb-3">
+                                            <label
+                                                class="small mb-1"
+                                                for="inputAmount"
+                                                >Note</label
+                                            >
+                                            <textarea class="form-control" id="note-text"></textarea>
+                                        </div>
+										<!-- Save changes button-->
+										<button
+											id="add-btn"
+											class="btn btn-primary"
+											type="button"
+										>
+											ADD NEW
+										</button>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /.container-fluid -->
+				</div>
+				<!-- End of Main Content -->
+
+				<!-- Footer -->
+				<footer-component></footer-component>
+				<!-- End of Footer -->
+			</div>
+			<!-- End of Content Wrapper -->
+		</div>
+		<!-- End of Page Wrapper -->
+
+		<!-- Scroll to Top Button-->
+		<a class="scroll-to-top rounded" href="#page-top">
+			<i class="fas fa-angle-up"></i>
+		</a>
+
+		<!-- Bootstrap core JavaScript-->
+		<script src="vendor/jquery/jquery.min.js"></script>
+		<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+		<!-- Core plugin JavaScript-->
+		<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+		<!-- Custom scripts for all pages-->
+		<script src="js/sb-admin-2.min.js"></script>
+
+		<script src="vendor/toaster/jquery.toast.min.js"></script>
+		<script src="js/components/sidebar.js"></script>
+		<script src="js/components/topbar.js"></script>
+		<script src="js/components/footer.js"></script>
+
+		<script src="js/add-student.js"></script>
+	</body>
+</html>

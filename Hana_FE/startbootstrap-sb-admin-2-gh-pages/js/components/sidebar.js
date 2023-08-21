@@ -37,22 +37,46 @@ class Sidebar extends HTMLElement {
                 <hr class="sidebar-divider" />
 
                 <!-- Heading -->
-                <div class="sidebar-heading">Management</div>
+                <div class="sidebar-heading">Student</div>
 
-                <!-- Nav Item - Student Management -->
+                <!-- Nav Item - Student Management Collapse Menu -->
                 <li class="nav-item">
-                    <a class="nav-link" href="student-management.html">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseStudent"
+                        aria-expanded="true" aria-controls="collapseStudent">
                         <i class="fas fa-user-graduate"></i>
-                        <span>Student Management</span></a
-                    >
+                        <span>Student Management</span>
+                    </a>
+                    <div id="collapseStudent" class="collapse" aria-labelledby="headingUtilities"
+                        data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Student Management:</h6>
+                            <a class="collapse-item" href="student-list.html">Student List</a>
+                            <a class="collapse-item" href="add-student.html">Add New Student</a>
+                        </div>
+                    </div>
                 </li>
 
-                <!-- Nav Item - Class Management -->
+                <!-- Divider -->
+                <hr class="sidebar-divider" />
+
+                <!-- Heading -->
+                <div class="sidebar-heading">Class</div>
+
+                <!-- Nav Item - Class Management Collapse Menu -->
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="fas fa-university"></i>
-                        <span>Class Management</span></a
-                    >
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseClass"
+                        aria-expanded="true" aria-controls="collapseClass">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        <span>Class Management</span>
+                    </a>
+                    <div id="collapseClass" class="collapse" aria-labelledby="headingUtilities"
+                        data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Class Management:</h6>
+                            <a class="collapse-item" href="#">Class List</a>
+                            <a class="collapse-item" href="#">Add New Class</a>
+                        </div>
+                    </div>
                 </li>
 
                 <!-- Divider -->

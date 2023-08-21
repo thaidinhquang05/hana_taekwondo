@@ -42,26 +42,26 @@ public class StudentService : IStudentService
     public ApiResponseModel AddNewStudent(NewStudentInput input)
     {
         var newStudent = _mapper.Map<Student>(input);
-        var addStuResult = _studentRepository.AddNewStudent(newStudent);
+        _studentRepository.AddNewStudent(newStudent);
 
-        var newTuition = _mapper.Map<Tuition>(input.Tuition);
-        newTuition.StudentId = newStudent.Id;
-        var addTuitionResult = _tuitionRepository.AddNewTuition(newTuition);
-
-        var newStuTimes = input.Timetables
-            .Select(timetable => new StudentTimetable
-            {
-                StudentId = newStudent.Id,
-                TimeTableId = timetable.TimetableId,
-                CreatedAt = DateTime.Now,
-                ModifiedAt = DateTime.Now
-            }).ToList();
-
-        _studentRepository.AddStudentTimetables(newStuTimes);
-
-        if (addStuResult == 0 || addTuitionResult == 0)
+        if (input.Tuition is not null)
         {
-            throw new Exception("Have something wrong when add new student!");
+            var newTuition = _mapper.Map<Tuition>(input.Tuition);
+            newTuition.StudentId = newStudent.Id;
+            _tuitionRepository.AddNewTuition(newTuition);
+        }
+
+        if (input.Timetables is not null)
+        {
+            var newStuTimes = input.Timetables
+                .Select(timetable => new StudentTimetable
+                {
+                    StudentId = newStudent.Id,
+                    TimeTableId = timetable.TimetableId,
+                    CreatedAt = DateTime.Now,
+                    ModifiedAt = DateTime.Now
+                }).ToList();
+            _studentRepository.AddStudentTimetables(newStuTimes);
         }
 
         return new ApiResponseModel
