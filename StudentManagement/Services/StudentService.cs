@@ -48,17 +48,6 @@ public class StudentService : IStudentService
         newTuition.StudentId = newStudent.Id;
         var addTuitionResult = _tuitionRepository.AddNewTuition(newTuition);
 
-        var newStuTimes = input.Timetables
-            .Select(timetable => new StudentTimetable
-            {
-                StudentId = newStudent.Id,
-                TimeTableId = timetable.TimetableId,
-                CreatedAt = DateTime.Now,
-                ModifiedAt = DateTime.Now
-            }).ToList();
-
-        _studentRepository.AddStudentTimetables(newStuTimes);
-
         if (addStuResult == 0 || addTuitionResult == 0)
         {
             throw new Exception("Have something wrong when add new student!");
@@ -88,6 +77,7 @@ public class StudentService : IStudentService
         existedStudent.ParentName = input.ParentName;
         existedStudent.Phone = input.Phone;
         existedStudent.ModifiedAt = DateTime.Now;
+        existedStudent.Schedule = input.Schedule;
         var updateStudentResult = _studentRepository.UpdateStudent(existedStudent);
         if (updateStudentResult == 0)
         {

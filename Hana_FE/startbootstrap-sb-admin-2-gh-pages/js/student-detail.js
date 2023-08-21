@@ -1,6 +1,7 @@
 $(() => {
 	let urlParam = new URLSearchParams(window.location.search);
 	let studentId = urlParam.get("id");
+	$("#schedule").jqs()
 
 	loadStudentInfo(studentId);
 	loadTuitionHistory(studentId);
@@ -13,8 +14,8 @@ $(() => {
 			gender: $("#inlineRadio1").is(":checked") ? "Male" : "Female",
 			parentName: $("#inputParent").val(),
 			phone: $("#inputPhone").val(),
+			schedule: $("#schedule").jqs("export")
 		};
-
 		updateStudent(student, studentId);
 	});
 
@@ -48,6 +49,7 @@ function loadStudentInfo(studentId) {
 			studentData.gender == "Male"
 				? $("#inlineRadio1").prop("checked", true)
 				: $("#inlineRadio2").prop("checked", true);
+			$("#schedule").jqs('import', JSON.parse(studentData.schedule));
 		},
 		error: (xhr) => {
 			$.toast({
