@@ -200,6 +200,8 @@
 										id="add-btn"
 										href="#"
 										class="btn btn-primary btn-icon-split"
+										data-toggle="modal"
+										data-target="#addTuitionModal"
 									>
 										<span class="icon text-white-50">
 											<i class="fas fa-plus-circle"></i>
@@ -226,10 +228,130 @@
 												<th>Actual Amount</th>
 												<th>Content</th>
 												<th>Note</th>
+												<th></th>
 											</tr>
 										</thead>
 										<tbody></tbody>
 									</table>
+								</div>
+							</div>
+						</div>
+
+						<!-- Add New Tuition Modal-->
+						<div
+							class="modal fade"
+							id="addTuitionModal"
+							tabindex="-1"
+							role="dialog"
+							aria-labelledby="exampleModalLabel"
+							aria-hidden="true"
+						>
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5
+											class="modal-title"
+											id="exampleModalLabel"
+										>
+											Add New Tuition
+										</h5>
+										<button
+											class="close"
+											type="button"
+											data-dismiss="modal"
+											aria-label="Close"
+										>
+											<span aria-hidden="true">×</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<form>
+											<div class="form-group">
+												<label
+													for="paid-date"
+													class="col-form-label"
+													>Paid Date</label
+												>
+												<input
+													type="date"
+													class="form-control"
+													id="paid-date"
+													required
+												/>
+											</div>
+											<div class="form-group">
+												<label
+													for="due-date"
+													class="col-form-label"
+													>Due Date</label
+												>
+												<input
+													type="date"
+													class="form-control"
+													id="due-date"
+													required
+												/>
+											</div>
+											<div class="form-group">
+												<label
+													for="amount"
+													class="col-form-label"
+													>Amount</label
+												>
+												<input
+													type="number"
+													class="form-control"
+													id="amount"
+													required
+												/>
+											</div>
+											<div class="form-group">
+												<label
+													for="actual-amount"
+													class="col-form-label"
+													>Actual Amount</label
+												>
+												<input
+													type="number"
+													class="form-control"
+													id="actual-amount"
+													required
+												/>
+											</div>
+											<div class="form-group">
+												<label
+													for="content-text"
+													class="col-form-label"
+													>Content</label
+												>
+												<textarea class="form-control" id="content-text" required></textarea>
+											</div>
+											<div class="form-group">
+												<label
+													for="note-text"
+													class="col-form-label"
+													>Note</label
+												>
+												<textarea class="form-control" id="note-text" required></textarea>
+											</div>
+										</form>
+									</div>
+									<div class="modal-footer">
+										<button
+											class="btn btn-secondary"
+											type="button"
+											data-dismiss="modal"
+										>
+											Cancel
+										</button>
+										<a
+											id="add-tuition-btn"
+											class="btn btn-primary"
+											href="#"
+											data-dismiss="modal"
+											>Add</a
+										>
+									</div>
 								</div>
 							</div>
 						</div>

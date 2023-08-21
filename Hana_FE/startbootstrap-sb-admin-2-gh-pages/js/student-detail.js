@@ -3,9 +3,9 @@ $(() => {
 	let studentId = urlParam.get("id");
 
 	loadStudentInfo(studentId);
-
 	loadTuitionHistory(studentId);
 
+	// update student click
 	$("#update-btn").on("click", () => {
 		let student = {
 			fullName: $("#inputStudentName").val(),
@@ -16,6 +16,21 @@ $(() => {
 		};
 
 		updateStudent(student, studentId);
+	});
+
+	// add tuition click
+	$("#add-tuition-btn").on("click", (e) => {
+		e.preventDefault();
+
+		let tuition = {
+			paidDate: $("#paid-date").val(),
+			dueDate: $("#due-date").val(),
+			amount: $("#amount").val(),
+			actualAmount: $("#actual-amount").val(),
+			content: $("#content-text").val(),
+			note: $("#note-text").val(),
+		};
+		addTuition(studentId, tuition);
 	});
 });
 
@@ -46,9 +61,10 @@ function loadStudentInfo(studentId) {
 	});
 }
 
-function loadTuitionHistory(studentId) {
+function loadTuitionHistory(studentId, destroy) {
 	$("#dataTable").DataTable({
 		ajax: `https://localhost:7010/api/Tuition/GetTuitionByStudentId/${studentId}`,
+		destroy: destroy,
 		columns: [
 			{ data: "id" },
 			{ data: "paidDate" },
@@ -56,6 +72,22 @@ function loadTuitionHistory(studentId) {
 			{ data: "actualAmount", orderable: false },
 			{ data: "content", orderable: false },
 			{ data: "note", orderable: false },
+			{
+				data: "id",
+				orderable: false,
+				render: (id) =>
+					`<a href='tuition-detail.html?id=${id}'><i class="fas fa-edit"></i></a>`,
+			},
+		],
+		columnDefs: [
+			{
+				targets: 0,
+				className: "text-center",
+			},
+			{
+				targets: 6,
+				className: "text-center",
+			},
 		],
 	});
 }
@@ -75,6 +107,35 @@ function updateStudent(student, id) {
 				showHideTransition: "plain",
 			});
 			loadStudentInfo(id);
+		},
+		error: (xhr) => {
+			$.toast({
+				heading: "Updated Failed!!!",
+				text: xhr.responseJSON?.message,
+				icon: "error",
+				position: "top-right",
+				showHideTransition: "plain",
+			});
+		},
+	});
+}
+
+function addTuition(studentId, tuition) {
+	$.ajax({
+		url: `https://localhost:7010/api/Tuition/AddNewTuition/${studentId}`,
+		method: "POST",
+		contentType: "application/json",
+		data: JSON.stringify(tuition),
+		success: (response) => {
+			$.toast({
+				heading: "Added Successfully!!!",
+				text: response.message,
+				icon: "success",
+				position: "top-right",
+				showHideTransition: "plain",
+			});
+			let destroy = true;
+			loadTuitionHistory(studentId, destroy);
 		},
 		error: (xhr) => {
 			$.toast({
