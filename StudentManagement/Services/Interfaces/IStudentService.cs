@@ -1,5 +1,6 @@
 ﻿using StudentManagement.DTOs.Input;
 using StudentManagement.DTOs.Output;
+using StudentManagement.Models;
 
 namespace StudentManagement.Services.Interfaces;
 

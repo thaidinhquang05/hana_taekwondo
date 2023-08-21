@@ -75,6 +75,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<IClassService, ClassService>();
 builder.Services.AddScoped<ITuitionService, TuitionService>();
+builder.Services.AddScoped<ITimetableService, TimetableService>();
 
 builder.Services.AddScoped<ILogicHandler, LogicHandler>();
 
@@ -84,6 +85,7 @@ builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<IClassRepository, ClassRepository>();
 builder.Services.AddScoped<ITuitionRepository, TuitionRepository>();
 builder.Services.AddScoped<IClassRepository, ClassRepository>();
+builder.Services.AddScoped<ITimetableRepository, TimetableRepository>();
 
 var app = builder.Build();
 
