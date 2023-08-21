@@ -26,8 +26,9 @@ public class TuitionRepository : Repository<Tuition>, ITuitionRepository
             .Where(x => x.StudentId == studentId)
             .Select(x => new TuitionInfoOutput
             {
-                PaidDate = $"{x.PaidDate:dd/MM/yyyy}",
-                DueDate = $"{x.DueDate:dd/MM/yyyy}",
+                Id = x.Id,
+                PaidDate = $"{x.PaidDate:yyyy-MM-dd}",
+                DueDate = $"{x.DueDate:yyyy-MM-dd}",
                 Amount = x.Amount,
                 ActualAmount = x.ActualAmount,
                 Content = x.Content,

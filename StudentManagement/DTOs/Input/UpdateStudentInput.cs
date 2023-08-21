@@ -6,11 +6,9 @@ public class UpdateStudentInput
 
     public DateTime Dob { get; set; }
 
-    public bool Gender { get; set; }
+    public string Gender { get; set; }
 
     public string? ParentName { get; set; }
 
     public string? Phone { get; set; }
-
-    public List<TimetableInput> Timetables { get; set; }
 }

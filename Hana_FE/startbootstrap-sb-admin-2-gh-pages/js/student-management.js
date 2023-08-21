@@ -1,6 +1,19 @@
 $(() => {
 	$("#dataTable").DataTable({
-		ajax: "https://localhost:7010/api/Student/GetAllStudents",
+        ajax: {
+            url: "https://localhost:7010/api/Student/GetAllStudents",
+            type: 'GET',
+            contentType: 'application/json',
+            error: function(xhr) {
+                $.toast({
+                    heading: 'Error',
+                    text: xhr.statusText,
+                    icon: 'error',
+                    position: 'top-right',
+                    showHideTransition: 'plain'
+                })
+            }
+        },
 		columns: [
 			{ data: "id" },
 			{ data: "fullName" },
@@ -12,16 +25,16 @@ $(() => {
 				data: "id",
 				orderable: false,
 				render: (id) =>
-					`<a href='student-detail.html/${id}'><i class="fas fa-user-edit"></i></a>`,
+					`<a href='student-detail.html?id=${id}'><i class="fas fa-user-edit"></i></a>`,
 			},
 		],
 		columnDefs: [
             {
-				targets: 0, // your case first column
+				targets: 0,
 				className: "text-center"
 			},
 			{
-				targets: 6, // your case first column
+				targets: 6,
 				className: "text-center"
 			}
 		],

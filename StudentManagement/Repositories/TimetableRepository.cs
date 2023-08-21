@@ -23,6 +23,7 @@ public class TimetableRepository : Repository<Timetable>, ITimetableRepository
             .Where(x => x.StudentId == studentId)
             .Select(x => new TimetableOutput
             {
+                Id = x.TimeTableId,
                 WeekDay = x.TimeTable.WeekDay,
                 SlotDesc = x.TimeTable.Slot.Desc
             })

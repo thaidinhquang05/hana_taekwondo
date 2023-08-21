@@ -2,6 +2,8 @@
 
 public class TuitionInfoOutput
 {
+    public int Id { get; set; }
+    
     public string PaidDate { get; set; }
     
     public string DueDate { get; set; }
