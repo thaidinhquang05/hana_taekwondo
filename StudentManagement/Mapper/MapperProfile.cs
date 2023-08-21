@@ -9,6 +9,10 @@ public class MapperProfile : Profile
 {
     public MapperProfile()
     {
+        CreateMap<TimetableInput, Timetable>()
+            .ForMember(des => des.Id, 
+                opt => opt.MapFrom(src => src.TimetableId));
+
         CreateMap<NewTuitionInput, Tuition>()
             .ForMember(des => des.CreatedAt,
                 opt => opt.MapFrom(src => DateTime.Now))
