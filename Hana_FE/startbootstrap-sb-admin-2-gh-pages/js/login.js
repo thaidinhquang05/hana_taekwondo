@@ -18,22 +18,22 @@ $(function () {
 					window.location.href = "../index.html";
 				}, 3000);
 
-				let toast = {
-					title: "Login Success!",
-					message: data.message,
-					status: TOAST_STATUS.SUCCESS,
-					timeout: 3000,
-				};
-				Toast.create(toast);
+				$.toast({
+                    heading: 'Login Successfully!',
+					text: '',
+                    icon: 'success',
+                    position: 'top-right',
+                    showHideTransition: 'plain'
+                })
 			},
 			error: function (xhr) {
-				let toast = {
-					title: "Login Failed!",
-					message: xhr.responseJSON.message,
-					status: TOAST_STATUS.DANGER,
-					timeout: 3000,
-				};
-				Toast.create(toast);
+				$.toast({
+                    heading: 'Login Failed!',
+                    text: xhr.responseJSON.message,
+                    icon: 'error',
+                    position: 'top-right',
+                    showHideTransition: 'plain'
+                })
 			},
 		});
 	});

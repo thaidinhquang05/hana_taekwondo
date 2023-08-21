@@ -27,15 +27,13 @@ public class MapperProfile : Profile
 
         CreateMap<Student, StudentInfoOutput>()
             .ForMember(des => des.Dob,
-                opt => opt.MapFrom(src => $"{src.Dob:dd/MM/yyyy}"));
-
-        CreateMap<UpdateStudentInput, Student>()
-            .ForMember(des => des.ModifiedAt,
-                opt => opt.MapFrom(src => DateTime.Now));
+                opt => opt.MapFrom(src => $"{src.Dob:yyyy-MM-dd}"))
+            .ForMember(des => des.Gender,
+                opt => opt.MapFrom(src => src.Gender ? "Male" : "Female"));
         
         CreateMap<Student, StudentOutput>()
             .ForMember(des => des.Dob,
-                opt => opt.MapFrom(src => $"{src.Dob:dd/MM/yyyy}"))
+                opt => opt.MapFrom(src => $"{src.Dob:yyyy-MM-dd}"))
             .ForMember(des => des.Gender,
                 opt => opt.MapFrom(src => src.Gender ? "Male" : "Female"));
     }
