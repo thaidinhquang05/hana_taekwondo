@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using StudentManagement.DTOs.Input;
 using StudentManagement.DTOs.Output;
 using StudentManagement.Services.Interfaces;
 
@@ -28,6 +29,25 @@ public class TuitionController : Controller
                 IsSuccess = true,
                 Data = result
             });
+        }
+        catch (Exception ex)
+        {
+            return Conflict(new ApiResponseModel
+            {
+                Code = StatusCodes.Status409Conflict,
+                Message = ex.Message,
+                IsSuccess = false
+            });
+        }
+    }
+
+    [HttpPost("{studentId:int}")]
+    public ActionResult<ApiResponseModel> AddNewTuition(int studentId, [FromBody] NewTuitionInput input)
+    {
+        try
+        {
+            var result = _service.AddNewTuition(studentId, input);
+            return Ok(result);
         }
         catch (Exception ex)
         {

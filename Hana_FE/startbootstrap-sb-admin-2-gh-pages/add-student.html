@@ -10,9 +10,9 @@
 		<meta name="description" content="" />
 		<meta name="author" content="" />
 
-		<title>Hana Taekwondo - Student Detail</title>
+		<title>Hana Taekwondo - Student List</title>
 
-		<!-- Custom fonts for this template-->
+		<!-- Custom fonts for this template -->
 		<link
 			href="vendor/fontawesome-free/css/all.min.css"
 			rel="stylesheet"
@@ -23,13 +23,15 @@
 			rel="stylesheet"
 		/>
 
-		<!-- Custom styles for this template-->
+		<!-- Custom styles for this template -->
 		<link href="css/sb-admin-2.min.css" rel="stylesheet" />
-		<link href="vendor/toaster/jquery.toast.min.css" rel="stylesheet" />
+
+		<!-- Custom styles for this page -->
 		<link
 			href="vendor/datatables/dataTables.bootstrap4.min.css"
 			rel="stylesheet"
 		/>
+		<link href="vendor/toaster/jquery.toast.min.css" rel="stylesheet" />
 	</head>
 
 	<body id="page-top">
@@ -50,7 +52,7 @@
 					<!-- Begin Page Content -->
 					<div class="container-fluid">
 						<!-- Page Heading -->
-						<h1 class="h3 mb-4 text-gray-800">Student Details</h1>
+						<h1 class="h3 mb-2 text-gray-800">Add New Student</h1>
 
 						<div class="col-xl-12">
 							<!-- Account details card-->
@@ -64,12 +66,13 @@
 								</div>
 								<div class="card-body">
 									<form>
+                                        <span style="color: red;">(*): The field needs to be filled out</span>
 										<!-- Form Group -->
 										<div class="mb-3">
 											<label
 												class="small mb-1"
 												for="inputStudentName"
-												>Student Name</label
+												>Student Name <span style="color: red;">(*)</span></label
 											>
 											<input
 												class="form-control"
@@ -83,7 +86,7 @@
 											<label
 												class="small mb-1"
 												for="inputParent"
-												>Parent</label
+												>Parent <span style="color: red;">(*)</span></label
 											>
 											<input
 												class="form-control"
@@ -113,7 +116,7 @@
 												<label
 													class="small mb-1"
 													for="inputBirthday"
-													>Birthday</label
+													>Birthday <span style="color: red;">(*)</span></label
 												>
 												<input
 													class="form-control"
@@ -139,6 +142,7 @@
 															name="inlineRadioOptions"
 															id="inlineRadio1"
 															value="Male"
+                                                            checked
 														/>
 														<label
 															class="form-check-label"
@@ -165,193 +169,100 @@
 												</div>
 											</div>
 										</div>
-										<!-- Save changes button-->
-										<button
-											id="update-btn"
-											class="btn btn-primary"
-											type="button"
-										>
-											Save changes
-										</button>
-									</form>
-								</div>
-							</div>
-						</div>
-
-						<!-- DataTales Example -->
-						<div class="card shadow mb-4">
-							<div class="card-header py-3">
-								<div
-									style="
-										display: flex;
-										justify-content: space-between;
-									"
-								>
-									<h6
-										class="m-0 font-weight-bold text-primary"
-										style="
-											display: flex;
-											align-items: center;
-										"
-									>
-										Tuition History
-									</h6>
-									<a
-										id="add-btn"
-										href="#"
-										class="btn btn-primary btn-icon-split"
-										data-toggle="modal"
-										data-target="#addTuitionModal"
-									>
-										<span class="icon text-white-50">
-											<i class="fas fa-plus-circle"></i>
-										</span>
-										<span class="text"
-											>Add New Tuition</span
-										>
-									</a>
-								</div>
-							</div>
-							<div class="card-body">
-								<div class="table-responsive">
-									<table
-										class="table table-bordered"
-										id="dataTable"
-										width="100%"
-										cellspacing="0"
-									>
-										<thead>
-											<tr>
-												<th>ID</th>
-												<th>Paid Date</th>
-												<th>Due Date</th>
-												<th>Actual Amount</th>
-												<th>Content</th>
-												<th>Note</th>
-												<th></th>
-											</tr>
-										</thead>
-										<tbody></tbody>
-									</table>
-								</div>
-							</div>
-						</div>
-
-						<!-- Add New Tuition Modal-->
-						<div
-							class="modal fade"
-							id="addTuitionModal"
-							tabindex="-1"
-							role="dialog"
-							aria-labelledby="exampleModalLabel"
-							aria-hidden="true"
-						>
-							<div class="modal-dialog" role="document">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h5
-											class="modal-title"
-											id="exampleModalLabel"
-										>
-											Add New Tuition
-										</h5>
-										<button
-											class="close"
-											type="button"
-											data-dismiss="modal"
-											aria-label="Close"
-										>
-											<span aria-hidden="true">×</span>
-										</button>
-									</div>
-									<div class="modal-body">
-										<form>
-											<div class="form-group">
+                                        <div class="card-header">
+                                            <h6
+                                                class="m-0 font-weight-bold text-primary"
+                                            >
+                                                Tuition Information
+                                            </h6>
+                                        </div>
+                                        <!-- Form Row-->
+										<div class="row gx-3 mb-3">
+											<!-- Form Group -->
+											<div class="col-md-6">
 												<label
-													for="paid-date"
-													class="col-form-label"
+													class="small mb-1"
+													for="inputPaidDate"
 													>Paid Date</label
 												>
 												<input
-													type="date"
 													class="form-control"
-													id="paid-date"
-													required
+													id="inputPaidDate"
+													type="date"
 												/>
 											</div>
-											<div class="form-group">
+											<!-- Form Group -->
+											<div class="col-md-6">
 												<label
-													for="due-date"
-													class="col-form-label"
+													class="small mb-1"
+													for="inputDueDate"
 													>Due Date</label
 												>
 												<input
-													type="date"
 													class="form-control"
-													id="due-date"
-													required
+													id="inputDueDate"
+													type="date"
 												/>
 											</div>
-											<div class="form-group">
+										</div>
+                                        <!-- Form Row-->
+										<div class="row gx-3 mb-3">
+											<!-- Form Group -->
+											<div class="col-md-6">
 												<label
-													for="amount"
-													class="col-form-label"
+													class="small mb-1"
+													for="inputAmount"
 													>Amount</label
 												>
 												<input
-													type="number"
 													class="form-control"
-													id="amount"
-													required
+													id="inputAmount"
+													type="number"
+                                                    placeholder="Enter amount..."
 												/>
 											</div>
-											<div class="form-group">
+											<!-- Form Group -->
+											<div class="col-md-6">
 												<label
-													for="actual-amount"
-													class="col-form-label"
+													class="small mb-1"
+													for="inputActualAmount"
 													>Actual Amount</label
 												>
 												<input
-													type="number"
 													class="form-control"
-													id="actual-amount"
-													required
+													id="inputActualAmount"
+													type="number"
+                                                    placeholder="Enter actual amount..."
 												/>
 											</div>
-											<div class="form-group">
-												<label
-													for="content-text"
-													class="col-form-label"
-													>Content</label
-												>
-												<textarea class="form-control" id="content-text" required></textarea>
-											</div>
-											<div class="form-group">
-												<label
-													for="note-text"
-													class="col-form-label"
-													>Note</label
-												>
-												<textarea class="form-control" id="note-text" required></textarea>
-											</div>
-										</form>
-									</div>
-									<div class="modal-footer">
+										</div>
+                                        <!-- Form Group -->
+                                        <div class="mb-3">
+                                            <label
+                                                class="small mb-1"
+                                                for="content-text"
+                                                >Content</label
+                                            >
+                                            <textarea class="form-control" id="content-text"></textarea>
+                                        </div>
+                                        <!-- Form Group -->
+                                        <div class="mb-3">
+                                            <label
+                                                class="small mb-1"
+                                                for="inputAmount"
+                                                >Note</label
+                                            >
+                                            <textarea class="form-control" id="note-text"></textarea>
+                                        </div>
+										<!-- Save changes button-->
 										<button
-											class="btn btn-secondary"
-											type="button"
-											data-dismiss="modal"
-										>
-											Cancel
-										</button>
-										<a
-											id="add-tuition-btn"
+											id="add-btn"
 											class="btn btn-primary"
-											href="#"
-											data-dismiss="modal"
-											>Add</a
+											type="button"
 										>
-									</div>
+											ADD NEW
+										</button>
+									</form>
 								</div>
 							</div>
 						</div>
@@ -382,12 +293,12 @@
 
 		<!-- Custom scripts for all pages-->
 		<script src="js/sb-admin-2.min.js"></script>
-		<script src="vendor/datatables/jquery.dataTables.min.js"></script>
-		<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
 		<script src="vendor/toaster/jquery.toast.min.js"></script>
 		<script src="js/components/sidebar.js"></script>
 		<script src="js/components/topbar.js"></script>
 		<script src="js/components/footer.js"></script>
-		<script src="js/student-detail.js"></script>
+
+		<script src="js/add-student.js"></script>
 	</body>
 </html>
