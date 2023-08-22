@@ -31,7 +31,20 @@
 			href="../../vendor/datatables/dataTables.bootstrap4.min.css"
 			rel="stylesheet"
 		/>
-		<link href="../../vendor/toaster/jquery.toast.min.css" rel="stylesheet" />
+		<link
+			href="../../vendor/toaster/jquery.toast.min.css"
+			rel="stylesheet"
+		/>
+		<style>
+			th,
+			td {
+				text-align: center;
+			}
+
+			.slot-desc {
+				display: block;
+			}
+		</style>
 	</head>
 
 	<body id="page-top">
@@ -66,13 +79,19 @@
 								</div>
 								<div class="card-body">
 									<form>
-                                        <span style="color: red;">(*): The field needs to be filled out</span>
+										<span style="color: red"
+											>(*): The field needs to be filled
+											out</span
+										>
 										<!-- Form Group -->
 										<div class="mb-3">
 											<label
 												class="small mb-1"
 												for="inputStudentName"
-												>Student Name <span style="color: red;">(*)</span></label
+												>Student Name
+												<span style="color: red"
+													>(*)</span
+												></label
 											>
 											<input
 												class="form-control"
@@ -86,7 +105,10 @@
 											<label
 												class="small mb-1"
 												for="inputParent"
-												>Parent <span style="color: red;">(*)</span></label
+												>Parent
+												<span style="color: red"
+													>(*)</span
+												></label
 											>
 											<input
 												class="form-control"
@@ -116,7 +138,10 @@
 												<label
 													class="small mb-1"
 													for="inputBirthday"
-													>Birthday <span style="color: red;">(*)</span></label
+													>Birthday
+													<span style="color: red"
+														>(*)</span
+													></label
 												>
 												<input
 													class="form-control"
@@ -142,7 +167,7 @@
 															name="inlineRadioOptions"
 															id="inlineRadio1"
 															value="Male"
-                                                            checked
+															checked
 														/>
 														<label
 															class="form-check-label"
@@ -169,14 +194,14 @@
 												</div>
 											</div>
 										</div>
-                                        <div class="card-header">
-                                            <h6
-                                                class="m-0 font-weight-bold text-primary"
-                                            >
-                                                Tuition Information
-                                            </h6>
-                                        </div>
-                                        <!-- Form Row-->
+										<div class="card-header">
+											<h6
+												class="m-0 font-weight-bold text-primary"
+											>
+												Tuition Information
+											</h6>
+										</div>
+										<!-- Form Row-->
 										<div class="row gx-3 mb-3">
 											<!-- Form Group -->
 											<div class="col-md-6">
@@ -205,7 +230,7 @@
 												/>
 											</div>
 										</div>
-                                        <!-- Form Row-->
+										<!-- Form Row-->
 										<div class="row gx-3 mb-3">
 											<!-- Form Group -->
 											<div class="col-md-6">
@@ -218,7 +243,7 @@
 													class="form-control"
 													id="inputAmount"
 													type="number"
-                                                    placeholder="Enter amount..."
+													placeholder="Enter amount..."
 												/>
 											</div>
 											<!-- Form Group -->
@@ -232,28 +257,56 @@
 													class="form-control"
 													id="inputActualAmount"
 													type="number"
-                                                    placeholder="Enter actual amount..."
+													placeholder="Enter actual amount..."
 												/>
 											</div>
 										</div>
-                                        <!-- Form Group -->
-                                        <div class="mb-3">
-                                            <label
-                                                class="small mb-1"
-                                                for="content-text"
-                                                >Content</label
-                                            >
-                                            <textarea class="form-control" id="content-text"></textarea>
-                                        </div>
-                                        <!-- Form Group -->
-                                        <div class="mb-3">
-                                            <label
-                                                class="small mb-1"
-                                                for="inputAmount"
-                                                >Note</label
-                                            >
-                                            <textarea class="form-control" id="note-text"></textarea>
-                                        </div>
+										<!-- Form Group -->
+										<div class="mb-3">
+											<label
+												class="small mb-1"
+												for="content-text"
+												>Content</label
+											>
+											<textarea
+												class="form-control"
+												id="content-text"
+											></textarea>
+										</div>
+										<!-- Form Group -->
+										<div class="mb-3">
+											<label
+												class="small mb-1"
+												for="inputAmount"
+												>Note</label
+											>
+											<textarea
+												class="form-control"
+												id="note-text"
+											></textarea>
+										</div>
+										<div class="card-header">
+											<h6
+												class="m-0 font-weight-bold text-primary"
+											>
+												Schedule Information
+											</h6>
+										</div>
+										<table class="table">
+											<thead>
+												<tr>
+													<th scope="col">#</th>
+													<th scope="col">Monday</th>
+													<th scope="col">Tuesday</th>
+													<th scope="col">Wednesday</th>
+													<th scope="col">Thursday</th>
+													<th scope="col">Friday</th>
+													<th scope="col">Saturday</th>
+													<th scope="col">Sunday</th>
+												</tr>
+											</thead>
+											<tbody></tbody>
+										</table>
 										<!-- Save changes button-->
 										<button
 											id="add-btn"

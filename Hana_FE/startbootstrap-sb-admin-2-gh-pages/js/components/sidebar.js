@@ -12,7 +12,7 @@ class Sidebar extends HTMLElement {
                 <!-- Sidebar - Brand -->
                 <a
                     class="sidebar-brand d-flex align-items-center justify-content-center"
-                    href="index.html"
+                    href="../../public/index.html"
                 >
                     <div class="sidebar-brand-icon rotate-n-15">
                         <i class="fas fa-school"></i>
@@ -27,7 +27,7 @@ class Sidebar extends HTMLElement {
 
                 <!-- Nav Item - Dashboard -->
                 <li class="nav-item active">
-                    <a class="nav-link" href="index.html">
+                    <a class="nav-link" href="../../public/index.html">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Dashboard</span></a
                     >
@@ -50,8 +50,8 @@ class Sidebar extends HTMLElement {
                         data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">Student Management:</h6>
-                            <a class="collapse-item" href="student-list.html">Student List</a>
-                            <a class="collapse-item" href="add-student.html">Add New Student</a>
+                            <a class="collapse-item" href="../../public/student/student-list.html">Student List</a>
+                            <a class="collapse-item" href="../../public/student/add-student.html">Add New Student</a>
                         </div>
                     </div>
                 </li>
