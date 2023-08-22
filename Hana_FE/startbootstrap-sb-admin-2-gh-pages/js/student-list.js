@@ -7,7 +7,7 @@ $(() => {
             error: function(xhr) {
                 $.toast({
                     heading: 'Error',
-                    text: xhr.statusText,
+                    text: "Have something wrong while load student list!!!",
                     icon: 'error',
                     position: 'top-right',
                     showHideTransition: 'plain'

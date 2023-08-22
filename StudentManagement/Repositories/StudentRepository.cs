@@ -76,5 +76,4 @@ public class StudentRepository : Repository<Student>, IStudentRepository
     
         return result;
     }
-
 }

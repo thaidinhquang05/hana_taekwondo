@@ -17,6 +17,8 @@ public interface IStudentRepository : IRepository<Student>
     List<StudentTimetable> GetStudentTimetablesByStudentId(int studentId);
 
     void DeleteStudentTimetables(List<StudentTimetable> items);
+    
     public List<Student> GetStudentByClass(int classId);
+    
     public List<Student> GetStudentToAddClass(int classId);
 }
