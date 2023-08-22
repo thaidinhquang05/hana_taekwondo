@@ -102,4 +102,18 @@ public class StudentService : IStudentService
             IsSuccess = true
         };
     }
+
+    public List<StudentOutput> GetStudentByClass(int classId)
+    {
+        var studentList = _studentRepository.GetStudentByClass(classId);
+        var result = _mapper.Map<List<StudentOutput>>(studentList);
+        return result;
+    }
+
+    public List<StudentOutput> GetStudentToAddClass(int classId)
+    {
+        var studentList = _studentRepository.GetStudentToAddClass(classId);
+        var result = _mapper.Map<List<StudentOutput>>(studentList);
+        return result;
+    }
 }

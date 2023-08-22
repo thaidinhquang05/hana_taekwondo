@@ -104,4 +104,56 @@ public class StudentController : Controller
             });
         }
     }
+
+    [HttpGet("{classId:int}")]
+    public ActionResult<ApiResponseModel> GetStudentsByClass(int classId)
+    {
+        try
+        {
+            var student = _studentService.GetStudentByClass(classId);
+
+            return Ok(new ApiResponseModel
+            {
+                Code = StatusCodes.Status200OK,
+                Message = "Student Information",
+                IsSuccess = true,
+                Data = student
+            });
+        }
+        catch (Exception ex)
+        {
+            return Conflict(new ApiResponseModel
+            {
+                Code = StatusCodes.Status409Conflict,
+                Message = ex.Message,
+                IsSuccess = false
+            });
+        }
+    }
+
+    [HttpGet("{classId:int}")]
+    public ActionResult<ApiResponseModel> GetStudentToAddClass(int classId)
+    {
+        try
+        {
+            var studentInfo = _studentService.GetStudentToAddClass(classId);
+
+            return Ok(new ApiResponseModel
+            {
+                Code = StatusCodes.Status200OK,
+                Message = "Student Information",
+                IsSuccess = true,
+                Data = studentInfo
+            });
+        }
+        catch (Exception ex)
+        {
+            return Conflict(new ApiResponseModel
+            {
+                Code = StatusCodes.Status409Conflict,
+                Message = ex.Message,
+                IsSuccess = false
+            });
+        }
+    }
 }

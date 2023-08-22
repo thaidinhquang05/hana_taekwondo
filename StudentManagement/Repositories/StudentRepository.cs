@@ -63,4 +63,18 @@ public class StudentRepository : Repository<Student>, IStudentRepository
         _context.StudentTimetables.RemoveRange(items);
         _context.SaveChanges();
     }
+
+    public List<Student> GetStudentByClass(int classId)
+    {
+        return _context.StudentClasses.Where(sc => sc.ClassId == classId).Select(sc => sc.Student).ToList();
+    }
+
+    public List<Student> GetStudentToAddClass(int classId)
+    {
+        var result = _context.Students.Where(student =>
+        !_context.StudentClasses.Any(sc => sc.StudentId == student.Id && sc.ClassId == classId)).ToList();
+    
+        return result;
+    }
+
 }

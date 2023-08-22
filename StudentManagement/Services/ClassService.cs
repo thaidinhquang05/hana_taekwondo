@@ -2,6 +2,7 @@
 using StudentManagement.DTOs.Input;
 using StudentManagement.DTOs.Output;
 using StudentManagement.Models;
+using StudentManagement.Repositories;
 using StudentManagement.Repositories.Interfaces;
 using StudentManagement.Services.Interfaces;
 
@@ -10,13 +11,15 @@ namespace StudentManagement.Services
     public class ClassService : IClassService
     {
         private readonly IClassRepository _classRepository;
+        private readonly IMapper _mapper;
 
-        public ClassService(IClassRepository classRepository)
+        public ClassService(IClassRepository classRepository, IMapper mapper)
         {
             _classRepository = classRepository;
+            _mapper = mapper;
         }
 
-        public ApiResponseModel AddNewStudentToClass(int _studentId, int _classId)
+        public ApiResponseModel AddNewStudentToClass(List<int> _studentId, int _classId)
         {
             try
             {
@@ -53,6 +56,13 @@ namespace StudentManagement.Services
                 Data = _student,
                 IsSuccess = true
             };
+        }
+
+        public List<ClassInfoOutput> GetAllClasses()
+        {
+            var classList = _classRepository.GetAllClasses();
+            var result = _mapper.Map<List<ClassInfoOutput>>(classList);
+            return result;
         }
 
     }

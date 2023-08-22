@@ -4,7 +4,7 @@ namespace StudentManagement.DTOs.Input
 {
     public class StudentClassInput
     {
-        public int StudentId { get; set; }
+        public List<int> StudentIds { get; set; }
         public int ClassId { get; set; }
     }
 }
