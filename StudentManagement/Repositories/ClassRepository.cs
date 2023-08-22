@@ -15,20 +15,28 @@ public class ClassRepository : Repository<Class>, IClassRepository
         _context = context;
     }
 
-    public void AddStudentToClass(int _studentId, int _classId)
+    public List<Class> GetAllClasses()
     {
-        var _student = _context.Students.Where(s => s.Id == _studentId).FirstOrDefault() ?? throw new Exception("Not found student!");
+        return _context.Classes.ToList();
+    }
+
+    public void AddStudentToClass(List<int> _studentIds, int _classId)
+    {
         var _class = _context.Classes.Where(s => s.Id == _classId).FirstOrDefault() ?? throw new Exception("Not found class!");
 
-        StudentClass studentClass = new StudentClass();
-        studentClass.Student = _student;
-        studentClass.Class = _class;
-        studentClass.ClassId = _class.Id;
-        studentClass.StudentId = _student.Id;
-        studentClass.CreatedAt = DateTime.Now;
-        studentClass.ModifiedAt = DateTime.Now;
-        _context.StudentClasses.Add(studentClass);
-        _context.SaveChanges();
+        foreach (var item in _studentIds)
+        {
+            var _student = _context.Students.Where(s => s.Id == item).FirstOrDefault() ?? throw new Exception("Not found student!");
+            StudentClass studentClass = new StudentClass();
+            studentClass.Student = _student;
+            studentClass.Class = _class;
+            studentClass.ClassId = _class.Id;
+            studentClass.StudentId = _student.Id;
+            studentClass.CreatedAt = DateTime.Now;
+            studentClass.ModifiedAt = DateTime.Now;
+            _context.StudentClasses.Add(studentClass);
+            _context.SaveChanges();
+        }
     }
 
     public void RemoveStudentFromClass(Student _student)

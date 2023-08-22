@@ -1,46 +1,68 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using StudentManagement.DTOs.Input;
 using StudentManagement.DTOs.Output;
-using StudentManagement.Models;
-using StudentManagement.Services;
 using StudentManagement.Services.Interfaces;
 
-namespace StudentManagement.Controllers
+namespace StudentManagement.Controllers;
+
+[Route("api/[controller]/[action]")]
+[ApiController]
+public class ClassController : Controller
 {
-    [Route("api/[controller]/[action]")]
-    [ApiController]
-    public class ClassController : Controller
+    private readonly IClassService _classService;
+
+    public ClassController(IClassService classService)
     {
-        private readonly IClassService _classService;
+        _classService = classService;
+    }
 
-        public ClassController(IClassService classService)
+    [HttpGet]
+    public ActionResult<ApiResponseModel> GetAllClasses()
+    {
+        try
         {
-            _classService = classService;
+            var classes = _classService.GetAllClasses();
+            return Ok(new ApiResponseModel
+            {
+                Code = StatusCodes.Status200OK,
+                Message = "Get All Classes Success!",
+                Data = classes,
+                IsSuccess = true
+            });
         }
-
-        [HttpPost]
-        public ActionResult<ApiResponseModel> AddStudentToClass([FromBody]StudentClassInput studentClass)
+        catch (Exception ex)
         {
-            try
+            return Conflict(new ApiResponseModel
             {
-                var students = _classService.AddNewStudentToClass(studentClass.StudentId, studentClass.ClassId);
-                return Ok(new ApiResponseModel
-                {
-                    Code = StatusCodes.Status200OK,
-                    Message = "Add Student Success!",
-                    Data = students,
-                    IsSuccess = true
-                });
-            }
-            catch (Exception ex)
+                Code = StatusCodes.Status409Conflict,
+                Message = ex.Message,
+                IsSuccess = false
+            });
+        }
+    }
+
+    [HttpPost]
+    public ActionResult<ApiResponseModel> AddStudentToClass([FromBody]StudentClassInput studentClass)
+    {
+        try
+        {
+            var students = _classService.AddNewStudentToClass(studentClass.StudentIds, studentClass.ClassId);
+            return Ok(new ApiResponseModel
             {
-                return Conflict(new ApiResponseModel
-                {
-                    Code = StatusCodes.Status409Conflict,
-                    Message = ex.Message,
-                    IsSuccess = false
-                });
-            }
+                Code = StatusCodes.Status200OK,
+                Message = "Add Student Success!",
+                Data = students,
+                IsSuccess = true
+            });
+        }
+        catch (Exception ex)
+        {
+            return Conflict(new ApiResponseModel
+            {
+                Code = StatusCodes.Status409Conflict,
+                Message = ex.Message,
+                IsSuccess = false
+            });
         }
     }
 }
