@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using StudentManagement.DTOs.Input;
 using StudentManagement.DTOs.Output;
 using StudentManagement.Services.Interfaces;
 
@@ -52,6 +53,30 @@ public class TimetableController : Controller
                 Message = "Student's Timetable Information!",
                 IsSuccess = true,
                 Data = result
+            });
+        }
+        catch (Exception ex)
+        {
+            return Conflict(new ApiResponseModel
+            {
+                Code = StatusCodes.Status409Conflict,
+                Message = ex.Message,
+                IsSuccess = false
+            });
+        }
+    }
+
+    [HttpPut("{studentId:int}")]
+    public ActionResult<ApiResponseModel> UpdateStudentTimetables(int studentId, [FromBody] List<TimetableInput> input)
+    {
+        try
+        {
+            _service.UpdateStudentTimetables(studentId, input);
+            return Ok(new ApiResponseModel
+            {
+                Code = StatusCodes.Status200OK,
+                Message = "Timetables Updated Successfully!",
+                IsSuccess = true,
             });
         }
         catch (Exception ex)

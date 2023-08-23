@@ -24,15 +24,15 @@ public class TimetableRepository : Repository<Timetable>, ITimetableRepository
         return slots;
     }
 
-    public List<TimetableOutput> GetTimetableByStudentId(int studentId)
+    public List<StudentTimetableOutput> GetTimetableByStudentId(int studentId)
     {
         var slots = _context.StudentTimetables
             .Include(x => x.TimeTable)
             .ThenInclude(x => x.Slot)
             .Where(x => x.StudentId == studentId)
-            .Select(slot => new TimetableOutput
+            .Select(slot => new StudentTimetableOutput
             {
-                Slot = slot.TimeTable.Slot
+                TimetableId = slot.TimeTableId
             })
             .ToList();
         return slots;
@@ -57,5 +57,19 @@ public class TimetableRepository : Repository<Timetable>, ITimetableRepository
                 _context.SaveChanges();
             }
         }
+    }
+
+    public void AddStudentTimetables(List<StudentTimetable> input)
+    {
+        _context.StudentTimetables.AddRange(input);
+        _context.SaveChanges();
+    }
+
+    public void RemoveStudentTimetables(int studentId)
+    {
+        var studentTimetables = _context.StudentTimetables
+            .Where(x => x.StudentId == studentId).ToList();
+        _context.StudentTimetables.RemoveRange(studentTimetables);
+        _context.SaveChanges();
     }
 }

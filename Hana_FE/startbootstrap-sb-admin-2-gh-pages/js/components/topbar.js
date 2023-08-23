@@ -358,7 +358,7 @@ class Topbar extends HTMLElement {
                             <a
                                 id="logout-btn"
                                 class="btn btn-primary"
-                                href="login.html"
+                                href="#"
                                 >Logout</a
                             >
                         </div>
@@ -378,8 +378,10 @@ class Topbar extends HTMLElement {
 			$(".username").append(username);
 		}
 
-		$("#logout-btn").on("click", () => {
+		$("#logout-btn").on("click", (e) => {
+            e.preventDefault()
 			localStorage.removeItem("token");
+            window.location.href = "../../public/login.html";
 		});
 	}
 }
