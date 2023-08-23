@@ -46,7 +46,7 @@ function loadStudent(classId) {
                 data: "id",
                 orderable: false,
                 render: (id) =>
-                    `<a href='student-detail.html?id=${id}'><i class="fas fa-user-edit"></i></a>`,
+                    `<a href='../../public/student/student-detail.html?id=${id}'><i class="fas fa-user-edit"></i></a>`,
             },
         ],
         columnDefs: [
@@ -82,8 +82,14 @@ function loadAvailableStudents(classId) {
                 console.error("Invalid data format:", data);
             }
         },
-        error: function (xhr, status, error) {
-            console.error(error);
+        error: function (xhr) {
+            $.toast({
+                heading: "Error",
+                text: xhr.responseJSON.message,
+                icon: "error",
+                position: "top-right",
+                showHideTransition: "plain",
+            });
         }
     });
 }
@@ -102,11 +108,23 @@ function addStudentsToClass(classId, studentIds) {
             console.log("Students added to class:", response);
 
             $("#add-student-popup").modal("hide");
-
+            $.toast({
+                heading: "Success!",
+                text: response.message,
+                icon: "success",
+                position: "top-right",
+                showHideTransition: "plain",
+            });
             location.reload();
         },
-        error: function (xhr, status, error) {
-            console.error(error);
+        error: function (xhr) {
+            $.toast({
+                heading: "Error",
+                text: xhr.responseJSON.message,
+                icon: "error",
+                position: "top-right",
+                showHideTransition: "plain",
+            });
         }
     });
 }
@@ -122,8 +140,14 @@ function getInfoClass(classId) {
             $("#start-date").text(data.data.startDate);
             $("#end-date").text(data.data.dueDate);
         },
-        error: function (xhr, status, error) {
-            console.error(error);
+        error: function (xhr) {
+            $.toast({
+                heading: "Error",
+                text: xhr.responseJSON.message,
+                icon: "error",
+                position: "top-right",
+                showHideTransition: "plain",
+            });
         }
     });
 }

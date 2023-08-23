@@ -71,12 +71,12 @@ public class ClassController : Controller
     {
         try
         {
-            var students = _classService.GetClassById(classId);
+            var _class = _classService.GetClassById(classId);
             return Ok(new ApiResponseModel
             {
                 Code = StatusCodes.Status200OK,
                 Message = "Get Class Success!",
-                Data = students,
+                Data = _class,
                 IsSuccess = true
             });
         }
@@ -96,12 +96,11 @@ public class ClassController : Controller
     {
         try
         {
-            var students = _classService.DeleteClass(classId);
+            _classService.DeleteClass(classId);
             return Ok(new ApiResponseModel
             {
                 Code = StatusCodes.Status200OK,
                 Message = "Delete Class Success!",
-                Data = students,
                 IsSuccess = true
             });
         }
@@ -116,17 +115,17 @@ public class ClassController : Controller
         }
     }
 
-    [HttpDelete("{classId:int}")]
+    [HttpPost]
     public ActionResult<ApiResponseModel> AddNewClass([FromBody]NewClassInput newClassInput)
     {
         try
         {
-            var students = _classService.AddNewClass(newClassInput);
+            _classService.AddNewClass(newClassInput);
             return Ok(new ApiResponseModel
             {
                 Code = StatusCodes.Status200OK,
                 Message = "Add New Class Success!",
-                Data = students,
+                Data = newClassInput,
                 IsSuccess = true
             });
         }
