@@ -1,6 +1,18 @@
 $(() => {
+	$(document).ajaxStart(() => {
+        $(".loading-div").show();
+    });
+
+    $(document).ajaxStop(() => {
+        $(".loading-div").hide();
+    });
+	
 	let urlParam = new URLSearchParams(window.location.search);
 	let studentId = urlParam.get("id");
+	
+	if (studentId == null) {
+		window.location.href = '../../public/404.html'
+	}
 
 	loadStudentInfo(studentId);
 	renderTimetables();
@@ -61,6 +73,7 @@ function loadStudentInfo(studentId) {
 				: $("#inlineRadio2").prop("checked", true);
 		},
 		error: (xhr) => {
+			window.location.href = '../../public/404.html'
 			$.toast({
 				heading: "Error!!!",
 				text: xhr.responseJSON?.message,

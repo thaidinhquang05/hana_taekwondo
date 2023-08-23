@@ -1,4 +1,12 @@
 $(() => {
+	$(document).ajaxStart(() => {
+        $(".loading-div").show();
+    });
+
+    $(document).ajaxStop(() => {
+        $(".loading-div").hide();
+    });
+	
 	$("#dataTable").DataTable({
         ajax: {
             url: "https://localhost:7010/api/Student/GetAllStudents",

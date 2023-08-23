@@ -57,7 +57,7 @@ function addStudent(student) {
 				showHideTransition: "plain",
 			});
             setTimeout(() => {
-                window.location.href = "../student-list.html";
+                window.location.href = "../student/student-list.html";
             }, 2000);
         },
 		error: (xhr) => {
