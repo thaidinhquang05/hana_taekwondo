@@ -6,6 +6,13 @@ namespace StudentManagement.Repositories.Interfaces;
 
 public interface ITimetableRepository : IRepository<Timetable>
 {
-    List<TimetableOutput> GetTimetableByStudentId(int studentId);
-    public void ChooseTimeTable(Student student, List<TimetableSelectionInput> timetables);
+    List<TimetableOutput> GetAllTimetables();
+    
+    List<StudentTimetableOutput> GetTimetableByStudentId(int studentId);
+    
+    void ChooseTimeTable(Student student, List<TimetableSelectionInput> timetables);
+
+    void AddStudentTimetables(List<StudentTimetable> input);
+    
+    void RemoveStudentTimetables(int studentId);
 }

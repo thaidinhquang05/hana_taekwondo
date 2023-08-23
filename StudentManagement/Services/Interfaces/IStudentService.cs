@@ -1,6 +1,5 @@
 ﻿using StudentManagement.DTOs.Input;
 using StudentManagement.DTOs.Output;
-using StudentManagement.Models;
 
 namespace StudentManagement.Services.Interfaces;
 
@@ -13,7 +12,9 @@ public interface IStudentService
     ApiResponseModel AddNewStudent(NewStudentInput input);
 
     ApiResponseModel UpdateStudent(int studentId, UpdateStudentInput input);
+    
     List<StudentOutput> GetStudentByClass(int classId);
+    
     public List<StudentOutput> GetStudentToAddClass(int classId);
 
 }

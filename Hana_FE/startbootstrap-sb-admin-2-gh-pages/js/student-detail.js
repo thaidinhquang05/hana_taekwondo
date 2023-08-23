@@ -1,8 +1,22 @@
 $(() => {
+	$(document).ajaxStart(() => {
+        $(".loading-div").show();
+    });
+
+    $(document).ajaxStop(() => {
+        $(".loading-div").hide();
+    });
+	
 	let urlParam = new URLSearchParams(window.location.search);
 	let studentId = urlParam.get("id");
+	
+	if (studentId == null) {
+		window.location.href = '../../public/404.html'
+	}
 
 	loadStudentInfo(studentId);
+	renderTimetables();
+	loadStudentTimetable(studentId);
 	loadTuitionHistory(studentId);
 
 	// update student click
@@ -14,8 +28,17 @@ $(() => {
 			parentName: $("#inputParent").val(),
 			phone: $("#inputPhone").val(),
 		};
-
 		updateStudent(student, studentId);
+	});
+
+	$("#update-timetable-btn").on("click", () => {
+		let timetables = [];
+		$('input[type="checkbox"]:checked').each(function () {
+			timetables.push({
+				timetableId: this.value,
+			});
+		});
+		updateStudentTimetables(studentId, timetables);
 	});
 
 	// add tuition click
@@ -50,9 +73,102 @@ function loadStudentInfo(studentId) {
 				: $("#inlineRadio2").prop("checked", true);
 		},
 		error: (xhr) => {
+			window.location.href = '../../public/404.html'
 			$.toast({
 				heading: "Error!!!",
 				text: xhr.responseJSON?.message,
+				icon: "error",
+				position: "top-right",
+				showHideTransition: "plain",
+			});
+		},
+	});
+}
+
+function renderTimetables() {
+	$.ajax({
+		url: "https://localhost:7010/api/Timetable/GetAllTimetables",
+		method: "GET",
+		contentType: "application/json",
+		success: (response) => {
+			let data = response.data;
+			$("#timetable").empty();
+			$("#timetable").append(
+				data.map(
+					(slot) =>
+						`<tr>
+						<th scope="row" style="text-align: center;">
+							Slot ${slot.slot.id}
+							<span class="slot-desc" style="display: block;">(${slot.slot.desc})</span>
+						</th>
+						${slot.slot.timetables.map(
+							(timetable) =>
+								`<td style="text-align: center;">
+									<input type="checkbox" value="${timetable.id}">
+								</td>`
+						)}
+					</tr>`
+				)
+			);
+		},
+		error: (xhr) => {
+			$.toast({
+				heading: "Error",
+				text: xhr.responseJSON.message,
+				icon: "error",
+				position: "top-right",
+				showHideTransition: "plain",
+			});
+		},
+	});
+}
+
+function loadStudentTimetable(studentId) {
+	$.ajax({
+		url: `https://localhost:7010/api/Timetable/GetTimetablesByStudentId/${studentId}`,
+		method: "GET",
+		contentType: "application/json",
+		success: (response) => {
+			let data = response.data;
+			data.forEach((element) => {
+				$('input[type="checkbox"]').each(function () {
+					if (element.timetableId == this.value) {
+						this.checked = true;
+					}
+				});
+			});
+		},
+		error: (xhr) => {
+			$.toast({
+				heading: "Error!!!",
+				text: xhr.responseJSON?.message,
+				icon: "error",
+				position: "top-right",
+				showHideTransition: "plain",
+			});
+		},
+	});
+}
+
+function updateStudentTimetables(studentId, timetables) {
+	$.ajax({
+		url: `https://localhost:7010/api/Timetable/UpdateStudentTimetables/${studentId}`,
+		method: "PUT",
+		contentType: "application/json",
+		data: JSON.stringify(timetables),
+		success: (response) => {
+			$.toast({
+				heading: "Success!!!",
+				text: response.message,
+				icon: "success",
+				position: "top-right",
+				showHideTransition: "plain",
+			});
+		},
+		error: (xhr) => {
+			$.toast({
+				heading: "Error",
+				text: xhr.responseJSON.message,
 				icon: "error",
 				position: "top-right",
 				showHideTransition: "plain",

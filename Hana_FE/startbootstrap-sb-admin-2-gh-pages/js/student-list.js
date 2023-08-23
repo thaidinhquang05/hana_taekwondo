@@ -1,4 +1,12 @@
 $(() => {
+	$(document).ajaxStart(() => {
+        $(".loading-div").show();
+    });
+
+    $(document).ajaxStop(() => {
+        $(".loading-div").hide();
+    });
+	
 	$("#dataTable").DataTable({
         ajax: {
             url: "https://localhost:7010/api/Student/GetAllStudents",
@@ -7,7 +15,7 @@ $(() => {
             error: function(xhr) {
                 $.toast({
                     heading: 'Error',
-                    text: xhr.statusText,
+                    text: "Have something wrong while load student list!!!",
                     icon: 'error',
                     position: 'top-right',
                     showHideTransition: 'plain'

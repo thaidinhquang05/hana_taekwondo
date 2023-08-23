@@ -15,41 +15,61 @@ public class TimetableRepository : Repository<Timetable>, ITimetableRepository
         _context = context;
     }
 
-    public List<TimetableOutput> GetTimetableByStudentId(int studentId)
+    public List<TimetableOutput> GetAllTimetables()
     {
-        var result = _context.StudentTimetables
+        var slots = _context.Slots
+            .Include(x => x.Timetables)
+            .Select(slot => new TimetableOutput { Slot = slot })
+            .ToList();
+        return slots;
+    }
+
+    public List<StudentTimetableOutput> GetTimetableByStudentId(int studentId)
+    {
+        var slots = _context.StudentTimetables
             .Include(x => x.TimeTable)
             .ThenInclude(x => x.Slot)
             .Where(x => x.StudentId == studentId)
-            .Select(x => new TimetableOutput
+            .Select(slot => new StudentTimetableOutput
             {
-                Id = x.TimeTableId,
-                WeekDay = x.TimeTable.WeekDay,
-                SlotDesc = x.TimeTable.Slot.Desc
+                TimetableId = slot.TimeTableId
             })
             .ToList();
-
-        return result;
+        return slots;
     }
 
     public void ChooseTimeTable(Student student, List<TimetableSelectionInput> timetables)
     {
-        foreach(var item in timetables)
+        foreach (var item in timetables)
         {
             Timetable timetable = new Timetable();
             StudentTimetable studentTimetable = new StudentTimetable();
-            foreach(var slot in item.SlotIds)
+            foreach (var slot in item.SlotIds)
             {
                 timetable.WeekDay = item.Day;
                 timetable.SlotId = slot;
 
                 studentTimetable.Student = student;
-                studentTimetable.StudentId  = student.Id;
+                studentTimetable.StudentId = student.Id;
 
                 timetable.StudentTimetables.Add(studentTimetable);
                 _context.Timetables.Add(timetable);
                 _context.SaveChanges();
             }
         }
+    }
+
+    public void AddStudentTimetables(List<StudentTimetable> input)
+    {
+        _context.StudentTimetables.AddRange(input);
+        _context.SaveChanges();
+    }
+
+    public void RemoveStudentTimetables(int studentId)
+    {
+        var studentTimetables = _context.StudentTimetables
+            .Where(x => x.StudentId == studentId).ToList();
+        _context.StudentTimetables.RemoveRange(studentTimetables);
+        _context.SaveChanges();
     }
 }

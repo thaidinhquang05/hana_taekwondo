@@ -10163,8 +10163,8 @@ a:focus {
 
 .sidebar .nav-item .nav-link .img-profile,
 .topbar .nav-item .nav-link .img-profile {
-  height: 2rem;
-  width: 2rem;
+  height: 3rem;
+  width: 3rem;
 }
 
 .topbar {
@@ -11282,4 +11282,19 @@ body.sidebar-toggled footer.sticky-footer {
 
 sidebar-component {
   min-height: 100vh;
+}
+
+.loading-div {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #f1f2f3;
+  z-index: 2;
 }
