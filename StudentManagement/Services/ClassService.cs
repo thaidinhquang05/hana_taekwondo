@@ -46,7 +46,7 @@ namespace StudentManagement.Services
             }
             catch
             {
-                new Exception("Have something wrong when remove new student!");
+                new Exception("Have something wrong when remove student!");
             }
 
             return new ApiResponseModel
@@ -65,5 +65,49 @@ namespace StudentManagement.Services
             return result;
         }
 
+        public ClassInfoOutput GetClassById(int classId)
+        {
+            var classList = _classRepository.GetClassById(classId);
+            var result = _mapper.Map<ClassInfoOutput>(classList);
+            return result;
+        }
+
+        public ApiResponseModel DeleteClass(int classId)
+        {
+            try
+            {
+                _classRepository.DeleteClass(classId);
+            }
+            catch
+            {
+                new Exception("Have something wrong when remove class!");
+            }
+
+            return new ApiResponseModel
+            {
+                Code = StatusCodes.Status200OK,
+                Message = "remove class successfully!",
+                IsSuccess = true
+            };
+        }
+
+        public ApiResponseModel AddNewClass(NewClassInput newClassInput)
+        {
+            try
+            {
+                _classRepository.AddNewClass(newClassInput);
+            }
+            catch
+            {
+                new Exception("Have something wrong when add class!");
+            }
+
+            return new ApiResponseModel
+            {
+                Code = StatusCodes.Status200OK,
+                Message = "add class successfully!",
+                IsSuccess = true
+            };
+        }
     }
 }
