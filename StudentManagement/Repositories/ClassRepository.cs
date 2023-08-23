@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using StudentManagement.DTOs.Input;
 using StudentManagement.DTOs.Output;
 using StudentManagement.Models;
 using StudentManagement.Repositories.Interfaces;
@@ -63,7 +64,36 @@ public class ClassRepository : Repository<Class>, IClassRepository
             StartDate = x.Class.StartDate,
             DueDate = x.Class.DueDate
         })
-        .ToList();
+        .ToList() ?? throw new NullReferenceException("Not found classes!");
         return result;
+    }
+
+    public Class GetClassById(int classId)
+    {
+        var result = _context.Classes.Where(c => c.Id == classId).FirstOrDefault() ?? throw new NullReferenceException("Not found class!");
+        return result;
+    }
+
+    public void DeleteClass(int classId)
+    {
+        var _class = _context.Classes.FirstOrDefault(c => c.Id == classId) ?? throw new NullReferenceException("Not found class!");
+        _context.Classes.Remove(_class);
+        _context.SaveChanges();
+    }
+
+    public void AddNewClass(NewClassInput newClassInput)
+    {
+        Class _class = new Class
+        {
+            Id = newClassInput.Id, 
+            Name = newClassInput.Name, 
+            Desc = newClassInput.Desc, 
+            CreatedAt = DateTime.Now, 
+            DueDate = newClassInput.DueDate, 
+            ModifiedAt = DateTime.Now,
+            StartDate = newClassInput.StartDate
+        };
+        _context.Classes.Add(_class);
+        _context.SaveChanges();
     }
 }

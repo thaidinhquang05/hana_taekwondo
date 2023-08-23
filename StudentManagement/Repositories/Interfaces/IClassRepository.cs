@@ -1,4 +1,5 @@
-﻿using StudentManagement.DTOs.Output;
+﻿using StudentManagement.DTOs.Input;
+using StudentManagement.DTOs.Output;
 using StudentManagement.Models;
 
 namespace StudentManagement.Repositories.Interfaces
@@ -11,5 +12,8 @@ namespace StudentManagement.Repositories.Interfaces
 
         List<ClassInfoOutput> GetClassesByStudentId(int studentId);
         public List<Class> GetAllClasses();
+        public Class GetClassById(int classId);
+        public void DeleteClass(int classId);
+        public void AddNewClass(NewClassInput newClassInput);
     }
 }

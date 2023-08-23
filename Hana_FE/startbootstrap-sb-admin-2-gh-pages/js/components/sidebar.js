@@ -73,7 +73,7 @@ class Sidebar extends HTMLElement {
                         data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">Class Management:</h6>
-                            <a class="collapse-item" href="#">Class List</a>
+                            <a class="collapse-item" href="class-management.html">Class List</a>
                             <a class="collapse-item" href="#">Add New Class</a>
                         </div>
                     </div>

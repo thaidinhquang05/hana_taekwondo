@@ -3,7 +3,7 @@ $(() => {
     let classId = urlParam.get("id");
 
     loadStudent(classId);
-
+    getInfoClass(classId);
     $("#add-btn").click(function () {
         loadAvailableStudents(classId);
         $("#add-student-popup").modal("show");
@@ -20,7 +20,6 @@ $(() => {
 });
 
 function loadStudent(classId) {
-    debugger
     $("#dataTable").DataTable({
         ajax: {
             url: "https://localhost:7010/api/Student/GetStudentsByClass/" + classId,
@@ -71,11 +70,11 @@ function loadAvailableStudents(classId) {
         success: function (data) {
             console.log(data);
             const students = data.data;
-            
+
             if (students && Array.isArray(students)) {
                 const dropdown = $("#student-dropdown");
                 dropdown.empty();
-        
+
                 students.forEach(s => {
                     dropdown.append(new Option(s.fullName, s.id));
                 });
@@ -97,7 +96,7 @@ function addStudentsToClass(classId, studentIds) {
     $.ajax({
         url: `https://localhost:7010/api/Class/AddStudentToClass`,
         method: "POST",
-		contentType: "application/json",
+        contentType: "application/json",
         data: JSON.stringify(dataSend),
         success: function (response) {
             console.log("Students added to class:", response);
@@ -105,6 +104,23 @@ function addStudentsToClass(classId, studentIds) {
             $("#add-student-popup").modal("hide");
 
             location.reload();
+        },
+        error: function (xhr, status, error) {
+            console.error(error);
+        }
+    });
+}
+
+function getInfoClass(classId) {
+    $.ajax({
+        url: `https://localhost:7010/api/Class/GetClassById/${classId}`,
+        method: "GET",
+        contentType: "application/json",
+        success: function (data) {
+            $("#class-name").text(data.data.name);
+            $("#class-description").text(data.data.desc);
+            $("#start-date").text(data.data.startDate);
+            $("#end-date").text(data.data.dueDate);
         },
         error: function (xhr, status, error) {
             console.error(error);

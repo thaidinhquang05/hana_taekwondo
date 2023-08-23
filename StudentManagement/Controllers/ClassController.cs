@@ -65,4 +65,79 @@ public class ClassController : Controller
             });
         }
     }
+
+    [HttpGet("{classId:int}")]
+    public ActionResult<ApiResponseModel> GetClassById(int classId)
+    {
+        try
+        {
+            var students = _classService.GetClassById(classId);
+            return Ok(new ApiResponseModel
+            {
+                Code = StatusCodes.Status200OK,
+                Message = "Get Class Success!",
+                Data = students,
+                IsSuccess = true
+            });
+        }
+        catch (Exception ex)
+        {
+            return Conflict(new ApiResponseModel
+            {
+                Code = StatusCodes.Status409Conflict,
+                Message = ex.Message,
+                IsSuccess = false
+            });
+        }
+    }
+
+    [HttpDelete("{classId:int}")]
+    public ActionResult<ApiResponseModel> DeleteClass(int classId)
+    {
+        try
+        {
+            var students = _classService.DeleteClass(classId);
+            return Ok(new ApiResponseModel
+            {
+                Code = StatusCodes.Status200OK,
+                Message = "Delete Class Success!",
+                Data = students,
+                IsSuccess = true
+            });
+        }
+        catch (Exception ex)
+        {
+            return Conflict(new ApiResponseModel
+            {
+                Code = StatusCodes.Status409Conflict,
+                Message = ex.Message,
+                IsSuccess = false
+            });
+        }
+    }
+
+    [HttpDelete("{classId:int}")]
+    public ActionResult<ApiResponseModel> AddNewClass([FromBody]NewClassInput newClassInput)
+    {
+        try
+        {
+            var students = _classService.AddNewClass(newClassInput);
+            return Ok(new ApiResponseModel
+            {
+                Code = StatusCodes.Status200OK,
+                Message = "Add New Class Success!",
+                Data = students,
+                IsSuccess = true
+            });
+        }
+        catch (Exception ex)
+        {
+            return Conflict(new ApiResponseModel
+            {
+                Code = StatusCodes.Status409Conflict,
+                Message = ex.Message,
+                IsSuccess = false
+            });
+        }
+    }
 }
