@@ -61,8 +61,8 @@ public class ClassRepository : Repository<Class>, IClassRepository
         {
             Name = x.Class.Name,
             Desc = x.Class.Desc,
-            StartDate = x.Class.StartDate,
-            DueDate = x.Class.DueDate
+            StartDate = x.Class.StartDate.ToShortDateString(),
+            DueDate = x.Class.DueDate.ToShortDateString()
         })
         .ToList() ?? throw new NullReferenceException("Not found classes!");
         return result;
@@ -84,8 +84,7 @@ public class ClassRepository : Repository<Class>, IClassRepository
     public void AddNewClass(NewClassInput newClassInput)
     {
         Class _class = new Class
-        {
-            Id = newClassInput.Id, 
+        { 
             Name = newClassInput.Name, 
             Desc = newClassInput.Desc, 
             CreatedAt = DateTime.Now, 

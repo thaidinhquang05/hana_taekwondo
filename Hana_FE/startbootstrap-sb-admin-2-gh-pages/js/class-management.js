@@ -54,7 +54,19 @@ $(() => {
     });
 
     $("#add-class").click(function () {
+        addClass();
+    });
 
+    $("#start-date").change(function () {
+        const startDate = new Date($(this).val());
+        const dueDateInput = $("#due-date");
+        const currentDueDate = new Date(dueDateInput.val());
+
+        if (startDate > currentDueDate) {
+            dueDateInput.val($(this).val());
+        }
+
+        dueDateInput.attr("min", $(this).val());
     });
 });
 
@@ -65,10 +77,23 @@ function deleteClass(classId) {
             method: "DELETE",
             success: function (response) {
                 console.log("Class deleted:", response);
-                loadStudent(classId);
+                $.toast({
+                    heading: "Success!",
+                    text: response.message,
+                    icon: "success",
+                    position: "top-right",
+                    showHideTransition: "plain",
+                });
+                location.reload();
             },
-            error: function (xhr, status, error) {
-                console.error(error);
+            error: function (xhr) {
+                $.toast({
+                    heading: "Error",
+                    text: xhr.responseJSON.message,
+                    icon: "error",
+                    position: "top-right",
+                    showHideTransition: "plain",
+                });
             }
         });
     }
@@ -81,14 +106,14 @@ function addClass() {
     const dueDate = $("#due-date").val();
 
     const newClass = {
-        className: className,
+        name: className,
         desc: desc,
         startDate: startDate,
         dueDate: dueDate
     };
 
     $.ajax({
-        url: "https://localhost:7010/api/Class/AddClass",
+        url: "https://localhost:7010/api/Class/AddNewClass",
         method: "POST",
         contentType: "application/json",
         data: JSON.stringify(newClass),
@@ -96,10 +121,23 @@ function addClass() {
             console.log("Class added:", response);
 
             $("#add-class-modal").modal("hide");
+            $.toast({
+                heading: "Success!",
+                text: response.message,
+                icon: "success",
+                position: "top-right",
+                showHideTransition: "plain",
+            });
             location.reload();
         },
-        error: function (xhr, status, error) {
-            console.error(error);
+        error: function (xhr) {
+            $.toast({
+                heading: "Error",
+                text: xhr.responseJSON.message,
+                icon: "error",
+                position: "top-right",
+                showHideTransition: "plain",
+            });
         }
     });
 }

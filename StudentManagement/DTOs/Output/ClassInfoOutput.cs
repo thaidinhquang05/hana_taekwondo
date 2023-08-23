@@ -8,7 +8,7 @@ public class ClassInfoOutput
     
     public string? Desc { get; set; }
     
-    public DateTime StartDate { get; set; }
+    public string StartDate { get; set; }
     
-    public DateTime DueDate { get; set; }
+    public string DueDate { get; set; }
 }
