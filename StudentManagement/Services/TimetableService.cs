@@ -1,4 +1,6 @@
-﻿using StudentManagement.DTOs.Output;
+﻿using StudentManagement.DTOs.Input;
+using StudentManagement.DTOs.Output;
+using StudentManagement.Models;
 using StudentManagement.Repositories.Interfaces;
 using StudentManagement.Services.Interfaces;
 
@@ -21,7 +23,7 @@ public class TimetableService : ITimetableService
         return result;
     }
 
-    public List<TimetableOutput> GetTimetableByStudentId(int studentId)
+    public List<StudentTimetableOutput> GetTimetableByStudentId(int studentId)
     {
         var existedStudent = _studentRepository.GetStudentInfoByStudentId(studentId);
         if (existedStudent is null)
@@ -31,5 +33,27 @@ public class TimetableService : ITimetableService
 
         var result = _repository.GetTimetableByStudentId(studentId);
         return result;
+    }
+
+    public void UpdateStudentTimetables(int studentId, List<TimetableInput> input)
+    {
+        var existedStudent = _studentRepository.GetStudentInfoByStudentId(studentId);
+        if (existedStudent is null)
+        {
+            throw new Exception($"Student with id: {studentId} is not exist!!!");
+        }
+
+        _repository.RemoveStudentTimetables(studentId);
+
+        if (input.Count <= 0) return;
+        var newStuTimes = input
+            .Select(item => new StudentTimetable
+            {
+                StudentId = studentId,
+                TimeTableId = item.TimetableId,
+                CreatedAt = DateTime.Now,
+                ModifiedAt = DateTime.Now
+            }).ToList();
+        _repository.AddStudentTimetables(newStuTimes);
     }
 }
