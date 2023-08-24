@@ -12,6 +12,8 @@ public interface IStudentService
     ApiResponseModel AddNewStudent(NewStudentInput input);
 
     ApiResponseModel UpdateStudent(int studentId, UpdateStudentInput input);
+
+    void DeleteStudent(int studentId);
     
     List<StudentOutput> GetStudentByClass(int classId);
     

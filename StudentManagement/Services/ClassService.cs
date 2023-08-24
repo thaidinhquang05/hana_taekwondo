@@ -24,38 +24,45 @@ namespace StudentManagement.Services
             try
             {
                 _classRepository.AddStudentToClass(_studentId, _classId);
+                return new ApiResponseModel
+                {
+                    Code = StatusCodes.Status200OK,
+                    Message = "Add new student successfully!",
+                    IsSuccess = true
+                };
             }
             catch
             {
-                new Exception("Have something wrong when add new student!");
+                return new ApiResponseModel
+                {
+                    Code = StatusCodes.Status409Conflict,
+                    Message = "Have something wrong when add new student!",
+                    IsSuccess = false
+                };
             }
-
-            return new ApiResponseModel
-            {
-                Code = StatusCodes.Status200OK,
-                Message = "Add new student successfully!",
-                IsSuccess = true
-            };
         }
 
-        public ApiResponseModel RemoveStudentFromClass(Student _student)
+        public ApiResponseModel RemoveStudentFromClass(int _studentId, int _classId)
         {
             try
             {
-                _classRepository.RemoveStudentFromClass(_student);
+                _classRepository.RemoveStudentFromClass(_studentId, _classId);
+                return new ApiResponseModel
+                {
+                    Code = StatusCodes.Status200OK,
+                    Message = "remove student successfully!",
+                    IsSuccess = true
+                };
             }
             catch
             {
-                new Exception("Have something wrong when remove student!");
+                return new ApiResponseModel
+                {
+                    Code = StatusCodes.Status409Conflict,
+                    Message = "Have something wrong when remove student!",
+                    IsSuccess = false
+                };
             }
-
-            return new ApiResponseModel
-            {
-                Code = StatusCodes.Status200OK,
-                Message = "remove student successfully!",
-                Data = _student,
-                IsSuccess = true
-            };
         }
 
         public List<ClassInfoOutput> GetAllClasses()
@@ -77,18 +84,22 @@ namespace StudentManagement.Services
             try
             {
                 _classRepository.DeleteClass(classId);
+                return new ApiResponseModel
+                {
+                    Code = StatusCodes.Status200OK,
+                    Message = "remove class successfully!",
+                    IsSuccess = true
+                };
             }
             catch
             {
-                throw new Exception("Have something wrong when remove class!");
+                return new ApiResponseModel
+                {
+                    Code = StatusCodes.Status409Conflict,
+                    Message = "Have something wrong when remove class!",
+                    IsSuccess = false
+                };
             }
-
-            return new ApiResponseModel
-            {
-                Code = StatusCodes.Status200OK,
-                Message = "remove class successfully!",
-                IsSuccess = true
-            };
         }
 
         public ApiResponseModel AddNewClass(NewClassInput newClassInput)
@@ -96,18 +107,22 @@ namespace StudentManagement.Services
             try
             {
                 _classRepository.AddNewClass(newClassInput);
+                return new ApiResponseModel
+                {
+                    Code = StatusCodes.Status200OK,
+                    Message = "add class successfully!",
+                    IsSuccess = true
+                };
             }
             catch
             {
-                throw new Exception("Have something wrong when add class!");
+                return new ApiResponseModel
+                {
+                    Code = StatusCodes.Status409Conflict,
+                    Message = "Have something wrong when add class!",
+                    IsSuccess = false
+                };
             }
-
-            return new ApiResponseModel
-            {
-                Code = StatusCodes.Status200OK,
-                Message = "add class successfully!",
-                IsSuccess = true
-            };
         }
     }
 }

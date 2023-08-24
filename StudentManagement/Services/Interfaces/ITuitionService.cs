@@ -7,5 +7,9 @@ public interface ITuitionService
 {
     List<TuitionInfoOutput> GetTuitionByStudentId(int studentId);
 
-    ApiResponseModel AddNewTuition(int studentId, NewTuitionInput input);
+    TuitionInfoOutput GetTuitionById(int tuitionId);
+
+    ApiResponseModel AddNewTuition(int studentId, TuitionInput input);
+
+    void UpdateTuition(int tuitionId, TuitionInput input);
 }

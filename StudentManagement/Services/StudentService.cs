@@ -108,6 +108,23 @@ public class StudentService : IStudentService
         };
     }
 
+    public void DeleteStudent(int studentId)
+    {
+        var student = _studentRepository.GetStudentInfoByStudentId(studentId);
+        if (student is null)
+        {
+            throw new Exception("Student does not exist!!!");
+        }
+
+        var studentClasses = _studentRepository.GetStudentClassesByStudentId(studentId);
+        _studentRepository.DeleteStudentClass(studentClasses);
+        var studentTimetables = _studentRepository.GetStudentTimetablesByStudentId(studentId);
+        _studentRepository.DeleteStudentTimetables(studentTimetables);
+        var tuition = _tuitionRepository.GetTuitionByStudentId(studentId);
+        _tuitionRepository.DeleteTuition(tuition);
+        _studentRepository.Delete(student);
+    }
+
     public List<StudentOutput> GetStudentByClass(int classId)
     {
         var studentList = _studentRepository.GetStudentByClass(classId);

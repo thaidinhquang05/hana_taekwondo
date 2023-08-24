@@ -46,14 +46,8 @@ public class ClassController : Controller
     {
         try
         {
-            var students = _classService.AddNewStudentToClass(studentClass.StudentIds, studentClass.ClassId);
-            return Ok(new ApiResponseModel
-            {
-                Code = StatusCodes.Status200OK,
-                Message = "Add Student Success!",
-                Data = students,
-                IsSuccess = true
-            });
+            var result = _classService.AddNewStudentToClass(studentClass.StudentIds, studentClass.ClassId);
+            return Ok(result);
         }
         catch (Exception ex)
         {
@@ -110,19 +104,32 @@ public class ClassController : Controller
         }
     }
 
+    [HttpDelete("{studentId:int},{classId:int}")]
+    public ActionResult<ApiResponseModel> RemoveStudent(int studentId,int classId)
+    {
+        try
+        {
+            var result = _classService.RemoveStudentFromClass(studentId,classId);
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return Conflict(new ApiResponseModel
+            {
+                Code = StatusCodes.Status409Conflict,
+                Message = ex.Message,
+                IsSuccess = false
+            });
+        }
+    }
+
     [HttpPost]
     public ActionResult<ApiResponseModel> AddNewClass([FromBody]NewClassInput newClassInput)
     {
         try
         {
-            _classService.AddNewClass(newClassInput);
-            return Ok(new ApiResponseModel
-            {
-                Code = StatusCodes.Status200OK,
-                Message = "Add New Class Success!",
-                Data = newClassInput,
-                IsSuccess = true
-            });
+            var result = _classService.AddNewClass(newClassInput);
+            return Ok(result);
         }
         catch (Exception ex)
         {

@@ -12,8 +12,12 @@ public interface IStudentRepository : IRepository<Student>
 
     int UpdateStudent(Student student);
 
+    void DeleteStudentClass(List<StudentClass> entities);
+
     void AddStudentTimetables(IEnumerable<StudentTimetable> items);
 
+    List<StudentClass> GetStudentClassesByStudentId(int studentId);
+    
     List<StudentTimetable> GetStudentTimetablesByStudentId(int studentId);
 
     void DeleteStudentTimetables(List<StudentTimetable> items);

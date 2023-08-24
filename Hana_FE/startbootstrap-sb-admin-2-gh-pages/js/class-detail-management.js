@@ -48,6 +48,12 @@ function loadStudent(classId) {
                 render: (id) =>
                     `<a href='../../public/student/student-detail.html?id=${id}'><i class="fas fa-user-edit"></i></a>`,
             },
+            {
+                data: "id",
+                orderable: false,
+                render: (id) =>
+                    `<a href='javascript:void(0)' onclick='removeStudent(${id},${classId})'>remove</a>`,
+            },
         ],
         columnDefs: [
             {
@@ -56,6 +62,10 @@ function loadStudent(classId) {
             },
             {
                 targets: 6,
+                className: "text-center"
+            },
+            {
+                targets: 7,
                 className: "text-center"
             }
         ],
@@ -105,8 +115,6 @@ function addStudentsToClass(classId, studentIds) {
         contentType: "application/json",
         data: JSON.stringify(dataSend),
         success: function (response) {
-            console.log("Students added to class:", response);
-
             $("#add-student-popup").modal("hide");
             $.toast({
                 heading: "Success!",
@@ -150,4 +158,32 @@ function getInfoClass(classId) {
             });
         }
     });
+}
+
+function removeStudent(studentId,classId) {
+    if (confirm("Are you sure you want to remove this student from class?")) {
+        $.ajax({
+            url: `https://localhost:7010/api/Class/RemoveStudent/${studentId},${classId}`,
+            method: "DELETE",
+            success: function (response) {
+                $.toast({
+                    heading: "Success!",
+                    text: response.message,
+                    icon: "success",
+                    position: "top-right",
+                    showHideTransition: "plain",
+                });
+                location.reload();
+            },
+            error: function (xhr) {
+                $.toast({
+                    heading: "Error",
+                    text: xhr.responseJSON.message,
+                    icon: "error",
+                    position: "top-right",
+                    showHideTransition: "plain",
+                });
+            }
+        });
+    }
 }

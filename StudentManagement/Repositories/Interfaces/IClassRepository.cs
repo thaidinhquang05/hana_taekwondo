@@ -7,7 +7,7 @@ namespace StudentManagement.Repositories.Interfaces
     public interface IClassRepository : IRepository<Class>
     {
         public void AddStudentToClass(List<int> _studentIds, int _classId);
-        public void RemoveStudentFromClass(Student _student);
+        public void RemoveStudentFromClass(int _studentId,int _classId);
         public List<Class> FindClassByKeyWord(string keyword);
 
         List<ClassInfoOutput> GetClassesByStudentId(int studentId);
