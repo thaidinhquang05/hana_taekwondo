@@ -96,13 +96,8 @@ public class ClassController : Controller
     {
         try
         {
-            _classService.DeleteClass(classId);
-            return Ok(new ApiResponseModel
-            {
-                Code = StatusCodes.Status200OK,
-                Message = "Delete Class Success!",
-                IsSuccess = true
-            });
+            var result = _classService.DeleteClass(classId);
+            return Ok(result);
         }
         catch (Exception ex)
         {

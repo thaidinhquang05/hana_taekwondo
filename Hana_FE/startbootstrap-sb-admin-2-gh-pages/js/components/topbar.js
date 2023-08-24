@@ -90,6 +90,7 @@ class Topbar extends HTMLElement {
                         >
                             <span
                                 class="mr-2 d-none d-lg-inline text-gray-600 small username"
+                                style="font-size: 20px"
                             ></span>
                             <img
                                 class="img-profile rounded-circle"
@@ -164,18 +165,19 @@ class Topbar extends HTMLElement {
 
 		const token = localStorage.getItem("token");
 		if (token === null) {
-			window.location.href = "../login.html";
+			window.location.href = "../../public/login.html";
 		} else {
 			let decoded = jwt_decode(token);
 			let username =
 				decoded[
 					"http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
 				];
-			$(".username").append(username);
+			$(".username").append(username.toUpperCase());
 		}
 
 		$("#logout-btn").on("click", (e) => {
             e.preventDefault()
+            console.log('aaa');
 			localStorage.removeItem("token");
             window.location.href = "../../public/login.html";
 		});

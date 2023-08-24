@@ -84,12 +84,11 @@ $(() => {
 });
 
 function deleteClass(classId) {
-    if (confirm("Are you sure you want to delete this class?")) {
+    if (confirm("Are you sure you want to delete this class? Need to be sure class don't have any student!")) {
         $.ajax({
             url: `https://localhost:7010/api/Class/DeleteClass/${classId}`,
             method: "DELETE",
             success: function (response) {
-                console.log("Class deleted:", response);
                 $.toast({
                     heading: "Success!",
                     text: response.message,

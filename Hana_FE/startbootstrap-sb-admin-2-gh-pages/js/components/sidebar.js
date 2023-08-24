@@ -28,8 +28,8 @@ class Sidebar extends HTMLElement {
                 <!-- Nav Item - Dashboard -->
                 <li class="nav-item active">
                     <a class="nav-link" href="../../public/index.html">
-                        <i class="fas fa-fw fa-tachometer-alt"></i>
-                        <span>Dashboard</span></a
+                        <i class="fas fa-home"></i>
+                        <span>Homepage</span></a
                     >
                 </li>
 

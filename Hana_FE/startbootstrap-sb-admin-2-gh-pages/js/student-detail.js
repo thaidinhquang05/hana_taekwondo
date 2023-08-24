@@ -45,16 +45,6 @@ $(() => {
 	$("#add-tuition-btn").on("click", (e) => {
 		e.preventDefault();
 
-		if ($("#due-date").val() >= $("#paid-date").val()) {
-			$.toast({
-				heading: "Warning!!!",
-				text: "Due Date need to be greater than Paid Date!!!",
-				icon: "warning",
-				position: "top-right",
-				showHideTransition: "plain",
-			});
-		}
-
 		let tuition = {
 			paidDate: $("#paid-date").val(),
 			dueDate: $("#due-date").val(),

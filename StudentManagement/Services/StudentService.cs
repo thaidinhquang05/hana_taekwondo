@@ -46,6 +46,11 @@ public class StudentService : IStudentService
 
         if (input.Tuition is not null)
         {
+            if (input.Tuition.DueDate <= input.Tuition.PaidDate)
+            {
+                throw new Exception("Due Date need to be greater than Paid Date!!!");
+            }
+
             var newTuition = _mapper.Map<Tuition>(input.Tuition);
             newTuition.StudentId = newStudent.Id;
             _tuitionRepository.AddNewTuition(newTuition);

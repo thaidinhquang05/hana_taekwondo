@@ -80,7 +80,7 @@ namespace StudentManagement.Services
             }
             catch
             {
-                new Exception("Have something wrong when remove class!");
+                throw new Exception("Have something wrong when remove class!");
             }
 
             return new ApiResponseModel
@@ -99,7 +99,7 @@ namespace StudentManagement.Services
             }
             catch
             {
-                new Exception("Have something wrong when add class!");
+                throw new Exception("Have something wrong when add class!");
             }
 
             return new ApiResponseModel

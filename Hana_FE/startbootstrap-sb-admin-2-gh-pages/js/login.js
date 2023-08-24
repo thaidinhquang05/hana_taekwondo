@@ -15,7 +15,7 @@ $(function () {
 			success: function (data) {
                 localStorage.setItem("token", data.data);
 				setTimeout(() => {
-					window.location.href = "../index.html";
+					window.location.href = "../../public/student/student-list.html";
 				}, 3000);
 
 				$.toast({
