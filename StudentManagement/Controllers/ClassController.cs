@@ -46,14 +46,8 @@ public class ClassController : Controller
     {
         try
         {
-            var students = _classService.AddNewStudentToClass(studentClass.StudentIds, studentClass.ClassId);
-            return Ok(new ApiResponseModel
-            {
-                Code = StatusCodes.Status200OK,
-                Message = "Add Student Success!",
-                Data = students,
-                IsSuccess = true
-            });
+            var result = _classService.AddNewStudentToClass(studentClass.StudentIds, studentClass.ClassId);
+            return Ok(result);
         }
         catch (Exception ex)
         {
@@ -96,13 +90,27 @@ public class ClassController : Controller
     {
         try
         {
-            _classService.DeleteClass(classId);
-            return Ok(new ApiResponseModel
+            var result = _classService.DeleteClass(classId);
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return Conflict(new ApiResponseModel
             {
-                Code = StatusCodes.Status200OK,
-                Message = "Delete Class Success!",
-                IsSuccess = true
+                Code = StatusCodes.Status409Conflict,
+                Message = ex.Message,
+                IsSuccess = false
             });
+        }
+    }
+
+    [HttpDelete("{studentId:int},{classId:int}")]
+    public ActionResult<ApiResponseModel> RemoveStudent(int studentId,int classId)
+    {
+        try
+        {
+            var result = _classService.RemoveStudentFromClass(studentId,classId);
+            return Ok(result);
         }
         catch (Exception ex)
         {
@@ -120,14 +128,8 @@ public class ClassController : Controller
     {
         try
         {
-            _classService.AddNewClass(newClassInput);
-            return Ok(new ApiResponseModel
-            {
-                Code = StatusCodes.Status200OK,
-                Message = "Add New Class Success!",
-                Data = newClassInput,
-                IsSuccess = true
-            });
+            var result = _classService.AddNewClass(newClassInput);
+            return Ok(result);
         }
         catch (Exception ex)
         {
