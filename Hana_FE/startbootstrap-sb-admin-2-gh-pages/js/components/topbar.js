@@ -164,7 +164,7 @@ class Topbar extends HTMLElement {
 
 		const token = localStorage.getItem("token");
 		if (token === null) {
-			// window.location.href = "../login.html";
+			window.location.href = "../login.html";
 		} else {
 			let decoded = jwt_decode(token);
 			let username =
