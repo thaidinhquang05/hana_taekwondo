@@ -68,6 +68,19 @@ $(() => {
 
         dueDateInput.attr("min", $(this).val());
     });
+
+    $("#due-date").change(function () {
+        const dueDate = new Date($(this).val());
+        const startDateInput = $("#start-date");
+        const currentStartDate = new Date(startDateInput.val());
+
+        if (dueDate < currentStartDate) {
+            startDateInput.val($(this).val());
+        }
+
+        startDateInput.attr("max", $(this).val());
+    });
+
 });
 
 function deleteClass(classId) {
