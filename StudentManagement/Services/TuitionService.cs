@@ -17,7 +17,7 @@ public class TuitionService : ITuitionService
         _repository = repository;
         _mapper = mapper;
     }
-    
+
     public List<TuitionInfoOutput> GetTuitionByStudentId(int studentId)
     {
         var result = _repository.GetTuitionByStudentId(studentId);
@@ -26,6 +26,11 @@ public class TuitionService : ITuitionService
 
     public ApiResponseModel AddNewTuition(int studentId, NewTuitionInput input)
     {
+        if (input.DueDate >= input.PaidDate)
+        {
+            throw new Exception("Due Date need to be greater than Paid Date!!!");
+        }
+
         var newTuition = _mapper.Map<Tuition>(input);
         newTuition.StudentId = studentId;
         var addTuitionResult = _repository.AddNewTuition(newTuition);
