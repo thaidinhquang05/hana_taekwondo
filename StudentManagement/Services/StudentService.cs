@@ -46,6 +46,11 @@ public class StudentService : IStudentService
 
         if (input.Tuition is not null)
         {
+            if (input.Tuition.DueDate <= input.Tuition.PaidDate)
+            {
+                throw new Exception("Due Date need to be greater than Paid Date!!!");
+            }
+
             var newTuition = _mapper.Map<Tuition>(input.Tuition);
             newTuition.StudentId = newStudent.Id;
             _tuitionRepository.AddNewTuition(newTuition);
@@ -101,6 +106,23 @@ public class StudentService : IStudentService
             Data = input,
             IsSuccess = true
         };
+    }
+
+    public void DeleteStudent(int studentId)
+    {
+        var student = _studentRepository.GetStudentInfoByStudentId(studentId);
+        if (student is null)
+        {
+            throw new Exception("Student does not exist!!!");
+        }
+
+        var studentClasses = _studentRepository.GetStudentClassesByStudentId(studentId);
+        _studentRepository.DeleteStudentClass(studentClasses);
+        var studentTimetables = _studentRepository.GetStudentTimetablesByStudentId(studentId);
+        _studentRepository.DeleteStudentTimetables(studentTimetables);
+        var tuition = _tuitionRepository.GetTuitionByStudentId(studentId);
+        _tuitionRepository.DeleteTuition(tuition);
+        _studentRepository.Delete(student);
     }
 
     public List<StudentOutput> GetStudentByClass(int classId)

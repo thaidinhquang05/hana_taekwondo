@@ -2,7 +2,7 @@
 
 namespace StudentManagement.DTOs.Input;
 
-public class NewTuitionInput
+public class TuitionInput
 {
     [Required(ErrorMessage = "You need to choose paid date!")]
     public DateTime PaidDate { get; set; }

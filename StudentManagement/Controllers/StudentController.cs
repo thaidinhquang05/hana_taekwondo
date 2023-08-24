@@ -105,6 +105,30 @@ public class StudentController : Controller
         }
     }
 
+    [HttpDelete("{studentId:int}")]
+    public ActionResult<ApiResponseModel> DeleteStudent(int studentId)
+    {
+        try
+        {
+            _studentService.DeleteStudent(studentId);
+            return Ok(new ApiResponseModel
+            {
+                Code = StatusCodes.Status200OK,
+                Message = "Deleted Successfully!",
+                IsSuccess = true
+            });
+        }
+        catch (Exception ex)
+        {
+            return Conflict(new ApiResponseModel
+            {
+                Code = StatusCodes.Status409Conflict,
+                Message = ex.Message,
+                IsSuccess = false
+            });
+        }
+    }
+
     [HttpGet("{classId:int}")]
     public ActionResult<ApiResponseModel> GetStudentsByClass(int classId)
     {

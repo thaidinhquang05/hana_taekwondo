@@ -45,6 +45,24 @@ public class StudentRepository : Repository<Student>, IStudentRepository
         return result;
     }
 
+    public void DeleteStudentClass(List<StudentClass> entities)
+    {
+        _context.StudentClasses.RemoveRange(entities);
+        _context.SaveChanges();
+    }
+
+    public override async Task Delete(Student entity)
+    {
+        _context.Students.Remove(entity);
+        await _context.SaveChangesAsync();
+    }
+
+    public List<StudentClass> GetStudentClassesByStudentId(int studentId)
+    {
+        var result = _context.StudentClasses.Where(x => x.StudentId == studentId).ToList();
+        return result;
+    }
+
     public List<StudentTimetable> GetStudentTimetablesByStudentId(int studentId)
     {
         var result = _context.StudentTimetables
@@ -72,8 +90,8 @@ public class StudentRepository : Repository<Student>, IStudentRepository
     public List<Student> GetStudentToAddClass(int classId)
     {
         var result = _context.Students.Where(student =>
-        !_context.StudentClasses.Any(sc => sc.StudentId == student.Id && sc.ClassId == classId)).ToList();
-    
+            !_context.StudentClasses.Any(sc => sc.StudentId == student.Id && sc.ClassId == classId)).ToList();
+
         return result;
     }
 }

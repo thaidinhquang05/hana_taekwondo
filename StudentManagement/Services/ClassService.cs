@@ -42,7 +42,7 @@ namespace StudentManagement.Services
             }
         }
 
-        public ApiResponseModel RemoveStudentFromClass(int _studentId,int _classId)
+        public ApiResponseModel RemoveStudentFromClass(int _studentId, int _classId)
         {
             try
             {
@@ -56,11 +56,11 @@ namespace StudentManagement.Services
             }
             catch
             {
-                return new ApiResponseModel 
+                return new ApiResponseModel
                 {
-                    Code = StatusCodes.Status409Conflict, 
-                    Message = "Have something wrong when remove student!", 
-                    IsSuccess = false 
+                    Code = StatusCodes.Status409Conflict,
+                    Message = "Have something wrong when remove student!",
+                    IsSuccess = false
                 };
             }
         }

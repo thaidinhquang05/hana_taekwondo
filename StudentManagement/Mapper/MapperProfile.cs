@@ -13,7 +13,7 @@ public class MapperProfile : Profile
             .ForMember(des => des.Id,
                 opt => opt.MapFrom(src => src.TimetableId));
 
-        CreateMap<NewTuitionInput, Tuition>()
+        CreateMap<TuitionInput, Tuition>()
             .ForMember(des => des.CreatedAt,
                 opt => opt.MapFrom(src => DateTime.Now))
             .ForMember(des => des.ModifiedAt,

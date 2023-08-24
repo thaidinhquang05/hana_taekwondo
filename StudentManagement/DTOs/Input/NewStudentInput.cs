@@ -17,7 +17,7 @@ public class NewStudentInput
 
     public string? Phone { get; set; }
 
-    public NewTuitionInput? Tuition { get; set; }
+    public TuitionInput? Tuition { get; set; }
 
     public List<TimetableInput>? Timetables { get; set; }
 }

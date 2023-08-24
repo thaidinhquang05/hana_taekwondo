@@ -41,13 +41,62 @@ public class TuitionController : Controller
         }
     }
 
+    [HttpGet("{tuitionId:int}")]
+    public ActionResult<ApiResponseModel> GetTuitionById(int tuitionId)
+    {
+        try
+        {
+            var tuitionInfo = _service.GetTuitionById(tuitionId);
+            return Ok(new ApiResponseModel
+            {
+                Code = StatusCodes.Status200OK,
+                Message = "Tuition Information",
+                IsSuccess = true,
+                Data = tuitionInfo
+            });
+        }
+        catch (Exception ex)
+        {
+            return Conflict(new ApiResponseModel
+            {
+                Code = StatusCodes.Status409Conflict,
+                Message = ex.Message,
+                IsSuccess = false
+            });
+        }
+    }
+
     [HttpPost("{studentId:int}")]
-    public ActionResult<ApiResponseModel> AddNewTuition(int studentId, [FromBody] NewTuitionInput input)
+    public ActionResult<ApiResponseModel> AddNewTuition(int studentId, [FromBody] TuitionInput input)
     {
         try
         {
             var result = _service.AddNewTuition(studentId, input);
             return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return Conflict(new ApiResponseModel
+            {
+                Code = StatusCodes.Status409Conflict,
+                Message = ex.Message,
+                IsSuccess = false
+            });
+        }
+    }
+
+    [HttpPut("{tuitionId:int}")]
+    public ActionResult<ApiResponseModel> UpdateTuitionInfo(int tuitionId, [FromBody] TuitionInput input)
+    {
+        try
+        {
+            _service.UpdateTuition(tuitionId, input);
+            return Ok(new ApiResponseModel
+            {
+                Code = StatusCodes.Status200OK,
+                Message = "Updated Successfully!",
+                IsSuccess = true
+            });
         }
         catch (Exception ex)
         {
