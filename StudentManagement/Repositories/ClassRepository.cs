@@ -23,11 +23,11 @@ public class ClassRepository : Repository<Class>, IClassRepository
 
     public void AddStudentToClass(List<int> _studentIds, int _classId)
     {
-        var _class = _context.Classes.Where(s => s.Id == _classId).FirstOrDefault() ?? throw new Exception("Not found class!");
+        var _class = _context.Classes.Where(s => s.Id == _classId).FirstOrDefault();
 
         foreach (var item in _studentIds)
         {
-            var _student = _context.Students.Where(s => s.Id == item).FirstOrDefault() ?? throw new Exception("Not found student!");
+            var _student = _context.Students.Where(s => s.Id == item).FirstOrDefault();
             StudentClass studentClass = new StudentClass();
             studentClass.Student = _student;
             studentClass.Class = _class;
@@ -40,16 +40,16 @@ public class ClassRepository : Repository<Class>, IClassRepository
         }
     }
 
-    public void RemoveStudentFromClass(Student _student)
+    public void RemoveStudentFromClass(int _studentId,int _classId)
     {
-        var studentClass = _context.StudentClasses.Where(sc => sc.StudentId == _student.Id).ToList() ?? throw new NullReferenceException("Record not found!");
-        _context.StudentClasses.RemoveRange(studentClass);
+        var studentClass = _context.StudentClasses.Where(sc => sc.StudentId == _studentId && sc.ClassId == _classId).FirstOrDefault();
+        _context.StudentClasses.Remove(studentClass);
         _context.SaveChanges();
     }
 
     public List<Class> FindClassByKeyWord(string keyword)
     {
-        return _context.Classes.Where(c => c.Name.Contains(keyword)).ToList() ?? throw new NullReferenceException("Class not found!");
+        return _context.Classes.Where(c => c.Name.Contains(keyword)).ToList();
     }
 
     public List<ClassInfoOutput> GetClassesByStudentId(int studentId)
@@ -64,19 +64,25 @@ public class ClassRepository : Repository<Class>, IClassRepository
             StartDate = x.Class.StartDate.ToShortDateString(),
             DueDate = x.Class.DueDate.ToShortDateString()
         })
-        .ToList() ?? throw new NullReferenceException("Not found classes!");
+        .ToList();
         return result;
     }
 
     public Class GetClassById(int classId)
     {
-        var result = _context.Classes.Where(c => c.Id == classId).FirstOrDefault() ?? throw new NullReferenceException("Not found class!");
+        var result = _context.Classes.Where(c => c.Id == classId).FirstOrDefault();
         return result;
     }
 
     public void DeleteClass(int classId)
     {
-        var _class = _context.Classes.FirstOrDefault(c => c.Id == classId) ?? throw new NullReferenceException("Not found class!");
+        var _classStudent = _context.StudentClasses.Where(sc => sc.ClassId == classId).ToList();
+        if( _classStudent != null )
+        {
+            _context.StudentClasses.RemoveRange(_classStudent);
+            _context.SaveChanges();
+        }
+        var _class = _context.Classes.FirstOrDefault(c => c.Id == classId);
         _context.Classes.Remove(_class);
         _context.SaveChanges();
     }
