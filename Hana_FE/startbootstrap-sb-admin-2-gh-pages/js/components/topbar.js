@@ -173,11 +173,16 @@ class Topbar extends HTMLElement {
 					"http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
 				];
 			$(".username").append(username.toUpperCase());
+
+            let exp = decoded['exp']
+            if (Date.now() >= exp * 1000) {
+                localStorage.removeItem("token");
+                window.location.href = "../../public/login.html";
+            }
 		}
 
 		$("#logout-btn").on("click", (e) => {
             e.preventDefault()
-            console.log('aaa');
 			localStorage.removeItem("token");
             window.location.href = "../../public/login.html";
 		});
