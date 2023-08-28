@@ -1,6 +1,6 @@
 $(() => {
 	loadClassList();
-    
+
 	$("#add-btn").click(function () {
 		$("#add-student-popup").modal("show");
 	});
@@ -35,9 +35,9 @@ $(() => {
 });
 
 function loadClassList() {
-    $("#dataTable").DataTable({
+	$("#dataTable").DataTable({
 		ajax: {
-			url: "https://localhost:7010/api/Class/GetAllClasses",
+			url: `${API_START_URL}/api/Class/GetAllClasses`,
 			type: "GET",
 			contentType: "application/json",
 			error: function (xhr) {
@@ -50,7 +50,7 @@ function loadClassList() {
 				});
 			},
 		},
-        destroy: true,
+		destroy: true,
 		columns: [
 			{ data: "id" },
 			{ data: "name" },
@@ -93,7 +93,7 @@ function deleteClass(classId) {
 	}).then((result) => {
 		if (result.isConfirmed) {
 			$.ajax({
-				url: `https://localhost:7010/api/Class/DeleteClass/${classId}`,
+				url: `${API_START_URL}/api/Class/DeleteClass/${classId}`,
 				method: "DELETE",
 				success: function (response) {
 					$.toast({
@@ -103,7 +103,7 @@ function deleteClass(classId) {
 						position: "top-right",
 						showHideTransition: "plain",
 					});
-					loadClassList()
+					loadClassList();
 				},
 				error: function (xhr) {
 					$.toast({
@@ -133,7 +133,7 @@ function addClass() {
 	};
 
 	$.ajax({
-		url: "https://localhost:7010/api/Class/AddNewClass",
+		url: `${API_START_URL}/api/Class/AddNewClass`,
 		method: "POST",
 		contentType: "application/json",
 		data: JSON.stringify(newClass),
