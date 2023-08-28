@@ -180,7 +180,7 @@ $(() => {
 
 function loadStudentInfo(studentId) {
 	$.ajax({
-		url: `https://localhost:7010/api/Student/GetStudentInfo/${studentId}`,
+		url: `${API_START_URL}/api/Student/GetStudentInfo/${studentId}`,
 		method: "GET",
 		contentType: "application/json",
 		success: (data) => {
@@ -208,7 +208,7 @@ function loadStudentInfo(studentId) {
 
 function renderTimetables() {
 	$.ajax({
-		url: "https://localhost:7010/api/Timetable/GetAllTimetables",
+		url: `${API_START_URL}/api/Timetable/GetAllTimetables`,
 		method: "GET",
 		contentType: "application/json",
 		success: (response) => {
@@ -246,7 +246,7 @@ function renderTimetables() {
 
 function loadStudentTimetable(studentId) {
 	$.ajax({
-		url: `https://localhost:7010/api/Timetable/GetTimetablesByStudentId/${studentId}`,
+		url: `${API_START_URL}/api/Timetable/GetTimetablesByStudentId/${studentId}`,
 		method: "GET",
 		contentType: "application/json",
 		success: (response) => {
@@ -273,7 +273,7 @@ function loadStudentTimetable(studentId) {
 
 function updateStudentTimetables(studentId, timetables) {
 	$.ajax({
-		url: `https://localhost:7010/api/Timetable/UpdateStudentTimetables/${studentId}`,
+		url: `${API_START_URL}/api/Timetable/UpdateStudentTimetables/${studentId}`,
 		method: "PUT",
 		contentType: "application/json",
 		data: JSON.stringify(timetables),
@@ -300,7 +300,7 @@ function updateStudentTimetables(studentId, timetables) {
 
 function loadTuitionHistory(studentId) {
 	$("#dataTable").DataTable({
-		ajax: `https://localhost:7010/api/Tuition/GetTuitionByStudentId/${studentId}`,
+		ajax: `${API_START_URL}/api/Tuition/GetTuitionByStudentId/${studentId}`,
 		destroy: true,
 		columns: [
 			{ data: "id" },
@@ -336,7 +336,7 @@ function loadTuitionHistory(studentId) {
 
 function updateStudent(student, id) {
 	$.ajax({
-		url: `https://localhost:7010/api/Student/UpdateStudent/${id}`,
+		url: `${API_START_URL}/api/Student/UpdateStudent/${id}`,
 		method: "PUT",
 		contentType: "application/json",
 		data: JSON.stringify(student),
@@ -364,7 +364,7 @@ function updateStudent(student, id) {
 
 function addTuition(studentId, tuition) {
 	$.ajax({
-		url: `https://localhost:7010/api/Tuition/AddNewTuition/${studentId}`,
+		url: `${API_START_URL}/api/Tuition/AddNewTuition/${studentId}`,
 		method: "POST",
 		contentType: "application/json",
 		data: JSON.stringify(tuition),
@@ -377,7 +377,7 @@ function addTuition(studentId, tuition) {
 				showHideTransition: "plain",
 			});
 			loadTuitionHistory(studentId);
-			$('#addTuitionModal').modal('hide');
+			$("#addTuitionModal").modal("hide");
 		},
 		error: (xhr) => {
 			$.toast({
@@ -393,7 +393,7 @@ function addTuition(studentId, tuition) {
 
 function showTuitionInfo(tuitionId) {
 	$.ajax({
-		url: `https://localhost:7010/api/Tuition/GetTuitionById/${tuitionId}`,
+		url: `${API_START_URL}/api/Tuition/GetTuitionById/${tuitionId}`,
 		method: "GET",
 		contentType: "application/json",
 		success: (response) => {
@@ -420,7 +420,7 @@ function showTuitionInfo(tuitionId) {
 
 function updateTuition(studentId, tuitionId, tuition) {
 	$.ajax({
-		url: `https://localhost:7010/api/Tuition/UpdateTuitionInfo/${tuitionId}`,
+		url: `${API_START_URL}/api/Tuition/UpdateTuitionInfo/${tuitionId}`,
 		method: "PUT",
 		contentType: "application/json",
 		data: JSON.stringify(tuition),
@@ -433,7 +433,7 @@ function updateTuition(studentId, tuitionId, tuition) {
 				showHideTransition: "plain",
 			});
 			loadTuitionHistory(studentId);
-			$('#updateTuitionModal').modal('hide');
+			$("#updateTuitionModal").modal("hide");
 		},
 		error: (xhr) => {
 			$.toast({

@@ -21,9 +21,7 @@ $(() => {
 function loadStudent(classId) {
 	$("#dataTable").DataTable({
 		ajax: {
-			url:
-				"https://localhost:7010/api/Student/GetStudentsByClass/" +
-				classId,
+			url: `${API_START_URL}/api/Student/GetStudentsByClass/${classId}`,
 			type: "GET",
 			contentType: "application/json",
 			error: function (xhr) {
@@ -36,7 +34,7 @@ function loadStudent(classId) {
 				});
 			},
 		},
-        destroy: true,
+		destroy: true,
 		columns: [
 			{ data: "id" },
 			{ data: "fullName" },
@@ -80,9 +78,7 @@ function loadStudent(classId) {
 
 function loadAvailableStudents(classId) {
 	$.ajax({
-		url:
-			"https://localhost:7010/api/Student/GetStudentToAddClass/" +
-			classId,
+		url: `${API_START_URL}/api/Student/GetStudentToAddClass/${classId}`,
 		type: "GET",
 		contentType: "application/json",
 		success: function (data) {
@@ -118,7 +114,7 @@ function addStudentsToClass(classId, studentIds) {
 		classId: classId,
 	};
 	$.ajax({
-		url: `https://localhost:7010/api/Class/AddStudentToClass`,
+		url: `${API_START_URL}/api/Class/AddStudentToClass`,
 		method: "POST",
 		contentType: "application/json",
 		data: JSON.stringify(dataSend),
@@ -147,7 +143,7 @@ function addStudentsToClass(classId, studentIds) {
 
 function getInfoClass(classId) {
 	$.ajax({
-		url: `https://localhost:7010/api/Class/GetClassById/${classId}`,
+		url: `${API_START_URL}/api/Class/GetClassById/${classId}`,
 		method: "GET",
 		contentType: "application/json",
 		success: function (data) {
@@ -180,7 +176,7 @@ function removeStudent(studentId, classId) {
 	}).then((result) => {
 		if (result.isConfirmed) {
 			$.ajax({
-				url: `https://localhost:7010/api/Class/RemoveStudent/${studentId},${classId}`,
+				url: `${API_START_URL}/api/Class/RemoveStudent/${studentId},${classId}`,
 				method: "DELETE",
 				success: function (response) {
 					$.toast({

@@ -8,32 +8,33 @@ $(function () {
 		};
 
 		$.ajax({
-			url: "https://localhost:7010/api/Auth/Login",
+			url: `${API_START_URL}/api/Auth/Login`,
 			method: "POST",
 			contentType: "application/json",
 			data: JSON.stringify(user),
 			success: function (data) {
-                localStorage.setItem("token", data.data);
+				localStorage.setItem("token", data.data);
 				setTimeout(() => {
-					window.location.href = "../../public/student/student-list.html";
+					window.location.href =
+						"../../public/student/student-list.html";
 				}, 3000);
 
 				$.toast({
-                    heading: 'Login Successfully!',
-					text: '',
-                    icon: 'success',
-                    position: 'top-right',
-                    showHideTransition: 'plain'
-                })
+					heading: "Login Successfully!",
+					text: "",
+					icon: "success",
+					position: "top-right",
+					showHideTransition: "plain",
+				});
 			},
 			error: function (xhr) {
 				$.toast({
-                    heading: 'Login Failed!',
-                    text: xhr.responseJSON.message,
-                    icon: 'error',
-                    position: 'top-right',
-                    showHideTransition: 'plain'
-                })
+					heading: "Login Failed!",
+					text: xhr.responseJSON.message,
+					icon: "error",
+					position: "top-right",
+					showHideTransition: "plain",
+				});
 			},
 		});
 	});

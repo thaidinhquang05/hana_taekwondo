@@ -13,7 +13,7 @@ $(() => {
 function loadStudentList() {
 	$("#dataTable").DataTable({
 		ajax: {
-			url: "https://localhost:7010/api/Student/GetAllStudents",
+			url: `${API_START_URL}/api/Student/GetAllStudents`,
 			type: "GET",
 			contentType: "application/json",
 			error: function (xhr) {
@@ -73,7 +73,7 @@ function deleteStudent(studentId) {
 	}).then((result) => {
 		if (result.isConfirmed) {
 			$.ajax({
-				url: `https://localhost:7010/api/Student/DeleteStudent/${studentId}`,
+				url: `${API_START_URL}/api/Student/DeleteStudent/${studentId}`,
 				method: "DELETE",
 				contentType: "application/json",
 				success: (response) => {

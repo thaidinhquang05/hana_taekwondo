@@ -79,7 +79,7 @@ $(() => {
 
 function addStudent(student) {
 	$.ajax({
-		url: "https://localhost:7010/api/Student/AddNewStudent",
+		url: `${API_START_URL}/api/Student/AddNewStudent`,
 		method: "POST",
 		contentType: "application/json",
 		data: JSON.stringify(student),
@@ -109,7 +109,7 @@ function addStudent(student) {
 
 function renderTimetables() {
 	$.ajax({
-		url: "https://localhost:7010/api/Timetable/GetAllTimetables",
+		url: `${API_START_URL}/api/Timetable/GetAllTimetables`,
 		method: "GET",
 		contentType: "application/json",
 		success: (response) => {
