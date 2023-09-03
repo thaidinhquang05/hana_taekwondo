@@ -50,9 +50,27 @@ public class TuitionRepository : Repository<Tuition>, ITuitionRepository
             .Where(x => x.PaidDate.Year == year)
             .Sum(x => x.ActualAmount);
 
+        var allMonths = Enumerable.Range(1, 12);
+        var earningData = allMonths
+            .GroupJoin(
+                _context.Tuitions.Where(x => x.PaidDate.Year == year),
+                month => month,
+                tuition => tuition.PaidDate.Month,
+                (month, tuitions) => new
+                {
+                    Month = month,
+                    TotalEarnings = tuitions.Sum(x => x.ActualAmount)
+                }
+            )
+            .OrderBy(x => x.Month)
+            .ToList();
+
+        var earningValues = earningData.Select(item => item.TotalEarnings).ToList();
+
         return new EarningValue
         {
             Monthly = monthly,
+            EarningData = earningValues,
             Annual = annual
         };
     }
