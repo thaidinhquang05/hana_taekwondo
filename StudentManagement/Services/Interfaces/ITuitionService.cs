@@ -12,4 +12,6 @@ public interface ITuitionService
     ApiResponseModel AddNewTuition(int studentId, TuitionInput input);
 
     void UpdateTuition(int tuitionId, TuitionInput input);
+
+    EarningValue GetEarningValueByMonth(int month, int year);
 }

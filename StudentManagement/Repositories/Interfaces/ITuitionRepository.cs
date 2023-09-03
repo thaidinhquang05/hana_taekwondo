@@ -1,4 +1,5 @@
-﻿using StudentManagement.Models;
+﻿using StudentManagement.DTOs.Output;
+using StudentManagement.Models;
 
 namespace StudentManagement.Repositories.Interfaces;
 
@@ -11,4 +12,6 @@ public interface ITuitionRepository : IRepository<Tuition>
     void DeleteTuition(List<Tuition> entities);
 
     Tuition GetTuitionById(int tuitionId);
+
+    EarningValue GetEarningValueByMonth(int month, int year);
 }

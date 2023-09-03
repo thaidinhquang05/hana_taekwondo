@@ -94,4 +94,10 @@ public class TuitionService : ITuitionService
         tuition.Note = input.Note;
         _repository.Update(tuition);
     }
+
+    public EarningValue GetEarningValueByMonth(int month, int year)
+    {
+        var earningValue = _repository.GetEarningValueByMonth(month, year);
+        return earningValue;
+    }
 }
