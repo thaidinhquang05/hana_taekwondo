@@ -40,7 +40,7 @@ public class TuitionRepository : Repository<Tuition>, ITuitionRepository
         return tuition;
     }
 
-    public EarningValue GetEarningValueByMonth(int month, int year)
+    public EarningValueOutput GetEarningValueByMonth(int month, int year)
     {
         var monthly = _context.Tuitions
             .Where(x => x.PaidDate.Month == month && x.PaidDate.Year == year)
@@ -67,7 +67,7 @@ public class TuitionRepository : Repository<Tuition>, ITuitionRepository
 
         var earningValues = earningData.Select(item => item.TotalEarnings).ToList();
 
-        return new EarningValue
+        return new EarningValueOutput
         {
             Monthly = monthly,
             EarningData = earningValues,

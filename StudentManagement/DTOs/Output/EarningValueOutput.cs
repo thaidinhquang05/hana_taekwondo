@@ -1,6 +1,6 @@
 ﻿namespace StudentManagement.DTOs.Output;
 
-public class EarningValue
+public class EarningValueOutput
 {
     public decimal Monthly { get; set; }
     

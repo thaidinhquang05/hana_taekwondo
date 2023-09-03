@@ -13,5 +13,5 @@ public interface ITuitionRepository : IRepository<Tuition>
 
     Tuition GetTuitionById(int tuitionId);
 
-    EarningValue GetEarningValueByMonth(int month, int year);
+    EarningValueOutput GetEarningValueByMonth(int month, int year);
 }
