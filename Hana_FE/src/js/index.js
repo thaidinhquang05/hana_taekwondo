@@ -28,7 +28,7 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 	return s.join(dec);
 }
 
-$(() => {
+$(async () => {
 	$(document).ajaxStart(() => {
 		$(".loading-div").show();
 	});
@@ -40,17 +40,15 @@ $(() => {
 	let date = new Date();
 	let currentMonth = String(date.getMonth() + 1).padStart(2, "0");
 	let currentYear = date.getFullYear();
-	let data = [
-		0, 10000, 5000, 15000, 10000, 20000, 15000, 25000, 20000, 30000, 25000,
-		40000,
-	];
 
-	getEarningValueByMonth(currentMonth, currentYear);
-	renderLineChart(data);
+	let data = await getEarningValueByMonth(currentMonth, currentYear);
+	renderEarningsOverviewChart(data);
 });
 
-function getEarningValueByMonth(month, year) {
-	$.ajax({
+async function getEarningValueByMonth(month, year) {
+	let data;
+
+	await $.ajax({
 		url: `${API_START_URL}/api/Tuition/GetEarningValueByMonth/${month}/${year}`,
 		method: "GET",
 		contentType: "application/json",
@@ -64,6 +62,8 @@ function getEarningValueByMonth(month, year) {
 			$(".earning-annual").append(
 				"VND " + number_format(res.data.annual)
 			);
+
+			data = res.data.earningData;
 		},
 		error: (xhr) => {
 			$.toast({
@@ -75,10 +75,12 @@ function getEarningValueByMonth(month, year) {
 			});
 		},
 	});
+
+	return data;
 }
 
-function renderLineChart(data) {
-	new Chart($("#myLineChart"), {
+function renderEarningsOverviewChart(data) {
+	new Chart($("#earningsOverviewChart"), {
 		type: "line",
 		data: {
 			labels: [
@@ -145,7 +147,7 @@ function renderLineChart(data) {
 							padding: 10,
 							// Include a dollar sign in the ticks
 							callback: function (value, index, values) {
-								return "$" + number_format(value);
+								return "VND" + number_format(value);
 							},
 						},
 						gridLines: {
@@ -182,7 +184,7 @@ function renderLineChart(data) {
 							"";
 						return (
 							datasetLabel +
-							": $" +
+							": VND" +
 							number_format(tooltipItem.yLabel)
 						);
 					},
