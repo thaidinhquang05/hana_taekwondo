@@ -13,5 +13,5 @@ public interface ITuitionService
 
     void UpdateTuition(int tuitionId, TuitionInput input);
 
-    EarningValue GetEarningValueByMonth(int month, int year);
+    EarningValueOutput GetEarningValueByMonth(int month, int year);
 }

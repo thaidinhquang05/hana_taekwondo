@@ -95,7 +95,7 @@ public class TuitionService : ITuitionService
         _repository.Update(tuition);
     }
 
-    public EarningValue GetEarningValueByMonth(int month, int year)
+    public EarningValueOutput GetEarningValueByMonth(int month, int year)
     {
         var earningValue = _repository.GetEarningValueByMonth(month, year);
         return earningValue;
