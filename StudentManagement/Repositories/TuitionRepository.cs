@@ -1,4 +1,5 @@
-﻿using StudentManagement.Models;
+﻿using StudentManagement.DTOs.Output;
+using StudentManagement.Models;
 using StudentManagement.Repositories.Interfaces;
 
 namespace StudentManagement.Repositories;
@@ -37,6 +38,23 @@ public class TuitionRepository : Repository<Tuition>, ITuitionRepository
     {
         var tuition = _context.Tuitions.FirstOrDefault(x => x.Id == tuitionId);
         return tuition;
+    }
+
+    public EarningValue GetEarningValueByMonth(int month, int year)
+    {
+        var monthly = _context.Tuitions
+            .Where(x => x.PaidDate.Month == month && x.PaidDate.Year == year)
+            .Sum(x => x.ActualAmount);
+
+        var annual = _context.Tuitions
+            .Where(x => x.PaidDate.Year == year)
+            .Sum(x => x.ActualAmount);
+
+        return new EarningValue
+        {
+            Monthly = monthly,
+            Annual = annual
+        };
     }
 
     public override async Task Update(Tuition entity)

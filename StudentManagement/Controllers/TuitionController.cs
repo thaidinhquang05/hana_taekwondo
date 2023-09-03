@@ -108,4 +108,29 @@ public class TuitionController : Controller
             });
         }
     }
+
+    [HttpGet("{month:int}/{year:int}")]
+    public ActionResult<ApiResponseModel> GetEarningValueByMonth(int month, int year)
+    {
+        try
+        {
+            var earningValue = _service.GetEarningValueByMonth(month, year);
+            return Ok(new ApiResponseModel
+            {
+                Code = StatusCodes.Status200OK,
+                Message = "Success!",
+                IsSuccess = true,
+                Data = earningValue
+            });
+        }
+        catch (Exception ex)
+        {
+            return Conflict(new ApiResponseModel
+            {
+                Code = StatusCodes.Status409Conflict,
+                Message = ex.Message,
+                IsSuccess = false
+            });
+        }
+    }
 }
