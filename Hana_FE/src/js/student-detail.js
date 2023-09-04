@@ -1,4 +1,4 @@
-$(async () => {
+$(() => {
 	$(document).ajaxStart(() => {
 		$(".loading-div").show();
 	});
@@ -16,7 +16,7 @@ $(async () => {
 
 	loadStudentInfo(studentId);
 	renderTimetables();
-	await loadStudentTimetable(studentId);
+	loadStudentTimetable(studentId);
 	loadTuitionHistory(studentId);
 
 	let date = new Date();
@@ -72,6 +72,14 @@ $(async () => {
 		}
 
 		startDateInput.attr("max", $(this).val());
+	});
+
+	$("#studentImg").on("change", () => {
+		let fileInput = document.getElementById("studentImg");
+		let file = fileInput.files[0];
+		let formData = new FormData();
+		formData.append("studentImg", file);
+		uploadStudentImg(studentId, formData);
 	});
 
 	// update student click
@@ -192,6 +200,7 @@ function loadStudentInfo(studentId) {
 			studentData.gender == "Male"
 				? $("#inlineRadio1").prop("checked", true)
 				: $("#inlineRadio2").prop("checked", true);
+			$(".img-account-profile").attr("src", studentData.studentImg);
 		},
 		error: (xhr) => {
 			window.location.href = "../../public/404.html";
@@ -244,8 +253,8 @@ function renderTimetables() {
 	});
 }
 
-async function loadStudentTimetable(studentId) {
-	await $.ajax({
+function loadStudentTimetable(studentId) {
+	$.ajax({
 		url: `${API_START_URL}/api/Timetable/GetTimetablesByStudentId/${studentId}`,
 		method: "GET",
 		contentType: "application/json",
@@ -306,7 +315,15 @@ function loadTuitionHistory(studentId) {
 			{ data: "id" },
 			{ data: "paidDate" },
 			{ data: "dueDate" },
-			{ data: "actualAmount", orderable: false },
+			{
+				data: "actualAmount",
+				orderable: false,
+				render: (actualAmount) =>
+					`${new Intl.NumberFormat("vi-VN", {
+						style: "currency",
+						currency: "VND",
+					}).format(actualAmount)}`,
+			},
 			{ data: "content", orderable: false },
 			{ data: "note", orderable: false },
 			{
@@ -354,6 +371,35 @@ function updateStudent(student, id) {
 			$.toast({
 				heading: "Updated Failed!!!",
 				text: xhr.responseJSON?.message,
+				icon: "error",
+				position: "top-right",
+				showHideTransition: "plain",
+			});
+		},
+	});
+}
+
+function uploadStudentImg(studentId, formData) {
+	$.ajax({
+		url: `${API_START_URL}/api/Student/UploadStudentImg/${studentId}`,
+		type: "PUT",
+		data: formData,
+		contentType: false,
+		processData: false,
+		success: (res) => {
+			$.toast({
+				heading: "Success!!!",
+				text: "Upload Image Successfully!!!",
+				icon: "success",
+				position: "top-right",
+				showHideTransition: "plain",
+			});
+			loadStudentInfo(studentId);
+		},
+		error: (xhr) => {
+			$.toast({
+				heading: "Error!!!",
+				text: xhr.responseJSON.message,
 				icon: "error",
 				position: "top-right",
 				showHideTransition: "plain",
