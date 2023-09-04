@@ -1,4 +1,4 @@
-$(() => {
+$(async () => {
 	$(document).ajaxStart(() => {
 		$(".loading-div").show();
 	});
@@ -16,7 +16,7 @@ $(() => {
 
 	loadStudentInfo(studentId);
 	renderTimetables();
-	loadStudentTimetable(studentId);
+	await loadStudentTimetable(studentId);
 	loadTuitionHistory(studentId);
 
 	let date = new Date();
@@ -244,8 +244,8 @@ function renderTimetables() {
 	});
 }
 
-function loadStudentTimetable(studentId) {
-	$.ajax({
+async function loadStudentTimetable(studentId) {
+	await $.ajax({
 		url: `${API_START_URL}/api/Timetable/GetTimetablesByStudentId/${studentId}`,
 		method: "GET",
 		contentType: "application/json",

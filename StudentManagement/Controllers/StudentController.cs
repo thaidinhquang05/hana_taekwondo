@@ -105,6 +105,25 @@ public class StudentController : Controller
         }
     }
 
+    [HttpPut("{studentId:int}")]
+    public async Task<ActionResult<ApiResponseModel>> UploadStudentImg(int studentId, IFormFile studentImg)
+    {
+        try
+        {
+            var result = await _studentService.UploadStudentImg(studentId, studentImg);
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return Conflict(new ApiResponseModel
+            {
+                Code = StatusCodes.Status409Conflict,
+                Message = ex.Message,
+                IsSuccess = false
+            });
+        }
+    }
+
     [HttpDelete("{studentId:int}")]
     public ActionResult<ApiResponseModel> DeleteStudent(int studentId)
     {

@@ -108,6 +108,39 @@ public class StudentService : IStudentService
         };
     }
 
+    public async Task<ApiResponseModel> UploadStudentImg(int studentId, IFormFile studentImg)
+    {
+        var student = _studentRepository.GetStudentInfoByStudentId(studentId);
+        if (student is null)
+        {
+            throw new Exception($"Student with id {studentId} is not exist!");
+        }
+
+        if (studentImg is null || studentImg.Length == 0)
+        {
+            throw new Exception("Invalid File!");
+        }
+
+        using var memoryStream = new MemoryStream();
+        await studentImg.CopyToAsync(memoryStream);
+        var imageBytes = memoryStream.ToArray();
+        var base64String = Convert.ToBase64String(imageBytes);
+
+        student.StudentImg = $"data:image/jpg;base64,{base64String}";
+        var updateStudentResult = _studentRepository.UpdateStudent(student);
+        if (updateStudentResult == 0)
+        {
+            throw new Exception("Have some error while update student!");
+        }
+        
+        return new ApiResponseModel
+        {
+            Code = StatusCodes.Status200OK,
+            Message = "Image uploaded and saved to the database",
+            IsSuccess = true
+        };
+    }
+
     public void DeleteStudent(int studentId)
     {
         var student = _studentRepository.GetStudentInfoByStudentId(studentId);

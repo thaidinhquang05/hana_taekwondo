@@ -178,6 +178,10 @@ namespace StudentManagement.Models
                 entity.Property(e => e.Phone)
                     .HasMaxLength(255)
                     .HasColumnName("phone");
+
+                entity.Property(e => e.StudentImg)
+                    .IsUnicode(false)
+                    .HasColumnName("student_img");
             });
 
             modelBuilder.Entity<StudentClass>(entity =>

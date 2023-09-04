@@ -4,6 +4,8 @@ public class StudentInfoOutput
 {
     public int Id { get; set; }
 
+    public string StudentImg { get; set; }
+
     public string FullName { get; set; }
 
     public string Dob { get; set; }

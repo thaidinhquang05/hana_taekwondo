@@ -13,6 +13,8 @@ public interface IStudentService
 
     ApiResponseModel UpdateStudent(int studentId, UpdateStudentInput input);
 
+    Task<ApiResponseModel> UploadStudentImg(int studentId, IFormFile studentImg);
+
     void DeleteStudent(int studentId);
     
     List<StudentOutput> GetStudentByClass(int classId);
