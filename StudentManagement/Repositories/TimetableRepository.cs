@@ -38,27 +38,6 @@ public class TimetableRepository : Repository<Timetable>, ITimetableRepository
         return slots;
     }
 
-    public void ChooseTimeTable(Student student, List<TimetableSelectionInput> timetables)
-    {
-        foreach (var item in timetables)
-        {
-            Timetable timetable = new Timetable();
-            StudentTimetable studentTimetable = new StudentTimetable();
-            foreach (var slot in item.SlotIds)
-            {
-                timetable.WeekDay = item.Day;
-                timetable.SlotId = slot;
-
-                studentTimetable.Student = student;
-                studentTimetable.StudentId = student.Id;
-
-                timetable.StudentTimetables.Add(studentTimetable);
-                _context.Timetables.Add(timetable);
-                _context.SaveChanges();
-            }
-        }
-    }
-
     public void AddStudentTimetables(List<StudentTimetable> input)
     {
         _context.StudentTimetables.AddRange(input);

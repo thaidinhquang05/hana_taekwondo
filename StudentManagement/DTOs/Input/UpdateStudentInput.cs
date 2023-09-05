@@ -2,6 +2,8 @@
 
 public class UpdateStudentInput
 {
+    public IFormFile StudentImg { get; set; }
+    
     public string FullName { get; set; }
 
     public DateTime Dob { get; set; }

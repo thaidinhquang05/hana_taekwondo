@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Newtonsoft.Json;
 using StudentManagement.DTOs.Input;
 using StudentManagement.DTOs.Output;
 using StudentManagement.Models;
@@ -39,34 +40,48 @@ public class StudentService : IStudentService
         return output;
     }
 
-    public ApiResponseModel AddNewStudent(NewStudentInput input)
+    public async Task<ApiResponseModel> AddNewStudent(NewStudentInput input)
     {
+        using var memoryStream = new MemoryStream();
+        await input.StudentImg.CopyToAsync(memoryStream);
+        var imageBytes = memoryStream.ToArray();
+        var base64String = Convert.ToBase64String(imageBytes);
+
         var newStudent = _mapper.Map<Student>(input);
+        newStudent.StudentImg = $"data:image/jpg;base64,{base64String}";
         _studentRepository.AddNewStudent(newStudent);
 
         if (input.Tuition is not null)
         {
-            if (input.Tuition.DueDate <= input.Tuition.PaidDate)
+            var tuition = JsonConvert.DeserializeObject<TuitionInput>(input.Tuition);
+            if (tuition is not null)
             {
-                throw new Exception("Due Date need to be greater than Paid Date!!!");
-            }
+                if (tuition.DueDate <= tuition.PaidDate)
+                {
+                    throw new Exception("Due Date need to be greater than Paid Date!!!");
+                }
 
-            var newTuition = _mapper.Map<Tuition>(input.Tuition);
-            newTuition.StudentId = newStudent.Id;
-            _tuitionRepository.AddNewTuition(newTuition);
+                var newTuition = _mapper.Map<Tuition>(tuition);
+                newTuition.StudentId = newStudent.Id;
+                _tuitionRepository.AddNewTuition(newTuition);
+            }
         }
 
         if (input.Timetables is not null)
         {
-            var newStuTimes = input.Timetables
-                .Select(timetable => new StudentTimetable
-                {
-                    StudentId = newStudent.Id,
-                    TimeTableId = timetable.TimetableId,
-                    CreatedAt = DateTime.Now,
-                    ModifiedAt = DateTime.Now
-                }).ToList();
-            _studentRepository.AddStudentTimetables(newStuTimes);
+            var timetables = JsonConvert.DeserializeObject<List<TimetableInput>>(input.Timetables);
+            if (timetables is not null)
+            {
+                var newStuTimes = timetables
+                    .Select(timetable => new StudentTimetable
+                    {
+                        StudentId = newStudent.Id,
+                        TimeTableId = timetable.TimetableId,
+                        CreatedAt = DateTime.Now,
+                        ModifiedAt = DateTime.Now
+                    }).ToList();
+                _studentRepository.AddStudentTimetables(newStuTimes);
+            }
         }
 
         return new ApiResponseModel
@@ -78,7 +93,7 @@ public class StudentService : IStudentService
         };
     }
 
-    public ApiResponseModel UpdateStudent(int studentId, UpdateStudentInput input)
+    public async Task<ApiResponseModel> UpdateStudent(int studentId, UpdateStudentInput input)
     {
         var existedStudent = _studentRepository.GetStudentInfoByStudentId(studentId);
         if (existedStudent is null)
@@ -87,6 +102,17 @@ public class StudentService : IStudentService
         }
 
         // update student
+        if (input.StudentImg is null || input.StudentImg.Length == 0)
+        {
+            throw new Exception("Invalid File!");
+        }
+
+        using var memoryStream = new MemoryStream();
+        await input.StudentImg.CopyToAsync(memoryStream);
+        var imageBytes = memoryStream.ToArray();
+        var base64String = Convert.ToBase64String(imageBytes);
+
+        existedStudent.StudentImg = $"data:image/jpg;base64,{base64String}";
         existedStudent.FullName = input.FullName;
         existedStudent.Dob = input.Dob;
         existedStudent.Gender = input.Gender.Equals("Male");

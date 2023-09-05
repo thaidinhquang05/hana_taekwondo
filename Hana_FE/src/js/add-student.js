@@ -1,4 +1,12 @@
 $(() => {
+	$(document).ajaxStart(() => {
+		$(".loading-div").show();
+	});
+
+	$(document).ajaxStop(() => {
+		$(".loading-div").hide();
+	});
+
 	renderTimetables();
 
 	$("#inputPaidDate").change(function () {
@@ -49,20 +57,32 @@ $(() => {
 			});
 		});
 
-		let student = {
-			fullName: $("#inputStudentName").val(),
-			dob: $("#inputBirthday").val(),
-			gender: $("#inlineRadio1").is(":checked") ? true : false,
-			parentName: $("#inputParent").val(),
-			phone: $("#inputPhone").val(),
-			tuition: tuition.paidDate === "" ? null : tuition,
-			timetables: timetables.length == 0 ? null : timetables,
-		};
+		let fileInput = document.getElementById("studentImgInput");
+		let file = fileInput.files[0];
+
+		let formData = new FormData();
+		formData.append("studentImg", file);
+		formData.append("fullName", $("#inputStudentName").val());
+		formData.append("dob", $("#inputBirthday").val());
+		formData.append(
+			"gender",
+			$("#inlineRadio1").is(":checked") ? true : false
+		);
+		formData.append("parentName", $("#inputParent").val());
+		formData.append("phone", $("#inputPhone").val());
+		formData.append(
+			"tuition",
+			tuition.paidDate === "" ? null : JSON.stringify(tuition)
+		);
+		formData.append(
+			"timetables",
+			timetables.length > 0 ? JSON.stringify(timetables) : null
+		);
 
 		if (
-			student.fullName === "" ||
-			student.dob === "" ||
-			student.parentName == ""
+			$("#inputStudentName").val() === "" ||
+			$("#inputBirthday").val() === "" ||
+			$("#inputParent").val() == ""
 		) {
 			$.toast({
 				heading: "Warning!!!",
@@ -72,7 +92,7 @@ $(() => {
 				showHideTransition: "plain",
 			});
 		} else {
-			addStudent(student);
+			addStudent(formData);
 		}
 	});
 });
@@ -80,12 +100,13 @@ $(() => {
 function addStudent(student) {
 	$.ajax({
 		url: `${API_START_URL}/api/Student/AddNewStudent`,
-		method: "POST",
-		contentType: "application/json",
-		data: JSON.stringify(student),
+		type: "POST",
+		data: student,
+		contentType: false,
+		processData: false,
 		success: (response) => {
 			$.toast({
-				heading: "Success!",
+				heading: "Added New Student Successfully!",
 				text: response.message,
 				icon: "success",
 				position: "top-right",
@@ -143,4 +164,16 @@ function renderTimetables() {
 			});
 		},
 	});
+}
+
+function readImg(input) {
+	if (input.files && input.files[0]) {
+		var reader = new FileReader();
+
+		reader.onload = function (e) {
+			$("#studentImg").attr("src", e.target.result);
+		};
+
+		reader.readAsDataURL(input.files[0]);
+	}
 }

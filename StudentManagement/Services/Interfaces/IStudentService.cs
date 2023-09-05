@@ -9,9 +9,9 @@ public interface IStudentService
 
     StudentInfoOutput GetStudentInfo(int studentId);
 
-    ApiResponseModel AddNewStudent(NewStudentInput input);
+    Task<ApiResponseModel> AddNewStudent(NewStudentInput input);
 
-    ApiResponseModel UpdateStudent(int studentId, UpdateStudentInput input);
+    Task<ApiResponseModel> UpdateStudent(int studentId, UpdateStudentInput input);
 
     void DeleteStudent(int studentId);
     

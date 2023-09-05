@@ -83,16 +83,20 @@ $(() => {
 			confirmButtonText: "Save",
 		}).then((result) => {
 			if (result.isConfirmed) {
-				let student = {
-					fullName: $("#inputStudentName").val(),
-					dob: $("#inputBirthday").val(),
-					gender: $("#inlineRadio1").is(":checked")
-						? "Male"
-						: "Female",
-					parentName: $("#inputParent").val(),
-					phone: $("#inputPhone").val(),
-				};
-				updateStudent(student, studentId);
+				let fileInput = document.getElementById("studentImg");
+				let file = fileInput.files[0];
+
+				let formData = new FormData();
+				formData.append("studentImg", file);
+				formData.append("fullName", $("#inputStudentName").val());
+				formData.append("dob", $("#inputBirthday").val());
+				formData.append(
+					"gender",
+					$("#inlineRadio1").is(":checked") ? "Male" : "Female"
+				);
+				formData.append("parentName", $("#inputParent").val());
+				formData.append("phone", $("#inputPhone").val());
+				updateStudent(formData, studentId);
 			}
 		});
 	});
@@ -192,6 +196,9 @@ function loadStudentInfo(studentId) {
 			studentData.gender == "Male"
 				? $("#inlineRadio1").prop("checked", true)
 				: $("#inlineRadio2").prop("checked", true);
+			if (studentData.studentImg !== null) {
+				$(".img-account-profile").attr("src", studentData.studentImg);
+			}
 		},
 		error: (xhr) => {
 			window.location.href = "../../public/404.html";
@@ -306,7 +313,15 @@ function loadTuitionHistory(studentId) {
 			{ data: "id" },
 			{ data: "paidDate" },
 			{ data: "dueDate" },
-			{ data: "actualAmount", orderable: false },
+			{
+				data: "actualAmount",
+				orderable: false,
+				render: (actualAmount) =>
+					`${new Intl.NumberFormat("vi-VN", {
+						style: "currency",
+						currency: "VND",
+					}).format(actualAmount)}`,
+			},
 			{ data: "content", orderable: false },
 			{ data: "note", orderable: false },
 			{
@@ -338,12 +353,13 @@ function updateStudent(student, id) {
 	$.ajax({
 		url: `${API_START_URL}/api/Student/UpdateStudent/${id}`,
 		method: "PUT",
-		contentType: "application/json",
-		data: JSON.stringify(student),
+		data: student,
+		contentType: false,
+		processData: false,
 		success: (data) => {
 			$.toast({
 				heading: "Updated Successfully!!!",
-				text: data.data.message,
+				text: data.message,
 				icon: "success",
 				position: "top-right",
 				showHideTransition: "plain",
@@ -445,4 +461,16 @@ function updateTuition(studentId, tuitionId, tuition) {
 			});
 		},
 	});
+}
+
+function readImg(input) {
+	if (input.files && input.files[0]) {
+		var reader = new FileReader();
+
+		reader.onload = function (e) {
+			$(".img-account-profile").attr("src", e.target.result);
+		};
+
+		reader.readAsDataURL(input.files[0]);
+	}
 }

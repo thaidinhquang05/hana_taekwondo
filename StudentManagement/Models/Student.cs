@@ -19,6 +19,7 @@ namespace StudentManagement.Models
         public string? Phone { get; set; }
         public DateTime? CreatedAt { get; set; }
         public DateTime? ModifiedAt { get; set; }
+        public string? StudentImg { get; set; }
 
         public virtual ICollection<StudentClass> StudentClasses { get; set; }
         public virtual ICollection<StudentTimetable> StudentTimetables { get; set; }
