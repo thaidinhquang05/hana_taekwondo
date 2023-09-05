@@ -68,7 +68,7 @@ public class StudentController : Controller
     }
 
     [HttpPost]
-    public ActionResult<ApiResponseModel> AddNewStudent([FromBody] NewStudentInput input)
+    public ActionResult<ApiResponseModel> AddNewStudent([FromForm] NewStudentInput input)
     {
         try
         {
@@ -87,30 +87,11 @@ public class StudentController : Controller
     }
 
     [HttpPut("{studentId:int}")]
-    public ActionResult<ApiResponseModel> UpdateStudent([FromBody] UpdateStudentInput input, int studentId)
+    public async Task<ActionResult<ApiResponseModel>> UpdateStudent([FromForm] UpdateStudentInput input, int studentId)
     {
         try
         {
-            var result = _studentService.UpdateStudent(studentId, input);
-            return Ok(result);
-        }
-        catch (Exception ex)
-        {
-            return Conflict(new ApiResponseModel
-            {
-                Code = StatusCodes.Status409Conflict,
-                Message = ex.Message,
-                IsSuccess = false
-            });
-        }
-    }
-
-    [HttpPut("{studentId:int}")]
-    public async Task<ActionResult<ApiResponseModel>> UploadStudentImg(int studentId, IFormFile studentImg)
-    {
-        try
-        {
-            var result = await _studentService.UploadStudentImg(studentId, studentImg);
+            var result = await _studentService.UpdateStudent(studentId, input);
             return Ok(result);
         }
         catch (Exception ex)
