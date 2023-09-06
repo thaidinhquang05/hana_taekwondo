@@ -15,5 +15,7 @@ namespace StudentManagement.Models
         public DateTime? ModifiedAt { get; set; }
         public string? Content { get; set; }
         public string? Note { get; set; }
+
+        public virtual Student Student { get; set; } = null!;
     }
 }

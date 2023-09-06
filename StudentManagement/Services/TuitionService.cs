@@ -2,6 +2,7 @@
 using StudentManagement.DTOs.Input;
 using StudentManagement.DTOs.Output;
 using StudentManagement.Models;
+using StudentManagement.Repositories;
 using StudentManagement.Repositories.Interfaces;
 using StudentManagement.Services.Interfaces;
 
@@ -10,11 +11,13 @@ namespace StudentManagement.Services;
 public class TuitionService : ITuitionService
 {
     private readonly ITuitionRepository _repository;
+    private readonly IStudentRepository _studentRepository;
     private readonly IMapper _mapper;
 
-    public TuitionService(ITuitionRepository repository, IMapper mapper)
+    public TuitionService(ITuitionRepository repository, IStudentRepository studentRepository, IMapper mapper)
     {
         _repository = repository;
+        _studentRepository = studentRepository;
         _mapper = mapper;
     }
 
@@ -93,5 +96,30 @@ public class TuitionService : ITuitionService
         tuition.Content = input.Content;
         tuition.Note = input.Note;
         _repository.Update(tuition);
+    }
+
+    public List<DeadlineTutionOutput> DeadlineTution()
+    {
+        try
+        {
+            List<DeadlineTutionOutput> deadlineTutionOutputs = new List<DeadlineTutionOutput>();
+            List<Student> students = _studentRepository.GetUpcomingDeadlinesStudent();
+
+            foreach (var item in students)
+            {
+                DeadlineTutionOutput deadlineTutionOutput = new();
+                deadlineTutionOutput.FullName = item.FullName;
+                deadlineTutionOutput.StudentId = item.Id;
+                deadlineTutionOutput.DueDate = _repository.GetTuitionDeadlineByStudentId(item.Id).DueDate.ToShortDateString();
+                deadlineTutionOutput.NotificationTime = _repository.GetTuitionDeadlineByStudentId(item.Id).DueDate.AddDays(-5);
+                deadlineTutionOutputs.Add(deadlineTutionOutput);
+            }
+
+            return deadlineTutionOutputs;
+        }
+        catch
+        {
+            throw new Exception("Not Found Any Record!");
+        }
     }
 }

@@ -94,4 +94,15 @@ public class StudentRepository : Repository<Student>, IStudentRepository
 
         return result;
     }
+
+    public List<Student> GetUpcomingDeadlinesStudent()
+    {
+        DateTime currentDate = DateTime.Now;
+
+        DateTime deadlineDate = currentDate.AddDays(-5);
+
+        var upcomingDeadlines = _context.Students.Where(s => s.Tuitions.Any(t => t.DueDate >= deadlineDate && t.DueDate <= currentDate)).ToList();
+
+        return upcomingDeadlines;
+    }
 }

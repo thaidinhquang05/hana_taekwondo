@@ -9,6 +9,7 @@ namespace StudentManagement.Models
         {
             StudentClasses = new HashSet<StudentClass>();
             StudentTimetables = new HashSet<StudentTimetable>();
+            Tuitions = new HashSet<Tuition>();
         }
 
         public int Id { get; set; }
@@ -22,5 +23,6 @@ namespace StudentManagement.Models
 
         public virtual ICollection<StudentClass> StudentClasses { get; set; }
         public virtual ICollection<StudentTimetable> StudentTimetables { get; set; }
+        public virtual ICollection<Tuition> Tuitions { get; set; }
     }
 }

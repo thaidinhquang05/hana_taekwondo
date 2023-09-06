@@ -38,7 +38,7 @@ namespace StudentManagement.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Class>(entity =>
-            {
+            {   
                 entity.ToTable("class");
 
                 entity.Property(e => e.Id).HasColumnName("id");
@@ -260,6 +260,12 @@ namespace StudentManagement.Models
                     .HasColumnName("paid_date");
 
                 entity.Property(e => e.StudentId).HasColumnName("student_id");
+
+                entity.HasOne(d => d.Student)
+                    .WithMany(p => p.Tuitions)
+                    .HasForeignKey(d => d.StudentId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tuition_student");
             });
 
             modelBuilder.Entity<User>(entity =>

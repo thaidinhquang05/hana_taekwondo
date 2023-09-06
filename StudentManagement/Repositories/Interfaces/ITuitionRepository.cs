@@ -11,4 +11,6 @@ public interface ITuitionRepository : IRepository<Tuition>
     void DeleteTuition(List<Tuition> entities);
 
     Tuition GetTuitionById(int tuitionId);
+
+    public Tuition GetTuitionDeadlineByStudentId(int studentId);
 }

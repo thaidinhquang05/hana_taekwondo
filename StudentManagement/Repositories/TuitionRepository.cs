@@ -44,4 +44,17 @@ public class TuitionRepository : Repository<Tuition>, ITuitionRepository
         _context.Tuitions.Update(entity);
         await _context.SaveChangesAsync();
     }
+
+    public Tuition GetTuitionDeadlineByStudentId(int studentId)
+    {
+        DateTime currentDate = DateTime.Now;
+
+        DateTime deadlineDate = currentDate.AddDays(-5);
+
+        var result = _context.Tuitions
+            .Where(t => t.StudentId == studentId && t.DueDate >= deadlineDate && t.DueDate <= currentDate)
+            .FirstOrDefault();
+
+        return result;
+    }
 }
