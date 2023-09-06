@@ -52,7 +52,7 @@ function loadStudentList() {
 						<i class="fas fa-user-edit"></i>
 					</a>
 					<a href='#' style='color: red; margin-left: 10px'
-						onclick='deleteStudent(${id})'
+						onclick='return deleteStudent(${id})'
 					>
 						<i class="fas fa-trash"></i>
 					</a>`,
@@ -112,4 +112,6 @@ function deleteStudent(studentId) {
 			});
 		}
 	});
+
+	return false;
 }

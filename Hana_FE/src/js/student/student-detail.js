@@ -1,4 +1,4 @@
-$(() => {
+$(async () => {
 	$(document).ajaxStart(() => {
 		$(".loading-div").show();
 	});
@@ -16,7 +16,7 @@ $(() => {
 
 	loadStudentInfo(studentId);
 	renderTimetables();
-	loadStudentTimetable(studentId);
+	await loadStudentTimetable(studentId);
 	loadTuitionHistory(studentId);
 
 	let date = new Date();
@@ -251,8 +251,8 @@ function renderTimetables() {
 	});
 }
 
-function loadStudentTimetable(studentId) {
-	$.ajax({
+async function loadStudentTimetable(studentId) {
+	await $.ajax({
 		url: `${API_START_URL}/api/Timetable/GetTimetablesByStudentId/${studentId}`,
 		method: "GET",
 		contentType: "application/json",
@@ -307,7 +307,20 @@ function updateStudentTimetables(studentId, timetables) {
 
 function loadTuitionHistory(studentId) {
 	$("#dataTable").DataTable({
-		ajax: `${API_START_URL}/api/Tuition/GetTuitionByStudentId/${studentId}`,
+		ajax: {
+			url: `${API_START_URL}/api/Tuition/GetTuitionByStudentId/${studentId}`,
+			type: "GET",
+			contentType: "application/json",
+			error: function (xhr) {
+				$.toast({
+					heading: "Error",
+					text: "Have something wrong while load tuition list!!!",
+					icon: "error",
+					position: "top-right",
+					showHideTransition: "plain",
+				});
+			},
+		},
 		destroy: true,
 		columns: [
 			{ data: "id" },
@@ -333,6 +346,11 @@ function loadTuitionHistory(studentId) {
 						data-target="#updateTuitionModal"
 					>
 						<i class="fas fa-edit"></i>
+					</a>
+					<a href='#' style='color: red; margin-left: 10px'
+						onclick='return deleteTuition(${id})'
+					>
+						<i class="fas fa-trash"></i>
 					</a>`,
 			},
 		],
@@ -461,6 +479,51 @@ function updateTuition(studentId, tuitionId, tuition) {
 			});
 		},
 	});
+}
+
+function deleteTuition(tuitionId) {
+	Swal.fire({
+		title: "Are you sure?",
+		text: "You won't be able to revert this!",
+		icon: "warning",
+		showCancelButton: true,
+		confirmButtonColor: "#3085d6",
+		cancelButtonColor: "#d33",
+		confirmButtonText: "Yes, delete it!",
+	}).then((result) => {
+		if (result.isConfirmed) {
+			$.ajax({
+				url: `${API_START_URL}/api/Tuition/DeleteTuitionRecord/${tuitionId}`,
+				method: "DELETE",
+				contentType: "application/json",
+				success: (response) => {
+					$.toast({
+						heading: "Success!",
+						text: response.message,
+						icon: "success",
+						position: "top-right",
+						showHideTransition: "plain",
+					});
+					const urlParam = new URLSearchParams(
+						window.location.search
+					);
+					const studentId = urlParam.get("id");
+					loadTuitionHistory(studentId);
+				},
+				error: (xhr) => {
+					$.toast({
+						heading: "Error",
+						text: xhr.responseJSON.message,
+						icon: "error",
+						position: "top-right",
+						showHideTransition: "plain",
+					});
+				},
+			});
+		}
+	});
+
+	return false;
 }
 
 function readImg(input) {

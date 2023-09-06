@@ -68,4 +68,34 @@ public class SpendingRepository : Repository<Spending>, ISpendingRepository
             SpendingAnnual = annual
         };
     }
+
+    public IEnumerable<Spending> GetListSpending()
+    {
+        var result = _context.Spendings.ToList();
+        return result;
+    }
+
+    public Spending GetSpendingById(int spendingId)
+    {
+        var spending = _context.Spendings.FirstOrDefault(x => x.Id == spendingId);
+        return spending;
+    }
+
+    public override async Task Add(Spending entity)
+    {
+        _context.Spendings.Add(entity);
+        await _context.SaveChangesAsync();
+    }
+
+    public override async Task Update(Spending entity)
+    {
+        _context.Spendings.Update(entity);
+        await _context.SaveChangesAsync();
+    }
+
+    public override async Task Delete(Spending entity)
+    {
+        _context.Spendings.Remove(entity);
+        await _context.SaveChangesAsync();
+    }
 }

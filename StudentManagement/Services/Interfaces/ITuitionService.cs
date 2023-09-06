@@ -13,5 +13,7 @@ public interface ITuitionService
 
     void UpdateTuition(int tuitionId, TuitionInput input);
 
+    void DeleteTuitionRecord(int tuitionId);
+
     EarningValueOutput GetEarningValueByMonth(int month, int year);
 }
