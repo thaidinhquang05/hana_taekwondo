@@ -78,7 +78,18 @@ class Sidebar extends HTMLElement {
                 </li>
 
                 <!-- Divider -->
-                <hr class="sidebar-divider d-none d-md-block" />
+                <hr class="sidebar-divider" />
+
+                <!-- Heading -->
+				<div class="sidebar-heading">Spending</div>
+
+                <!-- Nav Item - Spending -->
+				<li class="nav-item">
+					<a class="nav-link" href="../../public/spending/spending-management.html">
+                        <i class="fas fa-dollar-sign"></i>
+						<span>Spending Management</span></a
+					>
+				</li>
 
                 <!-- Sidebar Toggler (Sidebar) -->
                 <div class="text-center d-none d-md-inline">

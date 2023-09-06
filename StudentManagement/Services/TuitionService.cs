@@ -95,6 +95,17 @@ public class TuitionService : ITuitionService
         _repository.Update(tuition);
     }
 
+    public void DeleteTuitionRecord(int tuitionId)
+    {
+        var tuition = _repository.GetTuitionById(tuitionId);
+        if (tuition is null)
+        {
+            throw new Exception("This record is not exist!!!");
+        }
+
+        _repository.Delete(tuition);
+    }
+
     public EarningValueOutput GetEarningValueByMonth(int month, int year)
     {
         var earningValue = _repository.GetEarningValueByMonth(month, year);

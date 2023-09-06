@@ -80,4 +80,10 @@ public class TuitionRepository : Repository<Tuition>, ITuitionRepository
         _context.Tuitions.Update(entity);
         await _context.SaveChangesAsync();
     }
+
+    public override async Task Delete(Tuition entity)
+    {
+        _context.Tuitions.Remove(entity);
+        await _context.SaveChangesAsync();
+    }
 }
