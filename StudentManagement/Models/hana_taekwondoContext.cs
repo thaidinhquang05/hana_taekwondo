@@ -302,6 +302,12 @@ namespace StudentManagement.Models
                     .HasColumnName("paid_date");
 
                 entity.Property(e => e.StudentId).HasColumnName("student_id");
+
+                entity.HasOne(d => d.Student)
+                    .WithMany(p => p.Tuitions)
+                    .HasForeignKey(d => d.StudentId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("tuition_student_id_fk");
             });
 
             modelBuilder.Entity<User>(entity =>
