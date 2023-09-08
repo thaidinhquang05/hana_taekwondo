@@ -89,29 +89,24 @@ async function getEarningValue(month, year) {
     return data;
 }
 
-let totalNotifications = 0;
-$.ajax({
-    url: `${API_START_URL}/api/Tuition/GetDeadlineTutions`,
-    type: "GET",
-    contentType: "application/json",
-    success: function (data) {
-        const students = data.data;
-        totalNotifications = students.length;
-        $("#totalNotifications").text(totalNotifications);
-    },
-});
-
 let toastDisplayed = false;
 let lastDisplayedDate = null;
 
 const now = new Date();
 if (!toastDisplayed || lastDisplayedDate.getDate() !== now.getDate()) {
-    $.toast({
-        heading: "Notification",
-        text: `You have ${totalNotifications} notifications !!!`,
-        icon: "notification",
-        position: "top-right",
-        showHideTransition: "plain",
+    $.ajax({
+        url: `${API_START_URL}/api/Tuition/GetDeadlineTutions`,
+        type: "GET",
+        contentType: "application/json",
+        success: function (data) {
+            $.toast({
+                heading: "Notification",
+                text: `You have ${data.data.length} notifications !!!`,
+                icon: "notification",
+                position: "top-right",
+                showHideTransition: "plain",
+            });
+        },
     });
 
     toastDisplayed = true;
