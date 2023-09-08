@@ -1,3 +1,4 @@
+const notification = 0;
 $(() => {
 	$(document).ajaxStart(() => {
 		$(".loading-div").show();
@@ -9,7 +10,7 @@ $(() => {
 
 	loadNotificationList();
 
-	setInterval(updateNotificationTimes, 60000);
+	setInterval(getNotificationTime(notification), 60000);
 });
 
 function loadNotificationList() {
@@ -32,7 +33,7 @@ function loadNotificationList() {
 					row.innerHTML = `
                         <td class="border-less">
                             <img class="img-profile rounded-circle"
-                                src="${notification.avatar}" style="width: 5%;" />
+                                src="${notification.studentImg}" style="width: 5%;" />
 								</td>
 								<td class="border-less">
                             <span>We would like to remind you that the final 
@@ -72,16 +73,8 @@ function loadNotificationList() {
 	});
 }
 
-function updateNotificationTimes() {
-	const notificationTimeElements = document.querySelectorAll(".notification-time");
-	notificationTimeElements.forEach((element) => {
-		const notificationTime = new Date(element.dataset.notificationTime);
-		element.innerText = getNotificationTime(notificationTime);
-	});
-}
-
 function getNotificationTime(notificationTime) {
-	const notification = new Date(notificationTime);
+	let notification = new Date(notificationTime);
 	const currentTime = new Date();
 	var elapsedMinutes = Math.floor((currentTime - notification) / 60000);
 	if (elapsedMinutes === 0) {

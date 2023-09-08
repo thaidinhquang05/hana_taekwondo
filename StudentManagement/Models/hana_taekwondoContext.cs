@@ -19,6 +19,7 @@ namespace StudentManagement.Models
         public virtual DbSet<Class> Classes { get; set; } = null!;
         public virtual DbSet<ClassTimetable> ClassTimetables { get; set; } = null!;
         public virtual DbSet<Slot> Slots { get; set; } = null!;
+        public virtual DbSet<Spending> Spendings { get; set; } = null!;
         public virtual DbSet<Student> Students { get; set; } = null!;
         public virtual DbSet<StudentClass> StudentClasses { get; set; } = null!;
         public virtual DbSet<StudentTimetable> StudentTimetables { get; set; } = null!;
@@ -31,14 +32,14 @@ namespace StudentManagement.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("server = localhost; database = hana_taekwondo; uid = sa; password = 123456789;TrustServerCertificate=True");
+                optionsBuilder.UseSqlServer("server =(local); database = hana_taekwondo;uid=sa;pwd=123;Trust Server Certificate=true;");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Class>(entity =>
-            {   
+            {
                 entity.ToTable("class");
 
                 entity.Property(e => e.Id).HasColumnName("id");
@@ -109,6 +110,43 @@ namespace StudentManagement.Models
                     .HasColumnName("desc");
             });
 
+            modelBuilder.Entity<Spending>(entity =>
+            {
+                entity.ToTable("spending");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Another)
+                    .HasColumnType("decimal(18, 0)")
+                    .HasColumnName("another");
+
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("created_at");
+
+                entity.Property(e => e.Electric)
+                    .HasColumnType("decimal(18, 0)")
+                    .HasColumnName("electric");
+
+                entity.Property(e => e.ModifiedAt)
+                    .HasColumnType("datetime")
+                    .HasColumnName("modified_at");
+
+                entity.Property(e => e.Note).HasColumnName("note");
+
+                entity.Property(e => e.PaidDate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("paid_date");
+
+                entity.Property(e => e.Rent)
+                    .HasColumnType("decimal(18, 0)")
+                    .HasColumnName("rent");
+
+                entity.Property(e => e.Water)
+                    .HasColumnType("decimal(18, 0)")
+                    .HasColumnName("water");
+            });
+
             modelBuilder.Entity<Student>(entity =>
             {
                 entity.ToTable("student");
@@ -138,8 +176,12 @@ namespace StudentManagement.Models
                     .HasColumnName("parent_name");
 
                 entity.Property(e => e.Phone)
-                    .HasMaxLength(1)
+                    .HasMaxLength(255)
                     .HasColumnName("phone");
+
+                entity.Property(e => e.StudentImg)
+                    .IsUnicode(false)
+                    .HasColumnName("student_img");
             });
 
             modelBuilder.Entity<StudentClass>(entity =>

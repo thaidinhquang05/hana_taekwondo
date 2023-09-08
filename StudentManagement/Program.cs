@@ -80,6 +80,7 @@ builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<IClassService, ClassService>();
 builder.Services.AddScoped<ITuitionService, TuitionService>();
 builder.Services.AddScoped<ITimetableService, TimetableService>();
+builder.Services.AddScoped<ISpendingService, SpendingService>();
 
 builder.Services.AddScoped<ILogicHandler, LogicHandler>();
 
@@ -90,6 +91,7 @@ builder.Services.AddScoped<IClassRepository, ClassRepository>();
 builder.Services.AddScoped<ITuitionRepository, TuitionRepository>();
 builder.Services.AddScoped<IClassRepository, ClassRepository>();
 builder.Services.AddScoped<ITimetableRepository, TimetableRepository>();
+builder.Services.AddScoped<ISpendingRepository, SpendingRepository>();
 
 var app = builder.Build();
 

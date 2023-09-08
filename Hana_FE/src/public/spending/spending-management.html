@@ -10,9 +10,9 @@
 		<meta name="description" content="" />
 		<meta name="author" content="" />
 
-		<title>Hana Taekwondo - Student Detail</title>
+		<title>Hana Taekwondo - Spending Management</title>
 
-		<!-- Custom fonts for this template-->
+		<!-- Custom fonts for this template -->
 		<link
 			href="../../vendor/fontawesome-free/css/all.min.css"
 			rel="stylesheet"
@@ -23,14 +23,16 @@
 			rel="stylesheet"
 		/>
 
-		<!-- Custom styles for this template-->
+		<!-- Custom styles for this template -->
 		<link href="../../css/sb-admin-2.min.css" rel="stylesheet" />
+
+		<!-- Custom styles for this page -->
 		<link
-			href="../../vendor/toaster/jquery.toast.min.css"
+			href="../../vendor/datatables/dataTables.bootstrap4.min.css"
 			rel="stylesheet"
 		/>
 		<link
-			href="../../vendor/datatables/dataTables.bootstrap4.min.css"
+			href="../../vendor/toaster/jquery.toast.min.css"
 			rel="stylesheet"
 		/>
 	</head>
@@ -52,241 +54,27 @@
 
 					<!-- Begin Page Content -->
 					<div class="container-fluid">
-						<div class="loading-div">
+						<!-- <div class="loading-div">
 							<img src="../../img/Rolling-1s-200px.gif" />
-						</div>
+						</div> -->
 						<!-- Page Heading -->
-						<h1 class="h3 mb-4 text-gray-800">Student Details</h1>
-
-						<div class="card shadow mb-4">
-							<!-- Account details card-->
-							<div class="card-header">
-								<h6 class="m-0 font-weight-bold text-primary">
-									Student Information
-								</h6>
-							</div>
-							<div class="card-body">
-								<form>
-									<!-- Form Group -->
-									<div class="mb-3">
-										<label
-											class="small mb-1"
-											for="inputStudentName"
-											>Student Name</label
-										>
-										<input
-											class="form-control"
-											id="inputStudentName"
-											type="text"
-											placeholder="Enter student's name..."
-										/>
-									</div>
-									<!-- Form Group -->
-									<div class="mb-3">
-										<label
-											class="small mb-1"
-											for="inputParent"
-											>Parent</label
-										>
-										<input
-											class="form-control"
-											id="inputParent"
-											type="text"
-											placeholder="Enter student's parent name..."
-										/>
-									</div>
-									<!-- Form Row-->
-									<div class="row gx-3 mb-3">
-										<!-- Form Group (phone number)-->
-										<div class="col-md-4">
-											<label
-												class="small mb-1"
-												for="inputPhone"
-												>Phone number</label
-											>
-											<input
-												class="form-control"
-												id="inputPhone"
-												type="tel"
-												placeholder="Enter phone number..."
-											/>
-										</div>
-										<!-- Form Group (birthday)-->
-										<div class="col-md-4">
-											<label
-												class="small mb-1"
-												for="inputBirthday"
-												>Birthday</label
-											>
-											<input
-												class="form-control"
-												id="inputBirthday"
-												type="date"
-												name="birthday"
-												placeholder="Enter your birthday"
-											/>
-										</div>
-										<div class="col-md-4">
-											<label
-												class="small mb-1"
-												for="inputGender"
-												>Gender</label
-											>
-											<div>
-												<div
-													class="form-check form-check-inline"
-												>
-													<input
-														class="form-check-input"
-														type="radio"
-														name="inlineRadioOptions"
-														id="inlineRadio1"
-														value="Male"
-													/>
-													<label
-														class="form-check-label"
-														for="inlineRadio1"
-														>Male</label
-													>
-												</div>
-												<div
-													class="form-check form-check-inline"
-												>
-													<input
-														class="form-check-input"
-														type="radio"
-														name="inlineRadioOptions"
-														id="inlineRadio2"
-														value="Female"
-													/>
-													<label
-														class="form-check-label"
-														for="inlineRadio2"
-														>Female</label
-													>
-												</div>
-											</div>
-										</div>
-									</div>
-									<!-- Save changes button-->
-									<button
-										id="update-btn"
-										class="btn btn-primary"
-										type="button"
-									>
-										Save changes
-									</button>
-								</form>
-							</div>
-						</div>
-
-						<div class="card shadow mb-4">
-							<!-- Account details card-->
-							<div class="card-header">
-								<h6 class="m-0 font-weight-bold text-primary">
-									Schedule
-								</h6>
-							</div>
-							<div class="card-body">
-								<table class="table">
-									<thead>
-										<tr>
-											<th
-												scope="col"
-												style="text-align: center"
-											>
-												#
-											</th>
-											<th
-												scope="col"
-												style="text-align: center"
-											>
-												Monday
-											</th>
-											<th
-												scope="col"
-												style="text-align: center"
-											>
-												Tuesday
-											</th>
-											<th
-												scope="col"
-												style="text-align: center"
-											>
-												Wednesday
-											</th>
-											<th
-												scope="col"
-												style="text-align: center"
-											>
-												Thursday
-											</th>
-											<th
-												scope="col"
-												style="text-align: center"
-											>
-												Friday
-											</th>
-											<th
-												scope="col"
-												style="text-align: center"
-											>
-												Saturday
-											</th>
-											<th
-												scope="col"
-												style="text-align: center"
-											>
-												Sunday
-											</th>
-										</tr>
-									</thead>
-									<tbody id="timetable"></tbody>
-								</table>
-
-								<button
-									id="update-timetable-btn"
-									class="btn btn-primary"
-									type="button"
-								>
-									Save changes
-								</button>
-							</div>
-						</div>
+						<h1 class="h3 mb-2 text-gray-800">Spending Records</h1>
 
 						<!-- DataTales Example -->
 						<div class="card shadow mb-4">
 							<div class="card-header py-3">
-								<div
-									style="
-										display: flex;
-										justify-content: space-between;
-									"
+								<a
+									id="add-btn"
+									href="#"
+									class="btn btn-primary btn-icon-split"
+									data-toggle="modal"
+									data-target="#addSpendingModal"
 								>
-									<h6
-										class="m-0 font-weight-bold text-primary"
-										style="
-											display: flex;
-											align-items: center;
-										"
-									>
-										Tuition History
-									</h6>
-									<a
-										id="add-btn"
-										href="#"
-										class="btn btn-primary btn-icon-split"
-										data-toggle="modal"
-										data-target="#addTuitionModal"
-									>
-										<span class="icon text-white-50">
-											<i class="fas fa-plus-circle"></i>
-										</span>
-										<span class="text"
-											>Add New Tuition</span
-										>
-									</a>
-								</div>
+									<span class="icon text-white-50">
+										<i class="fas fa-plus-circle"></i>
+									</span>
+									<span class="text">Add New Spending</span>
+								</a>
 							</div>
 							<div class="card-body">
 								<div class="table-responsive">
@@ -298,25 +86,25 @@
 									>
 										<thead>
 											<tr>
-												<th>ID</th>
+												<th>Id</th>
+												<th>Electric</th>
+												<th>Water</th>
+												<th>Rent</th>
+												<th>Another</th>
 												<th>Paid Date</th>
-												<th>Due Date</th>
-												<th>Actual Amount</th>
-												<th>Content</th>
 												<th>Note</th>
 												<th></th>
 											</tr>
 										</thead>
-										<tbody></tbody>
 									</table>
 								</div>
 							</div>
 						</div>
 
-						<!-- Add New Tuition Modal-->
+						<!-- Add New Spending Modal-->
 						<div
 							class="modal fade"
-							id="addTuitionModal"
+							id="addSpendingModal"
 							tabindex="-1"
 							role="dialog"
 							aria-labelledby="exampleModalLabel"
@@ -329,7 +117,7 @@
 											class="modal-title"
 											id="exampleModalLabel"
 										>
-											Add New Tuition
+											Add New Spending
 										</h5>
 										<button
 											class="close"
@@ -344,10 +132,81 @@
 										<form>
 											<div class="form-group">
 												<label
+													for="electric"
+													class="col-form-label"
+													>Electric
+													<span style="color: red"
+														>(*)</span
+													>
+												</label>
+												<input
+													type="number"
+													class="form-control"
+													id="electric"
+													placeholder="Enter electric spending"
+													required
+												/>
+											</div>
+											<div class="form-group">
+												<label
+													for="water"
+													class="col-form-label"
+													>Water
+													<span style="color: red"
+														>(*)</span
+													>
+												</label>
+												<input
+													type="number"
+													class="form-control"
+													id="water"
+													placeholder="Enter water spending"
+													required
+												/>
+											</div>
+											<div class="form-group">
+												<label
+													for="rent"
+													class="col-form-label"
+													>Rent
+													<span style="color: red"
+														>(*)</span
+													>
+												</label>
+												<input
+													type="number"
+													class="form-control"
+													id="rent"
+													placeholder="Enter Rent spending"
+													required
+												/>
+											</div>
+											<div class="form-group">
+												<label
+													for="another"
+													class="col-form-label"
+													>Another
+													<span style="color: red"
+														>(*)</span
+													>
+												</label>
+												<input
+													type="number"
+													class="form-control"
+													id="another"
+													placeholder="Enter Another fee"
+													required
+												/>
+											</div>
+											<div class="form-group">
+												<label
 													for="paid-date"
 													class="col-form-label"
-													>Paid Date</label
-												>
+													>Paid Date
+													<span style="color: red"
+														>(*)</span
+													>
+												</label>
 												<input
 													type="date"
 													class="form-control"
@@ -357,65 +216,14 @@
 											</div>
 											<div class="form-group">
 												<label
-													for="due-date"
-													class="col-form-label"
-													>Due Date</label
-												>
-												<input
-													type="date"
-													class="form-control"
-													id="due-date"
-													required
-												/>
-											</div>
-											<div class="form-group">
-												<label
-													for="amount"
-													class="col-form-label"
-													>Amount</label
-												>
-												<input
-													type="number"
-													class="form-control"
-													id="amount"
-													required
-												/>
-											</div>
-											<div class="form-group">
-												<label
-													for="actual-amount"
-													class="col-form-label"
-													>Actual Amount</label
-												>
-												<input
-													type="number"
-													class="form-control"
-													id="actual-amount"
-													required
-												/>
-											</div>
-											<div class="form-group">
-												<label
-													for="content-text"
-													class="col-form-label"
-													>Content</label
-												>
-												<textarea
-													class="form-control"
-													id="content-text"
-													required
-												></textarea>
-											</div>
-											<div class="form-group">
-												<label
 													for="note-text"
 													class="col-form-label"
 													>Note</label
 												>
 												<textarea
+													type="number"
 													class="form-control"
 													id="note-text"
-													required
 												></textarea>
 											</div>
 										</form>
@@ -429,21 +237,21 @@
 											Cancel
 										</button>
 										<a
-											id="add-tuition-btn"
+											id="add-spending-btn"
 											class="btn btn-primary"
 											href="#"
-											data-dismiss="modal"
-											>Add</a
 										>
+											Add
+										</a>
 									</div>
 								</div>
 							</div>
 						</div>
 
-						<!-- Update Tuition Modal-->
+						<!-- Update Spending Modal-->
 						<div
 							class="modal fade"
-							id="updateTuitionModal"
+							id="updateSpendingModal"
 							tabindex="-1"
 							role="dialog"
 							aria-labelledby="exampleModalLabel"
@@ -456,7 +264,7 @@
 											class="modal-title"
 											id="exampleModalLabel"
 										>
-											Tuition Information
+											Spending Information
 										</h5>
 										<button
 											class="close"
@@ -471,14 +279,85 @@
 										<form>
 											<input
 												type="hidden"
-												id="tuitionInfoId"
+												id="spendingId"
 											/>
+											<div class="form-group">
+												<label
+													for="electric-update"
+													class="col-form-label"
+													>Electric
+													<span style="color: red"
+														>(*)</span
+													>
+												</label>
+												<input
+													type="number"
+													class="form-control"
+													id="electric-update"
+													placeholder="Enter electric spending"
+													required
+												/>
+											</div>
+											<div class="form-group">
+												<label
+													for="water-update"
+													class="col-form-label"
+													>Water
+													<span style="color: red"
+														>(*)</span
+													>
+												</label>
+												<input
+													type="number"
+													class="form-control"
+													id="water-update"
+													placeholder="Enter water spending"
+													required
+												/>
+											</div>
+											<div class="form-group">
+												<label
+													for="rent-update"
+													class="col-form-label"
+													>Rent
+													<span style="color: red"
+														>(*)</span
+													>
+												</label>
+												<input
+													type="number"
+													class="form-control"
+													id="rent-update"
+													placeholder="Enter Rent spending"
+													required
+												/>
+											</div>
+											<div class="form-group">
+												<label
+													for="another-update"
+													class="col-form-label"
+													>Another
+													<span style="color: red"
+														>(*)</span
+													>
+												</label>
+												<input
+													type="number"
+													class="form-control"
+													id="another-update"
+													placeholder="Enter Another fee"
+													required
+												/>
+											</div>
 											<div class="form-group">
 												<label
 													for="paid-date-update"
 													class="col-form-label"
-													>Paid Date</label
-												>
+													>Paid Date
+													<span style="color: red"
+														>(*)</span
+													>
+												</label>
 												<input
 													type="date"
 													class="form-control"
@@ -488,65 +367,14 @@
 											</div>
 											<div class="form-group">
 												<label
-													for="due-date-update"
-													class="col-form-label"
-													>Due Date</label
-												>
-												<input
-													type="date"
-													class="form-control"
-													id="due-date-update"
-													required
-												/>
-											</div>
-											<div class="form-group">
-												<label
-													for="amount-update"
-													class="col-form-label"
-													>Amount</label
-												>
-												<input
-													type="number"
-													class="form-control"
-													id="amount-update"
-													required
-												/>
-											</div>
-											<div class="form-group">
-												<label
-													for="actual-amount-update"
-													class="col-form-label"
-													>Actual Amount</label
-												>
-												<input
-													type="number"
-													class="form-control"
-													id="actual-amount-update"
-													required
-												/>
-											</div>
-											<div class="form-group">
-												<label
-													for="content-text-update"
-													class="col-form-label"
-													>Content</label
-												>
-												<textarea
-													class="form-control"
-													id="content-text-update"
-													required
-												></textarea>
-											</div>
-											<div class="form-group">
-												<label
 													for="note-text-update"
 													class="col-form-label"
 													>Note</label
 												>
 												<textarea
+													type="number"
 													class="form-control"
 													id="note-text-update"
-													required
 												></textarea>
 											</div>
 										</form>
@@ -560,7 +388,7 @@
 											Cancel
 										</button>
 										<a
-											id="update-tuition-btn"
+											id="update-spending-btn"
 											class="btn btn-primary"
 											href="#"
 											>Save Changes</a
@@ -597,14 +425,19 @@
 
 		<!-- Custom scripts for all pages-->
 		<script src="../../js/sb-admin-2.min.js"></script>
+
+		<!-- Page level plugins -->
 		<script src="../../vendor/datatables/jquery.dataTables.min.js"></script>
 		<script src="../../vendor/datatables/dataTables.bootstrap4.min.js"></script>
 		<script src="../../vendor/toaster/jquery.toast.min.js"></script>
+
 		<script src="../../js/jwt-decode.js"></script>
+		<script src="../../js/constants.js"></script>
+
 		<script src="../../js/components/sidebar.js"></script>
 		<script src="../../js/components/topbar.js"></script>
 		<script src="../../js/components/footer.js"></script>
-		<script src="../../js/constants.js"></script>
-		<script src="../../js/student-detail.js"></script>
+
+		<script src="../../js/spending/spending-management.js"></script>
 	</body>
 </html>

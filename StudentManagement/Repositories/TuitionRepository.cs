@@ -1,4 +1,5 @@
-﻿using StudentManagement.Models;
+﻿using StudentManagement.DTOs.Output;
+using StudentManagement.Models;
 using StudentManagement.Repositories.Interfaces;
 
 namespace StudentManagement.Repositories;
@@ -39,22 +40,72 @@ public class TuitionRepository : Repository<Tuition>, ITuitionRepository
         return tuition;
     }
 
+    public EarningValueOutput GetEarningValueByMonth(int month, int year)
+    {
+        var monthly = _context.Tuitions
+            .Where(x => x.PaidDate.Month == month && x.PaidDate.Year == year)
+            .Sum(x => x.ActualAmount);
+
+        var annual = _context.Tuitions
+            .Where(x => x.PaidDate.Year == year)
+            .Sum(x => x.ActualAmount);
+
+        var allMonths = Enumerable.Range(1, 12);
+        var earningData = allMonths
+            .GroupJoin(
+                _context.Tuitions.Where(x => x.PaidDate.Year == year),
+                month => month,
+                tuition => tuition.PaidDate.Month,
+                (month, tuitions) => new
+                {
+                    Month = month,
+                    TotalEarnings = tuitions.Sum(x => x.ActualAmount)
+                }
+            )
+            .OrderBy(x => x.Month)
+            .ToList();
+
+        var earningValues = earningData.Select(item => item.TotalEarnings).ToList();
+
+        return new EarningValueOutput
+        {
+            Monthly = monthly,
+            EarningData = earningValues,
+            Annual = annual
+        };
+    }
+
     public override async Task Update(Tuition entity)
     {
         _context.Tuitions.Update(entity);
         await _context.SaveChangesAsync();
     }
 
-    public Tuition GetTuitionDeadlineByStudentId(int studentId)
+    public override async Task Delete(Tuition entity)
+    {
+        _context.Tuitions.Remove(entity);
+        await _context.SaveChangesAsync();
+    }
+
+    public Tuition? GetTuitionDeadlineByStudentId(int studentId)
     {
         DateTime currentDate = DateTime.Now;
 
-        DateTime deadlineDate = currentDate.AddDays(-5);
+        DateTime deadlineDate = currentDate.AddDays(5);
 
-        var result = _context.Tuitions
-            .Where(t => t.StudentId == studentId && t.DueDate >= deadlineDate && t.DueDate <= currentDate)
-            .FirstOrDefault();
 
-        return result;
+        var lastTuitions = _context.Tuitions
+                .Where(t => t.StudentId == studentId)
+                .OrderByDescending(tuition => tuition.DueDate)
+                .FirstOrDefault();
+
+        if (lastTuitions.DueDate >= currentDate && lastTuitions.DueDate <= deadlineDate)
+        {
+            return lastTuitions;
+        }
+        else
+        {
+            return new();
+        }
     }
 }

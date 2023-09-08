@@ -4,8 +4,7 @@ class Sidebar extends HTMLElement {
 	}
 
 	connectedCallback() {
-		this.innerHTML = 
-            `<ul
+		this.innerHTML = `<ul
                 class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
                 id="accordionSidebar"
             >
@@ -28,9 +27,9 @@ class Sidebar extends HTMLElement {
                 <!-- Nav Item - Dashboard -->
                 <li class="nav-item active">
                     <a class="nav-link" href="../../public/index.html">
-                        <i class="fas fa-home"></i>
-                        <span>Homepage</span></a
-                    >
+                        <i class="fas fa-fw fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
                 </li>
 
                 <!-- Divider -->
@@ -79,7 +78,18 @@ class Sidebar extends HTMLElement {
                 </li>
 
                 <!-- Divider -->
-                <hr class="sidebar-divider d-none d-md-block" />
+                <hr class="sidebar-divider" />
+
+                <!-- Heading -->
+				<div class="sidebar-heading">Spending</div>
+
+                <!-- Nav Item - Spending -->
+				<li class="nav-item">
+					<a class="nav-link" href="../../public/spending/spending-management.html">
+                        <i class="fas fa-dollar-sign"></i>
+						<span>Spending Management</span></a
+					>
+				</li>
 
                 <!-- Sidebar Toggler (Sidebar) -->
                 <div class="text-center d-none d-md-inline">

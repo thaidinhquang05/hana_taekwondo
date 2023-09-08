@@ -1,4 +1,4 @@
-$(() => {
+$(async () => {
 	$(document).ajaxStart(() => {
 		$(".loading-div").show();
 	});
@@ -16,7 +16,7 @@ $(() => {
 
 	loadStudentInfo(studentId);
 	renderTimetables();
-	loadStudentTimetable(studentId);
+	await loadStudentTimetable(studentId);
 	loadTuitionHistory(studentId);
 
 	let date = new Date();
@@ -83,16 +83,20 @@ $(() => {
 			confirmButtonText: "Save",
 		}).then((result) => {
 			if (result.isConfirmed) {
-				let student = {
-					fullName: $("#inputStudentName").val(),
-					dob: $("#inputBirthday").val(),
-					gender: $("#inlineRadio1").is(":checked")
-						? "Male"
-						: "Female",
-					parentName: $("#inputParent").val(),
-					phone: $("#inputPhone").val(),
-				};
-				updateStudent(student, studentId);
+				let fileInput = document.getElementById("studentImg");
+				let file = fileInput.files[0];
+
+				let formData = new FormData();
+				formData.append("studentImg", file);
+				formData.append("fullName", $("#inputStudentName").val());
+				formData.append("dob", $("#inputBirthday").val());
+				formData.append(
+					"gender",
+					$("#inlineRadio1").is(":checked") ? "Male" : "Female"
+				);
+				formData.append("parentName", $("#inputParent").val());
+				formData.append("phone", $("#inputPhone").val());
+				updateStudent(formData, studentId);
 			}
 		});
 	});
@@ -192,6 +196,9 @@ function loadStudentInfo(studentId) {
 			studentData.gender == "Male"
 				? $("#inlineRadio1").prop("checked", true)
 				: $("#inlineRadio2").prop("checked", true);
+			if (studentData.studentImg !== null) {
+				$(".img-account-profile").attr("src", studentData.studentImg);
+			}
 		},
 		error: (xhr) => {
 			window.location.href = "../../public/404.html";
@@ -244,8 +251,8 @@ function renderTimetables() {
 	});
 }
 
-function loadStudentTimetable(studentId) {
-	$.ajax({
+async function loadStudentTimetable(studentId) {
+	await $.ajax({
 		url: `${API_START_URL}/api/Timetable/GetTimetablesByStudentId/${studentId}`,
 		method: "GET",
 		contentType: "application/json",
@@ -300,13 +307,34 @@ function updateStudentTimetables(studentId, timetables) {
 
 function loadTuitionHistory(studentId) {
 	$("#dataTable").DataTable({
-		ajax: `${API_START_URL}/api/Tuition/GetTuitionByStudentId/${studentId}`,
+		ajax: {
+			url: `${API_START_URL}/api/Tuition/GetTuitionByStudentId/${studentId}`,
+			type: "GET",
+			contentType: "application/json",
+			error: function (xhr) {
+				$.toast({
+					heading: "Error",
+					text: "Have something wrong while load tuition list!!!",
+					icon: "error",
+					position: "top-right",
+					showHideTransition: "plain",
+				});
+			},
+		},
 		destroy: true,
 		columns: [
 			{ data: "id" },
 			{ data: "paidDate" },
 			{ data: "dueDate" },
-			{ data: "actualAmount", orderable: false },
+			{
+				data: "actualAmount",
+				orderable: false,
+				render: (actualAmount) =>
+					`${new Intl.NumberFormat("vi-VN", {
+						style: "currency",
+						currency: "VND",
+					}).format(actualAmount)}`,
+			},
 			{ data: "content", orderable: false },
 			{ data: "note", orderable: false },
 			{
@@ -318,6 +346,11 @@ function loadTuitionHistory(studentId) {
 						data-target="#updateTuitionModal"
 					>
 						<i class="fas fa-edit"></i>
+					</a>
+					<a href='#' style='color: red; margin-left: 10px'
+						onclick='return deleteTuition(${id})'
+					>
+						<i class="fas fa-trash"></i>
 					</a>`,
 			},
 		],
@@ -338,12 +371,13 @@ function updateStudent(student, id) {
 	$.ajax({
 		url: `${API_START_URL}/api/Student/UpdateStudent/${id}`,
 		method: "PUT",
-		contentType: "application/json",
-		data: JSON.stringify(student),
+		data: student,
+		contentType: false,
+		processData: false,
 		success: (data) => {
 			$.toast({
 				heading: "Updated Successfully!!!",
-				text: data.data.message,
+				text: data.message,
 				icon: "success",
 				position: "top-right",
 				showHideTransition: "plain",
@@ -445,4 +479,61 @@ function updateTuition(studentId, tuitionId, tuition) {
 			});
 		},
 	});
+}
+
+function deleteTuition(tuitionId) {
+	Swal.fire({
+		title: "Are you sure?",
+		text: "You won't be able to revert this!",
+		icon: "warning",
+		showCancelButton: true,
+		confirmButtonColor: "#3085d6",
+		cancelButtonColor: "#d33",
+		confirmButtonText: "Yes, delete it!",
+	}).then((result) => {
+		if (result.isConfirmed) {
+			$.ajax({
+				url: `${API_START_URL}/api/Tuition/DeleteTuitionRecord/${tuitionId}`,
+				method: "DELETE",
+				contentType: "application/json",
+				success: (response) => {
+					$.toast({
+						heading: "Success!",
+						text: response.message,
+						icon: "success",
+						position: "top-right",
+						showHideTransition: "plain",
+					});
+					const urlParam = new URLSearchParams(
+						window.location.search
+					);
+					const studentId = urlParam.get("id");
+					loadTuitionHistory(studentId);
+				},
+				error: (xhr) => {
+					$.toast({
+						heading: "Error",
+						text: xhr.responseJSON.message,
+						icon: "error",
+						position: "top-right",
+						showHideTransition: "plain",
+					});
+				},
+			});
+		}
+	});
+
+	return false;
+}
+
+function readImg(input) {
+	if (input.files && input.files[0]) {
+		var reader = new FileReader();
+
+		reader.onload = function (e) {
+			$(".img-account-profile").attr("src", e.target.result);
+		};
+
+		reader.readAsDataURL(input.files[0]);
+	}
 }

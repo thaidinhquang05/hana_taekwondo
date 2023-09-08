@@ -99,10 +99,23 @@ public class StudentRepository : Repository<Student>, IStudentRepository
     {
         DateTime currentDate = DateTime.Now;
 
-        DateTime deadlineDate = currentDate.AddDays(-5);
+        DateTime deadlineDate = currentDate.AddDays(5);
 
-        var upcomingDeadlines = _context.Students.Where(s => s.Tuitions.Any(t => t.DueDate >= deadlineDate && t.DueDate <= currentDate)).ToList();
+        List<Student> result = new();
 
-        return upcomingDeadlines;
+        var lastTuitions = _context.Students.Select(student => student.Tuitions
+                .OrderByDescending(tuition => tuition.DueDate)
+                .FirstOrDefault()).ToList();
+
+        foreach(var item in lastTuitions)
+        {
+            if(item.DueDate >= currentDate && item.DueDate <= deadlineDate)
+            {
+                var student = _context.Students.FirstOrDefault(s => s.Id == item.StudentId);
+                result.Add(student);
+            }
+        }
+
+        return result;
     }
 }

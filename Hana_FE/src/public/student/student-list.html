@@ -10,7 +10,7 @@
 		<meta name="description" content="" />
 		<meta name="author" content="" />
 
-		<title>Hana Taekwondo - Class List</title>
+		<title>Hana Taekwondo - Student List</title>
 
 		<!-- Custom fonts for this template -->
 		<link
@@ -54,23 +54,24 @@
 
 					<!-- Begin Page Content -->
 					<div class="container-fluid">
+						<div class="loading-div">
+							<img src="../../img/Rolling-1s-200px.gif" />
+						</div>
 						<!-- Page Heading -->
-						<h1 class="h3 mb-2 text-gray-800">Class List</h1>
+						<h1 class="h3 mb-2 text-gray-800">Students List</h1>
 
 						<!-- DataTales Example -->
 						<div class="card shadow mb-4">
 							<div class="card-header py-3">
 								<a
 									id="add-btn"
-									href="#"
+									href="./add-student.html"
 									class="btn btn-primary btn-icon-split"
-									data-toggle="modal"
-									data-target="#exampleModal"
 								>
 									<span class="icon text-white-50">
-										<i class="fas fa-plus"></i>
+										<i class="fas fa-user-plus"></i>
 									</span>
-									<span class="text">Add New Class</span>
+									<span class="text">Add New Student</span>
 								</a>
 							</div>
 							<div class="card-body">
@@ -84,9 +85,12 @@
 										<thead>
 											<tr>
 												<th>Id</th>
-												<th>Class Name</th>
-												<th>Start Date</th>
-												<th>Due Date</th>
+												<th>Image</th>
+												<th>Full Name</th>
+												<th>Date of Birth</th>
+												<th>Gender</th>
+												<th>Parent</th>
+												<th>Phone Number</th>
 												<th></th>
 											</tr>
 										</thead>
@@ -102,86 +106,6 @@
 				<!-- Footer -->
 				<footer-component></footer-component>
 				<!-- End of Footer -->
-			</div>
-
-			<div
-				class="modal fade"
-				id="exampleModal"
-				tabindex="-1"
-				role="dialog"
-				aria-labelledby="exampleModalLabel"
-				aria-hidden="true"
-			>
-				<div class="modal-dialog" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">
-								Add New Class
-							</h5>
-							<button
-								type="button"
-								class="close"
-								data-dismiss="modal"
-								aria-label="Close"
-							>
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-							<form>
-								<div class="form-group">
-									<label for="class-name">Class Name</label>
-									<input
-										type="text"
-										class="form-control"
-										id="class-name"
-										placeholder="Enter class name"
-									/>
-								</div>
-								<div class="form-group">
-									<label for="desc">Description</label>
-									<input
-										type="text"
-										class="form-control"
-										id="desc"
-									/>
-								</div>
-								<div class="form-group">
-									<label for="start-date">Start Date</label>
-									<input
-										type="date"
-										class="form-control"
-										id="start-date"
-									/>
-								</div>
-								<div class="form-group">
-									<label for="due-date">Due Date</label>
-									<input
-										type="date"
-										class="form-control"
-										id="due-date"
-									/>
-								</div>
-							</form>
-						</div>
-						<div class="modal-footer">
-							<button
-								type="button"
-								class="btn btn-secondary"
-								data-dismiss="modal"
-							>
-								Close
-							</button>
-							<button
-								type="submit"
-								id="add-class"
-								class="btn btn-primary"
-							>
-								Save Changes
-							</button>
-						</div>
-					</div>
-				</div>
 			</div>
 			<!-- End of Content Wrapper -->
 		</div>
@@ -206,14 +130,15 @@
 		<!-- Page level plugins -->
 		<script src="../../vendor/datatables/jquery.dataTables.min.js"></script>
 		<script src="../../vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
 		<script src="../../vendor/toaster/jquery.toast.min.js"></script>
+
 		<script src="../../js/jwt-decode.js"></script>
+		<script src="../../js/constants.js"></script>
+
 		<script src="../../js/components/sidebar.js"></script>
 		<script src="../../js/components/topbar.js"></script>
 		<script src="../../js/components/footer.js"></script>
-		<script src="../../js/constants.js"></script>
 
-		<script src="../../js/class-management.js"></script>
+		<script src="../../js/student/student-list.js"></script>
 	</body>
 </html>

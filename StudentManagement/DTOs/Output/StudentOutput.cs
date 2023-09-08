@@ -3,6 +3,8 @@
 public class StudentOutput
 {
     public int Id { get; set; }
+
+    public string StudentImg { get; set; }
     
     public string FullName { get; set; }
     

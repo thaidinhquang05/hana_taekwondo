@@ -10,7 +10,7 @@
 		<meta name="description" content="" />
 		<meta name="author" content="" />
 
-		<title>Hana Taekwondo - Student List</title>
+		<title>Hana Taekwondo - Add New Student</title>
 
 		<!-- Custom fonts for this template -->
 		<link
@@ -64,6 +64,9 @@
 
 					<!-- Begin Page Content -->
 					<div class="container-fluid">
+						<div class="loading-div">
+							<img src="../../img/Rolling-1s-200px.gif" />
+						</div>
 						<!-- Page Heading -->
 						<h1 class="h3 mb-2 text-gray-800">Add New Student</h1>
 
@@ -84,21 +87,64 @@
 											out</span
 										>
 										<!-- Form Group -->
-										<div class="mb-3">
-											<label
-												class="small mb-1"
-												for="inputStudentName"
-												>Student Name
-												<span style="color: red"
-													>(*)</span
-												></label
-											>
-											<input
-												class="form-control"
-												id="inputStudentName"
-												type="text"
-												placeholder="Enter student's name..."
-											/>
+										<div
+											class="row"
+											style="
+												display: flex;
+												align-items: center;
+											"
+										>
+											<div class="col-md-6">
+												<label
+													class="small mb-1"
+													for="inputStudentName"
+													>Student Name
+													<span style="color: red"
+														>(*)</span
+													></label
+												>
+												<input
+													class="form-control"
+													id="inputStudentName"
+													type="text"
+													placeholder="Enter student's name..."
+												/>
+											</div>
+											<div class="col-md-6 text-center">
+												<!-- Profile picture upload button-->
+												<button
+													class="btn btn-primary"
+													type="button"
+													style="position: relative"
+												>
+													Upload new image
+													<input
+														id="studentImgInput"
+														type="file"
+														style="
+															position: absolute;
+															opacity: 0;
+															right: 0;
+															top: 0;
+															left: 0;
+															bottom: 0;
+															cursor: pointer;
+														"
+														onchange="readImg(this)"
+													/>
+												</button>
+												<!-- Profile picture image-->
+												<img
+													id="studentImg"
+													src="../../img/defaultavatar.png"
+													style="
+														width: 100px;
+														height: 110px;
+														margin-left: 20px;
+													"
+													alt=""
+												/>
+											</div>
 										</div>
 										<!-- Form Group -->
 										<div class="mb-3">
@@ -359,6 +405,6 @@
 		<script src="../../js/components/footer.js"></script>
 		<script src="../../js/constants.js"></script>
 
-		<script src="../../js/add-student.js"></script>
+		<script src="../../js/student/add-student.js"></script>
 	</body>
 </html>

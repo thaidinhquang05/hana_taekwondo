@@ -29,6 +29,16 @@ function loadStudentList() {
 		destroy: true,
 		columns: [
 			{ data: "id" },
+			{
+				data: "studentImg",
+				orderable: false,
+				render: (studentImg) =>
+					`<img src=${
+						studentImg !== null
+							? studentImg
+							: "../../img/defaultavatar.png"
+					} style="width: 110px; height: 120px;" alt=""/>`,
+			},
 			{ data: "fullName" },
 			{ data: "dob", orderable: false },
 			{ data: "gender", orderable: false },
@@ -42,7 +52,7 @@ function loadStudentList() {
 						<i class="fas fa-user-edit"></i>
 					</a>
 					<a href='#' style='color: red; margin-left: 10px'
-						onclick='deleteStudent(${id})'
+						onclick='return deleteStudent(${id})'
 					>
 						<i class="fas fa-trash"></i>
 					</a>`,
@@ -54,7 +64,11 @@ function loadStudentList() {
 				className: "text-center",
 			},
 			{
-				targets: 6,
+				targets: 1,
+				className: "text-center",
+			},
+			{
+				targets: 7,
 				className: "text-center",
 			},
 		],
@@ -98,4 +112,6 @@ function deleteStudent(studentId) {
 			});
 		}
 	});
+
+	return false;
 }

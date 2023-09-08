@@ -98,6 +98,23 @@ public class TuitionService : ITuitionService
         _repository.Update(tuition);
     }
 
+    public void DeleteTuitionRecord(int tuitionId)
+    {
+        var tuition = _repository.GetTuitionById(tuitionId);
+        if (tuition is null)
+        {
+            throw new Exception("This record is not exist!!!");
+        }
+
+        _repository.Delete(tuition);
+    }
+
+    public EarningValueOutput GetEarningValueByMonth(int month, int year)
+    {
+        var earningValue = _repository.GetEarningValueByMonth(month, year);
+        return earningValue;
+    }
+
     public List<DeadlineTutionOutput> DeadlineTution()
     {
         try
@@ -110,6 +127,7 @@ public class TuitionService : ITuitionService
                 DeadlineTutionOutput deadlineTutionOutput = new();
                 deadlineTutionOutput.FullName = item.FullName;
                 deadlineTutionOutput.StudentId = item.Id;
+                deadlineTutionOutput.StudentImg = item.StudentImg;
                 deadlineTutionOutput.DueDate = _repository.GetTuitionDeadlineByStudentId(item.Id).DueDate.ToShortDateString();
                 deadlineTutionOutput.NotificationTime = _repository.GetTuitionDeadlineByStudentId(item.Id).DueDate.AddDays(-5);
                 deadlineTutionOutputs.Add(deadlineTutionOutput);

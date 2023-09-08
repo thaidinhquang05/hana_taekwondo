@@ -20,6 +20,8 @@ public class MapperProfile : Profile
                 opt => opt.MapFrom(src => DateTime.Now)); ;
 
         CreateMap<NewStudentInput, Student>()
+            .ForMember(des => des.StudentImg,
+                opt => opt.MapFrom(src => ""))
             .ForMember(des => des.CreatedAt,
                 opt => opt.MapFrom(src => DateTime.Now))
             .ForMember(des => des.ModifiedAt,
@@ -46,6 +48,16 @@ public class MapperProfile : Profile
              opt => opt.MapFrom(src => $"{src.StartDate:yyyy-MM-dd}"))
             .ForMember(des => des.DueDate,
              opt => opt.MapFrom(src => $"{src.DueDate:yyyy-MM-dd}"));
+
+        CreateMap<SpendingInput, Spending>()
+            .ForMember(des => des.CreatedAt,
+                opt => opt.MapFrom(src => DateTime.Now))
+            .ForMember(des => des.ModifiedAt,
+                opt => opt.MapFrom(src => DateTime.Now));
+        
+        CreateMap<Spending, SpendingItemListOutput>()
+            .ForMember(des => des.PaidDate,
+                opt => opt.MapFrom(src => $"{src.PaidDate:yyyy-MM-dd}"));
 
         CreateMap<Student, DeadlineTutionOutput>()
             .ForMember(des => des.StudentId,

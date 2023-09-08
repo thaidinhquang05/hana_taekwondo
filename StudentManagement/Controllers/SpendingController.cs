@@ -7,25 +7,25 @@ namespace StudentManagement.Controllers;
 
 [Route("api/[controller]/[action]")]
 [ApiController]
-public class TuitionController : Controller
+public class SpendingController : Controller
 {
-    private readonly ITuitionService _service;
+    private readonly ISpendingService _service;
 
-    public TuitionController(ITuitionService service)
+    public SpendingController(ISpendingService service)
     {
         _service = service;
     }
 
-    [HttpGet("{studentId:int}")]
-    public ActionResult<ApiResponseModel> GetTuitionByStudentId(int studentId)
+    [HttpGet("{month:int}/{year:int}")]
+    public ActionResult<ApiResponseModel> GetSpendingValue(int month, int year)
     {
         try
         {
-            var result = _service.GetTuitionByStudentId(studentId);
+            var result = _service.GetSpendingValue(month, year);
             return Ok(new ApiResponseModel
             {
                 Code = StatusCodes.Status200OK,
-                Message = "Student Information",
+                Message = "Success!",
                 IsSuccess = true,
                 Data = result
             });
@@ -41,110 +41,18 @@ public class TuitionController : Controller
         }
     }
 
-    [HttpGet("{tuitionId:int}")]
-    public ActionResult<ApiResponseModel> GetTuitionById(int tuitionId)
+    [HttpGet]
+    public ActionResult<ApiResponseModel> GetListSpendingValue()
     {
         try
         {
-            var tuitionInfo = _service.GetTuitionById(tuitionId);
-            return Ok(new ApiResponseModel
-            {
-                Code = StatusCodes.Status200OK,
-                Message = "Tuition Information",
-                IsSuccess = true,
-                Data = tuitionInfo
-            });
-        }
-        catch (Exception ex)
-        {
-            return Conflict(new ApiResponseModel
-            {
-                Code = StatusCodes.Status409Conflict,
-                Message = ex.Message,
-                IsSuccess = false
-            });
-        }
-    }
-
-    [HttpPost("{studentId:int}")]
-    public ActionResult<ApiResponseModel> AddNewTuition(int studentId, [FromBody] TuitionInput input)
-    {
-        try
-        {
-            var result = _service.AddNewTuition(studentId, input);
-            return Ok(result);
-        }
-        catch (Exception ex)
-        {
-            return Conflict(new ApiResponseModel
-            {
-                Code = StatusCodes.Status409Conflict,
-                Message = ex.Message,
-                IsSuccess = false
-            });
-        }
-    }
-
-    [HttpPut("{tuitionId:int}")]
-    public ActionResult<ApiResponseModel> UpdateTuitionInfo(int tuitionId, [FromBody] TuitionInput input)
-    {
-        try
-        {
-            _service.UpdateTuition(tuitionId, input);
-            return Ok(new ApiResponseModel
-            {
-                Code = StatusCodes.Status200OK,
-                Message = "Updated Successfully!",
-                IsSuccess = true
-            });
-        }
-        catch (Exception ex)
-        {
-            return Conflict(new ApiResponseModel
-            {
-                Code = StatusCodes.Status409Conflict,
-                Message = ex.Message,
-                IsSuccess = false
-            });
-        }
-    }
-
-    [HttpDelete("{tuitionId:int}")]
-    public ActionResult<ApiResponseModel> DeleteTuitionRecord(int tuitionId)
-    {
-        try
-        {
-            _service.DeleteTuitionRecord(tuitionId);
-            return Ok(new ApiResponseModel
-            {
-                Code = StatusCodes.Status200OK,
-                Message = "Deleted Successfully!",
-                IsSuccess = true
-            });
-        }
-        catch (Exception ex)
-        {
-            return Conflict(new ApiResponseModel
-            {
-                Code = StatusCodes.Status409Conflict,
-                Message = ex.Message,
-                IsSuccess = false
-            });
-        }
-    }
-
-    [HttpGet("{month:int}/{year:int}")]
-    public ActionResult<ApiResponseModel> GetEarningValueByMonth(int month, int year)
-    {
-        try
-        {
-            var earningValue = _service.GetEarningValueByMonth(month, year);
+            var result = _service.GetListSpending();
             return Ok(new ApiResponseModel
             {
                 Code = StatusCodes.Status200OK,
                 Message = "Success!",
                 IsSuccess = true,
-                Data = earningValue
+                Data = result
             });
         }
         catch (Exception ex)
@@ -158,18 +66,91 @@ public class TuitionController : Controller
         }
     }
 
-    [HttpGet]
-    public ActionResult<ApiResponseModel> GetDeadlineTutions()
+    [HttpGet("{spendingId:int}")]
+    public ActionResult<ApiResponseModel> GetSpendingItem(int spendingId)
     {
         try
         {
-            var deadlineTutions = _service.DeadlineTution();
+            var result = _service.GetSpendingItem(spendingId);
             return Ok(new ApiResponseModel
             {
                 Code = StatusCodes.Status200OK,
-                Message = "Deadline Tution",
+                Message = "Success!",
                 IsSuccess = true,
-                Data = deadlineTutions
+                Data = result
+            });
+        }
+        catch (Exception ex)
+        {
+            return Conflict(new ApiResponseModel
+            {
+                Code = StatusCodes.Status409Conflict,
+                Message = ex.Message,
+                IsSuccess = false
+            });
+        }
+    }
+
+    [HttpPost]
+    public ActionResult<ApiResponseModel> AddSpending(SpendingInput input)
+    {
+        try
+        {
+            _service.AddNewSpending(input);
+            return Ok(new ApiResponseModel
+            {
+                Code = StatusCodes.Status200OK,
+                Message = "New Spending Added Successfully!",
+                IsSuccess = true,
+                Data = input
+            });
+        }
+        catch (Exception ex)
+        {
+            return Conflict(new ApiResponseModel
+            {
+                Code = StatusCodes.Status409Conflict,
+                Message = ex.Message,
+                IsSuccess = false
+            });
+        }
+    }
+
+    [HttpPut("{spendingId:int}")]
+    public ActionResult<ApiResponseModel> UpdateSpending(int spendingId, [FromBody] SpendingInput input)
+    {
+        try
+        {
+            _service.UpdateSpending(spendingId, input);
+            return Ok(new ApiResponseModel
+            {
+                Code = StatusCodes.Status200OK,
+                Message = "Spending Updated Successfully!",
+                IsSuccess = true
+            });
+        }
+        catch (Exception ex)
+        {
+            return Conflict(new ApiResponseModel
+            {
+                Code = StatusCodes.Status409Conflict,
+                Message = ex.Message,
+                IsSuccess = false
+            });
+        }
+    }
+
+    [HttpDelete("{spendingId:int}")]
+    public ActionResult<ApiResponseModel> DeleteSpendingRecord(int spendingId)
+    {
+        try
+        {
+            _service.DeleteSpendingRecord(spendingId);
+            return Ok(new ApiResponseModel
+            {
+                Code = StatusCodes.Status200OK,
+                Message = "Deleted Successfully!",
+                IsSuccess = true
             });
         }
         catch (Exception ex)

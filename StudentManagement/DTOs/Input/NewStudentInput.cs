@@ -4,6 +4,8 @@ namespace StudentManagement.DTOs.Input;
 
 public class NewStudentInput
 {
+    public IFormFile StudentImg { get; set; }
+    
     [Required(ErrorMessage = "Name must be filled!")]
     public string FullName { get; set; }
 
@@ -17,7 +19,7 @@ public class NewStudentInput
 
     public string? Phone { get; set; }
 
-    public TuitionInput? Tuition { get; set; }
+    public string? Tuition { get; set; }
 
-    public List<TimetableInput>? Timetables { get; set; }
+    public string? Timetables { get; set; }
 }
