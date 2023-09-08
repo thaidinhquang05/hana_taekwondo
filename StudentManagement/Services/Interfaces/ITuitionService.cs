@@ -16,4 +16,6 @@ public interface ITuitionService
     void DeleteTuitionRecord(int tuitionId);
 
     EarningValueOutput GetEarningValueByMonth(int month, int year);
+
+    List<DeadlineTutionOutput> DeadlineTution();
 }

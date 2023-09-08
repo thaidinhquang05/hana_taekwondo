@@ -58,5 +58,15 @@ public class MapperProfile : Profile
         CreateMap<Spending, SpendingItemListOutput>()
             .ForMember(des => des.PaidDate,
                 opt => opt.MapFrom(src => $"{src.PaidDate:yyyy-MM-dd}"));
+
+        CreateMap<Student, DeadlineTutionOutput>()
+            .ForMember(des => des.StudentId,
+             opt => opt.MapFrom(src => src.Id))
+            .ForMember(des => des.FullName,
+             opt => opt.MapFrom(src => src.FullName));
+
+        CreateMap<Tuition, DeadlineTutionOutput>()
+           .ForMember(des => des.DueDate,
+            opt => opt.MapFrom(src => $"{src.DueDate:yyyy-MM-dd}"));
     }
 }

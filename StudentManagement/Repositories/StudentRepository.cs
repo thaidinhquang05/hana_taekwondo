@@ -94,4 +94,28 @@ public class StudentRepository : Repository<Student>, IStudentRepository
 
         return result;
     }
+
+    public List<Student> GetUpcomingDeadlinesStudent()
+    {
+        DateTime currentDate = DateTime.Now;
+
+        DateTime deadlineDate = currentDate.AddDays(5);
+
+        List<Student> result = new();
+
+        var lastTuitions = _context.Students.Select(student => student.Tuitions
+                .OrderByDescending(tuition => tuition.DueDate)
+                .FirstOrDefault()).ToList();
+
+        foreach(var item in lastTuitions)
+        {
+            if(item.DueDate >= currentDate && item.DueDate <= deadlineDate)
+            {
+                var student = _context.Students.FirstOrDefault(s => s.Id == item.StudentId);
+                result.Add(student);
+            }
+        }
+
+        return result;
+    }
 }

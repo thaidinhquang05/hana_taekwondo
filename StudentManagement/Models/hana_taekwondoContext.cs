@@ -307,7 +307,7 @@ namespace StudentManagement.Models
                     .WithMany(p => p.Tuitions)
                     .HasForeignKey(d => d.StudentId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("tuition_student_id_fk");
+                    .HasConstraintName("FK_tuition_student");
             });
 
             modelBuilder.Entity<User>(entity =>

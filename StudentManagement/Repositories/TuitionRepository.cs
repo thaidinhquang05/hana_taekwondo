@@ -86,4 +86,26 @@ public class TuitionRepository : Repository<Tuition>, ITuitionRepository
         _context.Tuitions.Remove(entity);
         await _context.SaveChangesAsync();
     }
+
+    public Tuition? GetTuitionDeadlineByStudentId(int studentId)
+    {
+        DateTime currentDate = DateTime.Now;
+
+        DateTime deadlineDate = currentDate.AddDays(5);
+
+
+        var lastTuitions = _context.Tuitions
+                .Where(t => t.StudentId == studentId)
+                .OrderByDescending(tuition => tuition.DueDate)
+                .FirstOrDefault();
+
+        if (lastTuitions.DueDate >= currentDate && lastTuitions.DueDate <= deadlineDate)
+        {
+            return lastTuitions;
+        }
+        else
+        {
+            return new();
+        }
+    }
 }

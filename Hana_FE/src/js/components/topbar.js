@@ -76,6 +76,14 @@ class Topbar extends HTMLElement {
                             </form>
                         </div>
                     </li>
+                
+                    <li class="nav-item dropdown no-arrow mx-1">
+                            <a class="nav-link dropdown-toggle" href="../../public/notification/notification-list.html" id="alertsDropdown" role="button">
+                                <i class="fas fa-bell fa-fw"></i>
+                                <!-- Counter - Alerts -->
+                                <span class="badge badge-danger badge-counter" id="totalNotifications"></span>
+                            </a>
+                        </li>
                     
                     <!-- Nav Item - User Information -->
                     <li class="nav-item dropdown no-arrow">
@@ -186,6 +194,17 @@ class Topbar extends HTMLElement {
 			localStorage.removeItem("token");
             window.location.href = "../../public/login.html";
 		});
+
+        let totalNotifications = 0;
+        $.ajax({
+            url: `https://localhost:7010/api/Tuition/GetDeadlineTutions`,
+            type: "GET",
+            contentType: "application/json",
+            success: function (data) {
+                const students = data.data;
+                totalNotifications = students.length;
+                $("#totalNotifications").text(totalNotifications);
+            }});
 	}
 }
 

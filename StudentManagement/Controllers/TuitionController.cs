@@ -157,4 +157,29 @@ public class TuitionController : Controller
             });
         }
     }
+
+    [HttpGet]
+    public ActionResult<ApiResponseModel> GetDeadlineTutions()
+    {
+        try
+        {
+            var deadlineTutions = _service.DeadlineTution();
+            return Ok(new ApiResponseModel
+            {
+                Code = StatusCodes.Status200OK,
+                Message = "Deadline Tution",
+                IsSuccess = true,
+                Data = deadlineTutions
+            });
+        }
+        catch (Exception ex)
+        {
+            return Conflict(new ApiResponseModel
+            {
+                Code = StatusCodes.Status409Conflict,
+                Message = ex.Message,
+                IsSuccess = false
+            });
+        }
+    }
 }
