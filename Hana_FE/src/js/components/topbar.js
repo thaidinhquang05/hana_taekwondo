@@ -1,10 +1,10 @@
 class Topbar extends HTMLElement {
-	constructor() {
-		super();
-	}
+    constructor() {
+        super();
+    }
 
-	connectedCallback() {
-		this.innerHTML = `<nav
+    connectedCallback() {
+        this.innerHTML = `<nav
                 class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"
             >
                 <!-- Sidebar Toggle (Topbar) -->
@@ -171,41 +171,42 @@ class Topbar extends HTMLElement {
                 </div>
             </div>`;
 
-		const token = localStorage.getItem("token");
-		if (token === null) {
-			window.location.href = "../../public/login.html";
-		} else {
-			let decoded = jwt_decode(token);
-			let username =
-				decoded[
-					"http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
-				];
-			$(".username").append(username.toUpperCase());
+        const token = localStorage.getItem("token");
+        if (token === null) {
+            window.location.href = "../../public/login.html";
+        } else {
+            let decoded = jwt_decode(token);
+            let username =
+                decoded[
+                    "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
+                ];
+            $(".username").append(username.toUpperCase());
 
-            let exp = decoded['exp']
+            let exp = decoded["exp"];
             if (Date.now() >= exp * 1000) {
                 localStorage.removeItem("token");
                 window.location.href = "../../public/login.html";
             }
-		}
+        }
 
-		$("#logout-btn").on("click", (e) => {
-            e.preventDefault()
-			localStorage.removeItem("token");
+        $("#logout-btn").on("click", (e) => {
+            e.preventDefault();
+            localStorage.removeItem("token");
             window.location.href = "../../public/login.html";
-		});
+        });
 
         let totalNotifications = 0;
         $.ajax({
-            url: `https://localhost:7010/api/Tuition/GetDeadlineTutions`,
+            url: `${API_START_URL}/api/Tuition/GetDeadlineTutions`,
             type: "GET",
             contentType: "application/json",
             success: function (data) {
                 const students = data.data;
                 totalNotifications = students.length;
                 $("#totalNotifications").text(totalNotifications);
-            }});
-	}
+            },
+        });
+    }
 }
 
 customElements.define("topbar-component", Topbar);
