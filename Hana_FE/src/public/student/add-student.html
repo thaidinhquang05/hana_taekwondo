@@ -31,10 +31,8 @@
 			href="../../vendor/datatables/dataTables.bootstrap4.min.css"
 			rel="stylesheet"
 		/>
-		<link
-			href="../../vendor/toaster/jquery.toast.min.css"
-			rel="stylesheet"
-		/>
+		<link href="../../vendor/toaster/jquery.toast.min.css" rel="stylesheet" />
+		<link href="../../vendor/print.js/print.min.css" rel="stylesheet" />
 		<style>
 			th,
 			td {
@@ -74,34 +72,21 @@
 							<!-- Account details card-->
 							<div class="card mb-4">
 								<div class="card-header">
-									<h6
-										class="m-0 font-weight-bold text-primary"
-									>
+									<h6 class="m-0 font-weight-bold text-primary">
 										Student Information
 									</h6>
 								</div>
 								<div class="card-body">
 									<form>
 										<span style="color: red"
-											>(*): The field needs to be filled
-											out</span
+											>(*): The field needs to be filled out</span
 										>
 										<!-- Form Group -->
-										<div
-											class="row"
-											style="
-												display: flex;
-												align-items: center;
-											"
-										>
+										<div class="row" style="display: flex; align-items: center">
 											<div class="col-md-6">
-												<label
-													class="small mb-1"
-													for="inputStudentName"
+												<label class="small mb-1" for="inputStudentName"
 													>Student Name
-													<span style="color: red"
-														>(*)</span
-													></label
+													<span style="color: red">(*)</span></label
 												>
 												<input
 													class="form-control"
@@ -137,24 +122,15 @@
 												<img
 													id="studentImg"
 													src="../../img/defaultavatar.png"
-													style="
-														width: 100px;
-														height: 110px;
-														margin-left: 20px;
-													"
+													style="width: 100px; height: 110px; margin-left: 20px"
 													alt=""
 												/>
 											</div>
 										</div>
 										<!-- Form Group -->
 										<div class="mb-3">
-											<label
-												class="small mb-1"
-												for="inputParent"
-												>Parent
-												<span style="color: red"
-													>(*)</span
-												></label
+											<label class="small mb-1" for="inputParent"
+												>Parent <span style="color: red">(*)</span></label
 											>
 											<input
 												class="form-control"
@@ -167,9 +143,7 @@
 										<div class="row gx-3 mb-3">
 											<!-- Form Group (phone number)-->
 											<div class="col-md-4">
-												<label
-													class="small mb-1"
-													for="inputPhone"
+												<label class="small mb-1" for="inputPhone"
 													>Phone number</label
 												>
 												<input
@@ -181,13 +155,8 @@
 											</div>
 											<!-- Form Group (birthday)-->
 											<div class="col-md-4">
-												<label
-													class="small mb-1"
-													for="inputBirthday"
-													>Birthday
-													<span style="color: red"
-														>(*)</span
-													></label
+												<label class="small mb-1" for="inputBirthday"
+													>Birthday <span style="color: red">(*)</span></label
 												>
 												<input
 													class="form-control"
@@ -198,15 +167,11 @@
 												/>
 											</div>
 											<div class="col-md-4">
-												<label
-													class="small mb-1"
-													for="inputGender"
+												<label class="small mb-1" for="inputGender"
 													>Gender</label
 												>
 												<div>
-													<div
-														class="form-check form-check-inline"
-													>
+													<div class="form-check form-check-inline">
 														<input
 															class="form-check-input"
 															type="radio"
@@ -215,15 +180,11 @@
 															value="Male"
 															checked
 														/>
-														<label
-															class="form-check-label"
-															for="inlineRadio1"
+														<label class="form-check-label" for="inlineRadio1"
 															>Male</label
 														>
 													</div>
-													<div
-														class="form-check form-check-inline"
-													>
+													<div class="form-check form-check-inline">
 														<input
 															class="form-check-input"
 															type="radio"
@@ -231,9 +192,7 @@
 															id="inlineRadio2"
 															value="Female"
 														/>
-														<label
-															class="form-check-label"
-															for="inlineRadio2"
+														<label class="form-check-label" for="inlineRadio2"
 															>Female</label
 														>
 													</div>
@@ -241,9 +200,7 @@
 											</div>
 										</div>
 										<div class="card-header">
-											<h6
-												class="m-0 font-weight-bold text-primary"
-											>
+											<h6 class="m-0 font-weight-bold text-primary">
 												Tuition Information
 											</h6>
 										</div>
@@ -251,9 +208,7 @@
 										<div class="row gx-3 mb-3">
 											<!-- Form Group -->
 											<div class="col-md-6">
-												<label
-													class="small mb-1"
-													for="inputPaidDate"
+												<label class="small mb-1" for="inputPaidDate"
 													>Paid Date</label
 												>
 												<input
@@ -264,9 +219,7 @@
 											</div>
 											<!-- Form Group -->
 											<div class="col-md-6">
-												<label
-													class="small mb-1"
-													for="inputDueDate"
+												<label class="small mb-1" for="inputDueDate"
 													>Due Date</label
 												>
 												<input
@@ -280,9 +233,7 @@
 										<div class="row gx-3 mb-3">
 											<!-- Form Group -->
 											<div class="col-md-6">
-												<label
-													class="small mb-1"
-													for="inputAmount"
+												<label class="small mb-1" for="inputAmount"
 													>Amount</label
 												>
 												<input
@@ -294,9 +245,7 @@
 											</div>
 											<!-- Form Group -->
 											<div class="col-md-6">
-												<label
-													class="small mb-1"
-													for="inputActualAmount"
+												<label class="small mb-1" for="inputActualAmount"
 													>Actual Amount</label
 												>
 												<input
@@ -309,9 +258,7 @@
 										</div>
 										<!-- Form Group -->
 										<div class="mb-3">
-											<label
-												class="small mb-1"
-												for="content-text"
+											<label class="small mb-1" for="content-text"
 												>Content</label
 											>
 											<textarea
@@ -321,20 +268,11 @@
 										</div>
 										<!-- Form Group -->
 										<div class="mb-3">
-											<label
-												class="small mb-1"
-												for="inputAmount"
-												>Note</label
-											>
-											<textarea
-												class="form-control"
-												id="note-text"
-											></textarea>
+											<label class="small mb-1" for="inputAmount">Note</label>
+											<textarea class="form-control" id="note-text"></textarea>
 										</div>
 										<div class="card-header">
-											<h6
-												class="m-0 font-weight-bold text-primary"
-											>
+											<h6 class="m-0 font-weight-bold text-primary">
 												Schedule Information
 											</h6>
 										</div>
@@ -344,30 +282,117 @@
 													<th scope="col">#</th>
 													<th scope="col">Monday</th>
 													<th scope="col">Tuesday</th>
-													<th scope="col">
-														Wednesday
-													</th>
-													<th scope="col">
-														Thursday
-													</th>
+													<th scope="col">Wednesday</th>
+													<th scope="col">Thursday</th>
 													<th scope="col">Friday</th>
-													<th scope="col">
-														Saturday
-													</th>
+													<th scope="col">Saturday</th>
 													<th scope="col">Sunday</th>
 												</tr>
 											</thead>
 											<tbody></tbody>
 										</table>
 										<!-- Save changes button-->
-										<button
-											id="add-btn"
-											class="btn btn-primary"
-											type="button"
-										>
+										<button id="add-btn" class="btn btn-primary" type="button">
 											ADD NEW
 										</button>
+										<button
+											id="print-receipt"
+											class="btn btn-primary"
+											type="button"
+											data-toggle="modal"
+											data-target="#receiptModal"
+										>
+											<i class="fas fa-print"></i>
+											Get Bill
+										</button>
 									</form>
+								</div>
+							</div>
+						</div>
+
+						<div
+							class="modal fade"
+							id="receiptModal"
+							tabindex="-1"
+							role="dialog"
+							aria-labelledby="exampleModalLabel"
+							aria-hidden="true"
+						>
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLabel">
+											Receipt Preview
+										</h5>
+										<button
+											class="close"
+											type="button"
+											data-dismiss="modal"
+											aria-label="Close"
+										>
+											<span aria-hidden="true">×</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<form action="#" id="receipt-form">
+											<div
+												class="receipt-header"
+												style="display: flex; justify-content: space-around"
+											>
+												<div>
+													<p class="receipt-address" style="margin: 0">
+														Địa chỉ: 101-102-103 R2 Florence Building <br />
+														28 Trần Hữu Dực - Cầu Diễn - Nam TL - Hà Nội
+													</p>
+													<p class="hotline" style="font-weight: 700">
+														Hotline: 0338.157.313 - 09.8330.9330
+													</p>
+												</div>
+												<div>
+													<p class="receipt-date">Ngày</p>
+												</div>
+											</div>
+											<div class="receipt-main-content">
+												<div>
+													<p class="receipt-parent">
+														Họ và tên người nộp tiền:
+													</p>
+													<p class="receipt-phone">Số liên lạc:</p>
+													<p class="receipt-student">Họ tên học viên:</p>
+													<p class="receipt-note">Lý do nộp:</p>
+													<p class="receipt-actual-amount">Số tiền:</p>
+												</div>
+												<span></span>
+											</div>
+											<div
+												class="receipt-sign"
+												style="display: flex; justify-content: space-around"
+											>
+												<div>
+													<p>Người thu tiền</p>
+												</div>
+												<div>
+													<p>Người nộp tiền</p>
+												</div>
+											</div>
+										</form>
+									</div>
+									<div class="modal-footer">
+										<button
+											class="btn btn-secondary"
+											type="button"
+											data-dismiss="modal"
+										>
+											Cancel
+										</button>
+										<a
+											id="print-receipt-btn"
+											class="btn btn-primary"
+											onclick="handlePrintReceipt()"
+										>
+											<i class="fas fa-print"></i> Print Receipt
+										</a>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -392,6 +417,7 @@
 		<!-- Bootstrap core JavaScript-->
 		<script src="../../vendor/jquery/jquery.min.js"></script>
 		<script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<script src="../../vendor/print.js/print.min.js"></script>
 
 		<!-- Core plugin JavaScript-->
 		<script src="../../vendor/jquery-easing/jquery.easing.min.js"></script>
@@ -400,11 +426,71 @@
 		<script src="../../js/sb-admin-2.min.js"></script>
 		<script src="../../js/jwt-decode.js"></script>
 		<script src="../../vendor/toaster/jquery.toast.min.js"></script>
+		<script src="../../js/constants.js"></script>
+
 		<script src="../../js/components/sidebar.js"></script>
 		<script src="../../js/components/topbar.js"></script>
 		<script src="../../js/components/footer.js"></script>
-		<script src="../../js/constants.js"></script>
 
 		<script src="../../js/student/add-student.js"></script>
+		<script>
+			$("#print-receipt").on("click", () => {
+				let date = new Date();
+				let currentDay = String(date.getDate()).padStart(2, "0");
+				let currentMonth = String(date.getMonth() + 1).padStart(2, "0");
+				let currentYear = date.getFullYear();
+				let currentDate = `${currentDay}-${currentMonth}-${currentYear}`;
+
+				$(".receipt-date").append(`: ${currentDate}`);
+				$(".receipt-parent").append(" " + $("#inputParent").val());
+				$(".receipt-phone").append(" " + $("#inputPhone").val());
+				$(".receipt-student").append(" " + $("#inputStudentName").val());
+				$(".receipt-note").append(" " + $("#content-text").val());
+				$(".receipt-actual-amount").append(
+					" " +
+						new Intl.NumberFormat("vi-VN", {
+							style: "currency",
+							currency: "VND",
+						}).format($("#inputActualAmount").val())
+				);
+			});
+
+			function handlePrintReceipt() {
+				printJS({
+					printable: "receipt-form",
+					type: "html",
+					header: `<div
+										class="receipt-header"
+										style="
+											display: flex;
+											flex-direction: column;
+											align-items: center;
+										"
+									>
+										<h2>HANA TAEKWONDO ACADEMY</h2>
+										<h2>Phiếu thu</h2>
+									</div>`,
+					style: `
+						.receipt-header{ 
+							display: flex; 
+							justify-content: space-around;
+						}
+
+						.receipt-address {
+							margin: 0;
+						}
+
+						.hotline {
+							font-weight: 700;
+						}
+
+						.receipt-sign {
+							display: flex; 
+							justify-content: space-around;
+						}
+					`,
+				});
+			}
+		</script>
 	</body>
 </html>
