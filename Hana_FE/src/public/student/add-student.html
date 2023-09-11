@@ -335,22 +335,14 @@
 									</div>
 									<div class="modal-body">
 										<form action="#" id="receipt-form">
-											<div
-												class="receipt-header"
-												style="display: flex; justify-content: space-around"
-											>
-												<div>
-													<p class="receipt-address" style="margin: 0">
-														Địa chỉ: 101-102-103 R2 Florence Building <br />
-														28 Trần Hữu Dực - Cầu Diễn - Nam TL - Hà Nội
-													</p>
-													<p class="hotline" style="font-weight: 700">
+											<div class="receipt-header">
+												<p class="receipt-address">
+													Địa chỉ: 101-102-103 R2 Florence Building <br />
+													28 Trần Hữu Dực - Cầu Diễn - Nam TL - Hà Nội <br />
+													<span class="hotline" style="font-weight: 700">
 														Hotline: 0338.157.313 - 09.8330.9330
-													</p>
-												</div>
-												<div>
-													<p class="receipt-date">Ngày</p>
-												</div>
+													</span>
+												</p>
 											</div>
 											<div class="receipt-main-content">
 												<div>
@@ -434,14 +426,13 @@
 
 		<script src="../../js/student/add-student.js"></script>
 		<script>
-			$("#print-receipt").on("click", () => {
-				let date = new Date();
-				let currentDay = String(date.getDate()).padStart(2, "0");
-				let currentMonth = String(date.getMonth() + 1).padStart(2, "0");
-				let currentYear = date.getFullYear();
-				let currentDate = `${currentDay}-${currentMonth}-${currentYear}`;
+			let date = new Date();
+			let currentDay = String(date.getDate()).padStart(2, "0");
+			let currentMonth = String(date.getMonth() + 1).padStart(2, "0");
+			let currentYear = date.getFullYear();
+			let currentDate = `${currentDay}-${currentMonth}-${currentYear}`;
 
-				$(".receipt-date").append(`: ${currentDate}`);
+			$("#print-receipt").on("click", () => {
 				$(".receipt-parent").append(" " + $("#inputParent").val());
 				$(".receipt-phone").append(" " + $("#inputPhone").val());
 				$(".receipt-student").append(" " + $("#inputStudentName").val());
@@ -467,8 +458,16 @@
 											align-items: center;
 										"
 									>
-										<h2>HANA TAEKWONDO ACADEMY</h2>
-										<h2>Phiếu thu</h2>
+										<h2 style="
+											display: flex;
+											flex-direction: column;
+											align-items: center;
+										">
+											HANA TAEKWONDO ACADEMY <br/>
+											<span class='receipt-date-bill'>Ngày: ${currentDate}</span>
+											<span class='receipt-divider'>-----------------------------------------------</span>
+										</h2>
+										<h3>PHIẾU THU</h3>
 									</div>`,
 					style: `
 						.receipt-header{ 
@@ -476,8 +475,11 @@
 							justify-content: space-around;
 						}
 
-						.receipt-address {
-							margin: 0;
+						.receipt-date-bill {
+							text-align: center;
+							font-size: 16px;
+							font-weight: 400; 
+							font-style: italic;
 						}
 
 						.hotline {
