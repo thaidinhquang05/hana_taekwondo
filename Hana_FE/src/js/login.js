@@ -29,7 +29,7 @@ $(function () {
 			error: function (xhr) {
 				$.toast({
 					heading: "Login Failed!",
-					text: xhr.responseJSON.message,
+					text: xhr.responseJSON?.message,
 					icon: "error",
 					position: "top-right",
 					showHideTransition: "plain",
