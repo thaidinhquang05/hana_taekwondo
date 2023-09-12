@@ -34,9 +34,7 @@ function loadStudentList() {
 				orderable: false,
 				render: (studentImg) =>
 					`<img src=${
-						studentImg !== null
-							? studentImg
-							: "../../img/defaultavatar.png"
+						studentImg !== null ? studentImg : "../../img/defaultavatar.png"
 					} style="width: 110px; height: 120px;" alt=""/>`,
 			},
 			{ data: "fullName" },
@@ -103,7 +101,7 @@ function deleteStudent(studentId) {
 				error: (xhr) => {
 					$.toast({
 						heading: "Error",
-						text: xhr.responseJSON.message,
+						text: xhr.responseJSON?.message,
 						icon: "error",
 						position: "top-right",
 						showHideTransition: "plain",

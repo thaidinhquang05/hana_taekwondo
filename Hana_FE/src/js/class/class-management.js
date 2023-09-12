@@ -108,7 +108,7 @@ function deleteClass(classId) {
 				error: function (xhr) {
 					$.toast({
 						heading: "Error",
-						text: xhr.responseJSON.message,
+						text: xhr.responseJSON?.message,
 						icon: "error",
 						position: "top-right",
 						showHideTransition: "plain",

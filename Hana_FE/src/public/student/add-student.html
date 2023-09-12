@@ -352,7 +352,7 @@
 													<p class="receipt-phone">Số liên lạc:</p>
 													<p class="receipt-student">Họ tên học viên:</p>
 													<p class="receipt-note">Lý do nộp:</p>
-													<p class="receipt-actual-amount">Số tiền:</p>
+													<p class="receipt-actual-amount"></p>
 												</div>
 												<span></span>
 											</div>
@@ -437,8 +437,10 @@
 				$(".receipt-phone").append(" " + $("#inputPhone").val());
 				$(".receipt-student").append(" " + $("#inputStudentName").val());
 				$(".receipt-note").append(" " + $("#content-text").val());
+
+				$(".receipt-actual-amount").empty();
 				$(".receipt-actual-amount").append(
-					" " +
+					"Số tiền: " +
 						new Intl.NumberFormat("vi-VN", {
 							style: "currency",
 							currency: "VND",
