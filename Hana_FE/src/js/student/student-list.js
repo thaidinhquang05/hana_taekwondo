@@ -34,7 +34,9 @@ function loadStudentList() {
 				orderable: false,
 				render: (studentImg) =>
 					`<img src=${
-						studentImg !== null ? studentImg : "../../img/defaultavatar.png"
+						studentImg !== null
+							? `../../img/student/${studentImg}`
+							: "../../img/defaultavatar.png"
 					} style="width: 110px; height: 120px;" alt=""/>`,
 			},
 			{ data: "fullName" },

@@ -197,7 +197,10 @@ function loadStudentInfo(studentId) {
 				? $("#inlineRadio1").prop("checked", true)
 				: $("#inlineRadio2").prop("checked", true);
 			if (studentData.studentImg !== null) {
-				$(".img-account-profile").attr("src", studentData.studentImg);
+				$(".img-account-profile").attr(
+					"src",
+					`../../img/student/${studentData.studentImg}`
+				);
 			}
 		},
 		error: (xhr) => {
@@ -504,9 +507,7 @@ function deleteTuition(tuitionId) {
 						position: "top-right",
 						showHideTransition: "plain",
 					});
-					const urlParam = new URLSearchParams(
-						window.location.search
-					);
+					const urlParam = new URLSearchParams(window.location.search);
 					const studentId = urlParam.get("id");
 					loadTuitionHistory(studentId);
 				},

@@ -9,7 +9,7 @@ public interface IStudentService
 
     StudentInfoOutput GetStudentInfo(int studentId);
 
-    Task<ApiResponseModel> AddNewStudent(NewStudentInput input);
+    ApiResponseModel AddNewStudent(NewStudentInput input);
 
     Task<ApiResponseModel> UpdateStudent(int studentId, UpdateStudentInput input);
 
