@@ -5,6 +5,7 @@ using StudentManagement.DTOs.Output;
 using StudentManagement.Models;
 using StudentManagement.Repositories.Interfaces;
 using StudentManagement.Services.Interfaces;
+using StudentManagement.Utils.Interfaces;
 
 namespace StudentManagement.Services;
 
@@ -13,12 +14,15 @@ public class StudentService : IStudentService
     private readonly IStudentRepository _studentRepository;
     private readonly ITuitionRepository _tuitionRepository;
     private readonly IMapper _mapper;
+    private readonly ILogicHandler _logic;
 
-    public StudentService(IStudentRepository studentRepository, ITuitionRepository tuitionRepository, IMapper mapper)
+    public StudentService(IStudentRepository studentRepository, ITuitionRepository tuitionRepository
+        , IMapper mapper, ILogicHandler logic)
     {
         _studentRepository = studentRepository;
         _tuitionRepository = tuitionRepository;
         _mapper = mapper;
+        _logic = logic;
     }
 
     public List<StudentOutput> GetAll()
@@ -40,15 +44,20 @@ public class StudentService : IStudentService
         return output;
     }
 
-    public async Task<ApiResponseModel> AddNewStudent(NewStudentInput input)
+    public ApiResponseModel AddNewStudent(NewStudentInput input)
     {
-        using var memoryStream = new MemoryStream();
-        await input.StudentImg.CopyToAsync(memoryStream);
-        var imageBytes = memoryStream.ToArray();
-        var base64String = Convert.ToBase64String(imageBytes);
-
         var newStudent = _mapper.Map<Student>(input);
-        newStudent.StudentImg = $"data:image/jpg;base64,{base64String}";
+
+        var imageFile = input.StudentImg;
+        if (imageFile != null || imageFile.Length > 0)
+        {
+            var image = _logic.SaveImageFile(imageFile, null);
+            if (image is not null)
+            {
+                newStudent.StudentImg = image;
+            }
+        }
+
         _studentRepository.AddNewStudent(newStudent);
 
         if (input.Tuition is not null)
@@ -102,17 +111,16 @@ public class StudentService : IStudentService
         }
 
         // update student
-        if (input.StudentImg is null || input.StudentImg.Length == 0)
+        var stuImg = input.StudentImg;
+        if (stuImg != null || stuImg.Length > 0)
         {
-            throw new Exception("Invalid File!");
+            var image = _logic.SaveImageFile(stuImg, existedStudent.StudentImg);
+            if (image is not null)
+            {
+                existedStudent.StudentImg = image;
+            }
         }
 
-        using var memoryStream = new MemoryStream();
-        await input.StudentImg.CopyToAsync(memoryStream);
-        var imageBytes = memoryStream.ToArray();
-        var base64String = Convert.ToBase64String(imageBytes);
-
-        existedStudent.StudentImg = $"data:image/jpg;base64,{base64String}";
         existedStudent.FullName = input.FullName;
         existedStudent.Dob = input.Dob;
         existedStudent.Gender = input.Gender.Equals("Male");
@@ -140,6 +148,12 @@ public class StudentService : IStudentService
         if (student is null)
         {
             throw new Exception("Student does not exist!!!");
+        }
+
+        var studentImg = student.StudentImg;
+        if (studentImg != null)
+        {
+            _logic.DeleteImg(studentImg);
         }
 
         var studentClasses = _studentRepository.GetStudentClassesByStudentId(studentId);

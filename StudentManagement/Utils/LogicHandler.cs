@@ -14,7 +14,7 @@ public class LogicHandler : ILogicHandler
     {
         _config = config;
     }
-    
+
     public string GenerateJsonWebToken(Claim[] claims)
     {
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
@@ -29,5 +29,70 @@ public class LogicHandler : ILogicHandler
 
         var encodeToken = new JwtSecurityTokenHandler().WriteToken(token);
         return encodeToken;
+    }
+
+    public string? SaveImageFile(IFormFile imageFile, string? oldImage)
+    {
+        try
+        {
+            var extension = Path.GetExtension(imageFile.FileName);
+            if (!extension.ToLower().Equals(".jpg") && !extension.ToLower().Equals(".jpeg") &&
+                !extension.ToLower().Equals(".png"))
+            {
+                return null;
+            }
+
+            const string targetFolderPath = @"..\..\StudentManagement\Hana_FE\src\img\student";
+            if (!Directory.Exists(targetFolderPath))
+            {
+                Directory.CreateDirectory(targetFolderPath);
+            }
+
+            var r = new Random();
+            var imageNameFile = r.Next() + imageFile.FileName;
+            var newImagePath = Path.Combine(targetFolderPath, imageNameFile);
+
+            using var stream = new FileStream(newImagePath, FileMode.Create);
+            imageFile.CopyTo(stream);
+
+            if (oldImage != null)
+            {
+                var oldImgPath = Path.Combine(targetFolderPath, oldImage);
+                var fileDelete = new FileInfo(oldImgPath);
+                if (fileDelete.Length > 0)
+                {
+                    File.Delete(oldImgPath);
+                    fileDelete.Delete();
+                }
+            }
+
+            return imageNameFile;
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    public bool DeleteImg(string fileName)
+    {
+        try
+        {
+            if (string.IsNullOrEmpty(fileName)) return false;
+
+            const string targetFolderPath = @"..\..\StudentManagement\Hana_FE\src\img\student";
+            var oldImgPath = Path.Combine(targetFolderPath, fileName);
+            var fileDelete = new FileInfo(oldImgPath);
+
+            if (fileDelete.Length <= 0) return false;
+
+            File.Delete(oldImgPath);
+            fileDelete.Delete();
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
     }
 }
