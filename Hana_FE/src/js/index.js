@@ -49,6 +49,8 @@ $(async () => {
 		spendingMonthly.electricSpending,
 		spendingMonthly.waterSpending,
 		spendingMonthly.rentSpending,
+		spendingMonthly.salarySpending,
+		spendingMonthly.eatingSpending,
 		spendingMonthly.anotherSpending,
 	];
 	renderOverviewChart(earningData, spendingValue.spendingData);
@@ -274,12 +276,26 @@ function renderSpendingDoughnutChart(spendingSrcData) {
 	new Chart($("#spendingSourcesChart"), {
 		type: "doughnut",
 		data: {
-			labels: ["Electric", "Water", "Rent", "Another"],
+			labels: ["Electric", "Water", "Rent", "Salary", "Eating", "Another"],
 			datasets: [
 				{
 					data: spendingSrcData,
-					backgroundColor: ["#4e73df", "#1cc88a", "#36b9cc", "#858796"],
-					hoverBackgroundColor: ["#2e59d9", "#17a673", "#2c9faf", "#60616f"],
+					backgroundColor: [
+						"#4e73df",
+						"#1cc88a",
+						"#36b9cc",
+						"#83c5be",
+						"#7209b7",
+						"#858796",
+					],
+					hoverBackgroundColor: [
+						"#2e59d9",
+						"#17a673",
+						"#2c9faf",
+						"#006d77",
+						"#560bad",
+						"#60616f",
+					],
 					hoverBorderColor: "rgba(234, 236, 244, 1)",
 				},
 			],

@@ -7,7 +7,7 @@ namespace StudentManagement.Repositories;
 public class SpendingRepository : Repository<Spending>, ISpendingRepository
 {
     private readonly hana_taekwondoContext _context;
-    
+
     public SpendingRepository(hana_taekwondoContext context) : base(context)
     {
         _context = context;
@@ -24,16 +24,18 @@ public class SpendingRepository : Repository<Spending>, ISpendingRepository
                 ElectricSpending = group.Sum(x => x.Electric),
                 WaterSpending = group.Sum(x => x.Water),
                 RentSpending = group.Sum(x => x.Rent),
+                SalarySpending = group.Sum(x => x.Salary),
+                EatingSpending = group.Sum(x => x.Eating),
                 AnotherSpending = group.Sum(x => x.Another),
                 PaidDate = $"{year}-{group.Key:00}",
-                Total = group.Sum(x => x.Water + x.Electric + x.Rent + x.Another)
+                Total = group.Sum(x => x.Water + x.Electric + x.Rent + x.Salary + x.Eating + x.Another)
             })
             .FirstOrDefault();
-        
+
         var annual = _context.Spendings
             .Where(x => x.PaidDate.Year == year)
-            .Sum(x => x.Water + x.Electric + x.Rent + x.Another);
-        
+            .Sum(x => x.Water + x.Electric + x.Rent + x.Salary + x.Eating + x.Another);
+
         var allMonths = Enumerable.Range(1, 12);
         var spendingData = allMonths
             .GroupJoin(
@@ -43,7 +45,7 @@ public class SpendingRepository : Repository<Spending>, ISpendingRepository
                 (month, tuitions) => new
                 {
                     Month = month,
-                    TotalSpendings = tuitions.Sum(x => x.Water + x.Electric + x.Rent + x.Another)
+                    TotalSpendings = tuitions.Sum(x => x.Water + x.Electric + x.Rent + x.Salary + x.Eating + x.Another)
                 }
             )
             .OrderBy(x => x.Month)
@@ -57,6 +59,8 @@ public class SpendingRepository : Repository<Spending>, ISpendingRepository
             ElectricSpending = 0,
             WaterSpending = 0,
             RentSpending = 0,
+            SalarySpending = 0,
+            EatingSpending = 0,
             AnotherSpending = 0,
             PaidDate = $"{year}-{month}",
             Total = 0

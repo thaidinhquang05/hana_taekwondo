@@ -8,8 +8,7 @@ namespace StudentManagement.Utils;
 
 public class LogicHandler : ILogicHandler
 {
-    // private const string TargetFolder = @"..\httpdocs\img\student";
-    private const string TargetFolder = @"..\..\StudentManagement\Hana_FE\img\student";
+    private const string TargetFolder = @"..\httpdocs\img\student";
     
     private readonly IConfiguration _config;
 
