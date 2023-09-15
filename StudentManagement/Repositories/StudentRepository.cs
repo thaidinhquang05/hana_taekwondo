@@ -104,15 +104,18 @@ public class StudentRepository : Repository<Student>, IStudentRepository
         List<Student> result = new();
 
         var lastTuitions = _context.Students.Select(student => student.Tuitions
-                .OrderByDescending(tuition => tuition.DueDate)
-                .FirstOrDefault()).ToList();
+            .OrderByDescending(tuition => tuition.DueDate)
+            .FirstOrDefault()).ToList();
 
-        foreach(var item in lastTuitions)
+        foreach (var item in lastTuitions)
         {
-            if(item.DueDate >= currentDate && item.DueDate <= deadlineDate)
+            if (item != null)
             {
-                var student = _context.Students.FirstOrDefault(s => s.Id == item.StudentId);
-                result.Add(student);
+                if (item.DueDate >= currentDate && item.DueDate <= deadlineDate)
+                {
+                    var student = _context.Students.FirstOrDefault(s => s.Id == item.StudentId);
+                    result.Add(student);
+                }
             }
         }
 

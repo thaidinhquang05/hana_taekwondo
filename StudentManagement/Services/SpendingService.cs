@@ -33,9 +33,11 @@ public class SpendingService : ISpendingService
                 Electric = x.Electric,
                 Water = x.Water,
                 Rent = x.Rent,
+                Salary = x.Salary,
+                Eating = x.Eating,
                 Another = x.Another,
                 PaidDate = $"{x.PaidDate: dd-MM-yyyy}",
-                Note = x.Note
+                Content = x.Content
             })
             .ToList();
         return result;
@@ -69,9 +71,11 @@ public class SpendingService : ISpendingService
         existedSpending.Electric = input.Electric;
         existedSpending.Water = input.Water;
         existedSpending.Rent = input.Rent;
+        existedSpending.Salary = input.Salary;
+        existedSpending.Eating = input.Eating;
         existedSpending.Another = input.Another;
         existedSpending.PaidDate = input.PaidDate;
-        existedSpending.Note = input.Note;
+        existedSpending.Content = input.Content;
         existedSpending.ModifiedAt = DateTime.Now;
         _repository.Update(existedSpending);
     }

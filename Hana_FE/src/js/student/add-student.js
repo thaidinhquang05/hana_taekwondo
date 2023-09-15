@@ -64,10 +64,7 @@ $(() => {
 		formData.append("studentImg", file);
 		formData.append("fullName", $("#inputStudentName").val());
 		formData.append("dob", $("#inputBirthday").val());
-		formData.append(
-			"gender",
-			$("#inlineRadio1").is(":checked") ? true : false
-		);
+		formData.append("gender", $("#inlineRadio1").is(":checked") ? true : false);
 		formData.append("parentName", $("#inputParent").val());
 		formData.append("phone", $("#inputPhone").val());
 		formData.append(
