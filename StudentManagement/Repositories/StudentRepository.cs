@@ -21,7 +21,7 @@ public class StudentRepository : Repository<Student>, IStudentRepository
 
     public List<Student> GetAllStudents()
     {
-        var result = _context.Students.ToList();
+        var result = _context.Students.Include(x => x.Tuitions).ToList();
         return result;
     }
 

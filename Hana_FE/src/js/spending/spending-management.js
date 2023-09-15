@@ -95,19 +95,19 @@ function loadSpendingList() {
 			},
 			{
 				data: "salary",
-				render: (rent) =>
+				render: (salary) =>
 					`${new Intl.NumberFormat("vi-VN", {
 						style: "currency",
 						currency: "VND",
-					}).format(rent)}`,
+					}).format(salary)}`,
 			},
 			{
 				data: "eating",
-				render: (rent) =>
+				render: (eating) =>
 					`${new Intl.NumberFormat("vi-VN", {
 						style: "currency",
 						currency: "VND",
-					}).format(rent)}`,
+					}).format(eating)}`,
 			},
 			{
 				data: "another",
