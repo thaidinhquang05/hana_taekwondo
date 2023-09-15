@@ -20,8 +20,6 @@ public class MapperProfile : Profile
                 opt => opt.MapFrom(src => DateTime.Now)); ;
 
         CreateMap<NewStudentInput, Student>()
-            .ForMember(des => des.StudentImg,
-                opt => opt.MapFrom(src => ""))
             .ForMember(des => des.CreatedAt,
                 opt => opt.MapFrom(src => DateTime.Now))
             .ForMember(des => des.ModifiedAt,

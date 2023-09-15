@@ -10,9 +10,13 @@ public class SpendingItemListOutput
     
     public decimal Rent { get; set; }
     
+    public decimal Salary { get; set; }
+    
+    public decimal Eating { get; set; }
+    
     public decimal Another { get; set; }
     
     public string PaidDate { get; set; }
     
-    public string? Note { get; set; }
+    public string? Content { get; set; }
 }

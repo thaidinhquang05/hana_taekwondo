@@ -8,6 +8,9 @@ namespace StudentManagement.Utils;
 
 public class LogicHandler : ILogicHandler
 {
+    // private const string TargetFolder = @"..\httpdocs\img\student";
+    private const string TargetFolder = @"..\..\StudentManagement\Hana_FE\img\student";
+    
     private readonly IConfiguration _config;
 
     public LogicHandler(IConfiguration config)
@@ -42,22 +45,21 @@ public class LogicHandler : ILogicHandler
                 return null;
             }
 
-            const string targetFolderPath = @"..\..\StudentManagement\Hana_FE\src\img\student";
-            if (!Directory.Exists(targetFolderPath))
+            if (!Directory.Exists(TargetFolder))
             {
-                Directory.CreateDirectory(targetFolderPath);
+                Directory.CreateDirectory(TargetFolder);
             }
 
             var r = new Random();
             var imageNameFile = r.Next() + imageFile.FileName;
-            var newImagePath = Path.Combine(targetFolderPath, imageNameFile);
+            var newImagePath = Path.Combine(TargetFolder, imageNameFile);
 
             using var stream = new FileStream(newImagePath, FileMode.Create);
             imageFile.CopyTo(stream);
 
             if (oldImage != null)
             {
-                var oldImgPath = Path.Combine(targetFolderPath, oldImage);
+                var oldImgPath = Path.Combine(TargetFolder, oldImage);
                 var fileDelete = new FileInfo(oldImgPath);
                 if (fileDelete.Length > 0)
                 {
@@ -80,8 +82,7 @@ public class LogicHandler : ILogicHandler
         {
             if (string.IsNullOrEmpty(fileName)) return false;
 
-            const string targetFolderPath = @"..\..\StudentManagement\Hana_FE\src\img\student";
-            var oldImgPath = Path.Combine(targetFolderPath, fileName);
+            var oldImgPath = Path.Combine(TargetFolder, fileName);
             var fileDelete = new FileInfo(oldImgPath);
 
             if (fileDelete.Length <= 0) return false;

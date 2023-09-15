@@ -120,9 +120,15 @@ namespace StudentManagement.Models
                     .HasColumnType("decimal(18, 0)")
                     .HasColumnName("another");
 
+                entity.Property(e => e.Content).HasColumnName("content");
+
                 entity.Property(e => e.CreatedAt)
                     .HasColumnType("datetime")
                     .HasColumnName("created_at");
+
+                entity.Property(e => e.Eating)
+                    .HasColumnType("decimal(18, 0)")
+                    .HasColumnName("eating");
 
                 entity.Property(e => e.Electric)
                     .HasColumnType("decimal(18, 0)")
@@ -132,8 +138,6 @@ namespace StudentManagement.Models
                     .HasColumnType("datetime")
                     .HasColumnName("modified_at");
 
-                entity.Property(e => e.Note).HasColumnName("note");
-
                 entity.Property(e => e.PaidDate)
                     .HasColumnType("datetime")
                     .HasColumnName("paid_date");
@@ -141,6 +145,10 @@ namespace StudentManagement.Models
                 entity.Property(e => e.Rent)
                     .HasColumnType("decimal(18, 0)")
                     .HasColumnName("rent");
+
+                entity.Property(e => e.Salary)
+                    .HasColumnType("decimal(18, 0)")
+                    .HasColumnName("salary");
 
                 entity.Property(e => e.Water)
                     .HasColumnType("decimal(18, 0)")

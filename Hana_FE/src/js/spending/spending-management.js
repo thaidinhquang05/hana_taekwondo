@@ -90,6 +90,22 @@ function loadSpendingList() {
 					}).format(rent)}`,
 			},
 			{
+				data: "salary",
+				render: (rent) =>
+					`${new Intl.NumberFormat("vi-VN", {
+						style: "currency",
+						currency: "VND",
+					}).format(rent)}`,
+			},
+			{
+				data: "eating",
+				render: (rent) =>
+					`${new Intl.NumberFormat("vi-VN", {
+						style: "currency",
+						currency: "VND",
+					}).format(rent)}`,
+			},
+			{
 				data: "another",
 				render: (another) =>
 					`${new Intl.NumberFormat("vi-VN", {
@@ -98,7 +114,7 @@ function loadSpendingList() {
 					}).format(another)}`,
 			},
 			{ data: "paidDate", orderable: false },
-			{ data: "note", orderable: false },
+			{ data: "content", orderable: false },
 			{
 				data: "id",
 				orderable: false,
@@ -142,7 +158,15 @@ function loadSpendingList() {
 				className: "text-center",
 			},
 			{
+				targets: 6,
+				className: "text-center",
+			},
+			{
 				targets: 7,
+				className: "text-center",
+			},
+			{
+				targets: 9,
 				className: "text-center",
 			},
 		],

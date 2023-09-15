@@ -13,6 +13,8 @@ namespace StudentManagement.Models
         public DateTime? CreatedAt { get; set; }
         public DateTime? ModifiedAt { get; set; }
         public DateTime PaidDate { get; set; }
-        public string? Note { get; set; }
+        public string? Content { get; set; }
+        public decimal Salary { get; set; }
+        public decimal Eating { get; set; }
     }
 }

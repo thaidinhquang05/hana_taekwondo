@@ -48,16 +48,15 @@ public class StudentService : IStudentService
     {
         var newStudent = _mapper.Map<Student>(input);
 
-        var imageFile = input.StudentImg;
-        if (imageFile != null || imageFile.Length > 0)
+        if (input.StudentImg != null)
         {
-            var image = _logic.SaveImageFile(imageFile, null);
+            var image = _logic.SaveImageFile(input.StudentImg, null);
             if (image is not null)
             {
                 newStudent.StudentImg = image;
             }
         }
-
+        
         _studentRepository.AddNewStudent(newStudent);
 
         if (input.Tuition is not null)
