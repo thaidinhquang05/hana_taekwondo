@@ -10,6 +10,10 @@ public class SpendingItemValueOutput
 
     public decimal RentSpending { get; set; }
 
+    public decimal SalarySpending { get; set; }
+    
+    public decimal EatingSpending { get; set; }
+
     public decimal AnotherSpending { get; set; }
 
     public decimal Total { get; set; }

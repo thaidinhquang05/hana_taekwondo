@@ -16,9 +16,11 @@ $(() => {
 			electric: $("#electric").val(),
 			water: $("#water").val(),
 			rent: $("#rent").val(),
+			salary: $("#salary").val(),
+			eating: $("#eating").val(),
 			another: $("#another").val(),
 			paidDate: $("#paid-date").val(),
-			note: $("#note-text").val(),
+			content: $("#note-text").val(),
 		};
 		addSpending(spending);
 	});
@@ -36,9 +38,11 @@ $(() => {
 					electric: $("#electric-update").val(),
 					water: $("#water-update").val(),
 					rent: $("#rent-update").val(),
+					salary: $("#salary-update").val(),
+					eating: $("#eating-update").val(),
 					another: $("#another-update").val(),
 					paidDate: $("#paid-date-update").val(),
-					note: $("#note-text-update").val(),
+					content: $("#note-text-update").val(),
 				};
 				updateSpending($("#spendingId").val(), spending);
 			}
@@ -213,9 +217,11 @@ function getSpendingById(spendingId) {
 			$("#electric-update").val(spending.electric);
 			$("#water-update").val(spending.water);
 			$("#rent-update").val(spending.rent);
+			$("#salary-update").val(spending.salary);
+			$("#eating-update").val(spending.eating);
 			$("#another-update").val(spending.another);
 			$("#paid-date-update").val(spending.paidDate);
-			$("#note-text-update").val(spending.note);
+			$("#note-text-update").val(spending.content);
 		},
 		error: (xhr) => {
 			$.toast({
