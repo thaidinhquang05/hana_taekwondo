@@ -45,6 +45,14 @@ function loadStudentList() {
 			{ data: "parentName", orderable: false },
 			{ data: "phone", orderable: false },
 			{
+				data: "totalTuitions",
+				render: (totalTuitions) =>
+					`${new Intl.NumberFormat("vi-VN", {
+						style: "currency",
+						currency: "VND",
+					}).format(totalTuitions)}`,
+			},
+			{
 				data: "id",
 				orderable: false,
 				render: (id) =>
@@ -69,6 +77,10 @@ function loadStudentList() {
 			},
 			{
 				targets: 7,
+				className: "text-center",
+			},
+			{
+				targets: 8,
 				className: "text-center",
 			},
 		],

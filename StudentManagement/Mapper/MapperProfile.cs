@@ -35,7 +35,9 @@ public class MapperProfile : Profile
             .ForMember(des => des.Dob,
                 opt => opt.MapFrom(src => $"{src.Dob:yyyy-MM-dd}"))
             .ForMember(des => des.Gender,
-                opt => opt.MapFrom(src => src.Gender ? "Male" : "Female"));
+                opt => opt.MapFrom(src => src.Gender ? "Male" : "Female"))
+            .ForMember(des => des.TotalTuitions,
+                opt => opt.MapFrom(src => src.Tuitions.Sum(x => x.ActualAmount)));
 
         CreateMap<Class, ClassInfoOutput>()
             .ForMember(des => des.Id,
