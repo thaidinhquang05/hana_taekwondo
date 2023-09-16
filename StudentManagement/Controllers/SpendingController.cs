@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Data;
+using ClosedXML.Excel;
+using Microsoft.AspNetCore.Mvc;
 using StudentManagement.DTOs.Input;
 using StudentManagement.DTOs.Output;
 using StudentManagement.Services.Interfaces;
@@ -162,5 +164,39 @@ public class SpendingController : Controller
                 IsSuccess = false
             });
         }
+    }
+
+    [HttpGet]
+    public ActionResult ExportToExcel()
+    {
+        var dt = new DataTable();
+        dt.TableName = "Student Data Table";
+        dt.Columns.Add("Id", typeof(int));
+        dt.Columns.Add("Electric", typeof(decimal));
+        dt.Columns.Add("Water", typeof(decimal));
+        dt.Columns.Add("Rent", typeof(decimal));
+        dt.Columns.Add("Salary", typeof(decimal));
+        dt.Columns.Add("Eating", typeof(decimal));
+        dt.Columns.Add("Another", typeof(decimal));
+        dt.Columns.Add("Paid Date", typeof(string));
+        dt.Columns.Add("Content", typeof(string));
+
+        var spendingList = _service.GetListSpending();
+        if (spendingList.Count > 0)
+        {
+            spendingList.ForEach(item =>
+            {
+                dt.Rows.Add(item.Id, item.Electric, item.Water, item.Rent, item.Salary, item.Eating, item.Another,
+                    item.PaidDate, item.Content);
+            });
+        }
+
+        using var wb = new XLWorkbook();
+        wb.AddWorksheet(dt, "Spending Records");
+        using var ms = new MemoryStream();
+        wb.SaveAs(ms);
+
+        const string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+        return File(ms.ToArray(), contentType, "SpendingRecord.xlsx");
     }
 }
