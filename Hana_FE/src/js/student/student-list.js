@@ -8,6 +8,11 @@ $(() => {
 	});
 
 	loadStudentList();
+
+	$("#export-excel").on("click", (e) => {
+		e.preventDefault();
+		exportExcel();
+	});
 });
 
 function loadStudentList() {
@@ -126,4 +131,30 @@ function deleteStudent(studentId) {
 	});
 
 	return false;
+}
+
+function exportExcel() {
+	fetch(`${API_START_URL}/api/Student/ExportToExcel`, {
+		method: "GET",
+		responseType: "blob",
+	})
+		.then((response) => response.blob())
+		.then((blob) => {
+			const blobUrl = URL.createObjectURL(blob);
+
+			const a = document.createElement("a");
+			a.href = blobUrl;
+			a.download = "StudentRecords.xlsx";
+			a.click();
+			URL.revokeObjectURL(blobUrl);
+		})
+		.catch((error) => {
+			$.toast({
+				heading: "Error!!!",
+				text: error,
+				icon: "error",
+				position: "top-right",
+				showHideTransition: "plain",
+			});
+		});
 }

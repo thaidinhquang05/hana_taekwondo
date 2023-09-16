@@ -100,7 +100,7 @@ class Sidebar extends HTMLElement {
                 </div>
             </ul>`;
 
-		$("#sidebarToggle, #sidebarToggleTop").on("click", function (e) {
+		$("#sidebarToggle").on("click", function (e) {
 			$("body").toggleClass("sidebar-toggled");
 			$(".sidebar").toggleClass("toggled");
 			if ($(".sidebar").hasClass("toggled")) {

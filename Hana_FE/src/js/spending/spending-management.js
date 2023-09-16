@@ -48,6 +48,11 @@ $(() => {
 			}
 		});
 	});
+
+	$("#export-excel").on("click", (e) => {
+		e.preventDefault();
+		exportExcel();
+	});
 });
 
 function loadSpendingList() {
@@ -303,4 +308,30 @@ function deleteSpending(spendingId) {
 	});
 
 	return false;
+}
+
+function exportExcel() {
+	fetch(`${API_START_URL}/api/Spending/ExportToExcel`, {
+		method: "GET",
+		responseType: "blob",
+	})
+		.then((response) => response.blob())
+		.then((blob) => {
+			const blobUrl = URL.createObjectURL(blob);
+
+			const a = document.createElement("a");
+			a.href = blobUrl;
+			a.download = "SpendingRecords.xlsx";
+			a.click();
+			URL.revokeObjectURL(blobUrl);
+		})
+		.catch((error) => {
+			$.toast({
+				heading: "Error!!!",
+				text: error,
+				icon: "error",
+				position: "top-right",
+				showHideTransition: "plain",
+			});
+		});
 }
