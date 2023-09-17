@@ -33,7 +33,7 @@ function loadStudentList() {
 		},
 		destroy: true,
 		columns: [
-			{ data: "id" },
+			{ data: "index" },
 			{
 				data: "studentImg",
 				orderable: false,

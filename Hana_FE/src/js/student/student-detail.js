@@ -259,9 +259,9 @@ async function loadStudentTimetable(studentId) {
 		url: `${API_START_URL}/api/Timetable/GetTimetablesByStudentId/${studentId}`,
 		method: "GET",
 		contentType: "application/json",
-		success: (response) => {
+		success: async (response) => {
 			let data = response.data;
-			data.forEach((element) => {
+			await data.forEach((element) => {
 				$('input[type="checkbox"]').each(function () {
 					if (element.timetableId == this.value) {
 						this.checked = true;
@@ -326,7 +326,7 @@ function loadTuitionHistory(studentId) {
 		},
 		destroy: true,
 		columns: [
-			{ data: "id" },
+			{ data: "index" },
 			{ data: "paidDate" },
 			{ data: "dueDate" },
 			{
