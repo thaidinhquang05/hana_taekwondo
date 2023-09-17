@@ -24,9 +24,10 @@ public class TuitionService : ITuitionService
     public List<TuitionInfoOutput> GetTuitionByStudentId(int studentId)
     {
         var response = _repository.GetTuitionByStudentId(studentId);
-        var result = response.Select(x => new TuitionInfoOutput
+        var result = response.Select((x, i) => new TuitionInfoOutput
         {
             Id = x.Id,
+            Index = i + 1,
             PaidDate = $"{x.PaidDate:yyyy-MM-dd}",
             DueDate = $"{x.DueDate:yyyy-MM-dd}",
             Amount = x.Amount,

@@ -3,6 +3,8 @@
 public class TuitionInfoOutput
 {
     public int Id { get; set; }
+
+    public int Index { get; set; }
     
     public string PaidDate { get; set; }
     

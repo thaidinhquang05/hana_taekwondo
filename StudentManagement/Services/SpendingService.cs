@@ -27,9 +27,10 @@ public class SpendingService : ISpendingService
     public List<SpendingItemListOutput> GetListSpending()
     {
         var spendingList = _repository.GetListSpending();
-        var result = spendingList.Select(x => new SpendingItemListOutput
+        var result = spendingList.Select((x, i) => new SpendingItemListOutput
             {
                 Id = x.Id,
+                Index = i + 1,
                 Electric = x.Electric,
                 Water = x.Water,
                 Rent = x.Rent,

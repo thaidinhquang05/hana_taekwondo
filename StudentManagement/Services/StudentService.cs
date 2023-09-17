@@ -28,7 +28,20 @@ public class StudentService : IStudentService
     public List<StudentOutput> GetAll()
     {
         var studentList = _studentRepository.GetAllStudents();
-        var result = _mapper.Map<List<StudentOutput>>(studentList);
+        // var result = _mapper.Map<List<StudentOutput>>(studentList);
+        var result = studentList.Select((x,i) => new StudentOutput
+            {
+                Id = x.Id,
+                Index = i + 1,
+                StudentImg = x.StudentImg,
+                FullName = x.FullName,
+                Dob = $"{x.Dob:yyyy-MM-dd}",
+                Gender = x.Gender ? "Male" : "Female",
+                ParentName = x.ParentName,
+                Phone = x.Phone,
+                TotalTuitions = x.Tuitions.Sum(y => y.ActualAmount)
+            })
+            .ToList();
         return result;
     }
 

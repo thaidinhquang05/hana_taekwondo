@@ -3,6 +3,8 @@
 public class SpendingItemListOutput
 {
     public int Id { get; set; }
+
+    public int Index { get; set; }
     
     public decimal Electric { get; set; }
     

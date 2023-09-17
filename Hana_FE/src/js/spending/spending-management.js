@@ -73,7 +73,7 @@ function loadSpendingList() {
 		},
 		destroy: true,
 		columns: [
-			{ data: "id" },
+			{ data: "index" },
 			{
 				data: "electric",
 				render: (electric) =>
