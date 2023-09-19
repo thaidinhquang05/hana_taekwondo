@@ -72,7 +72,7 @@ builder.Services.AddAutoMapper(typeof(MapperProfile));
 
 // Add db context
 builder.Services.AddDbContext<hana_taekwondoContext>(opt =>
-    opt.UseSqlServer(builder.Configuration.GetConnectionString("ConStr")));
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("LocalConStr")));
 
 // Add Service
 builder.Services.AddScoped<IAuthService, AuthService>();

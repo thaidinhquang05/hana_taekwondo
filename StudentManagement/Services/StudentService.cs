@@ -29,7 +29,7 @@ public class StudentService : IStudentService
     {
         var studentList = _studentRepository.GetAllStudents();
         // var result = _mapper.Map<List<StudentOutput>>(studentList);
-        var result = studentList.Select((x,i) => new StudentOutput
+        var result = studentList.Select((x, i) => new StudentOutput
             {
                 Id = x.Id,
                 Index = i + 1,
@@ -69,7 +69,7 @@ public class StudentService : IStudentService
                 newStudent.StudentImg = image;
             }
         }
-        
+
         _studentRepository.AddNewStudent(newStudent);
 
         if (input.Tuition is not null)
@@ -180,7 +180,18 @@ public class StudentService : IStudentService
     public List<StudentOutput> GetStudentByClass(int classId)
     {
         var studentList = _studentRepository.GetStudentByClass(classId);
-        var result = _mapper.Map<List<StudentOutput>>(studentList);
+        var result = studentList.Select((x, index) => new StudentOutput
+        {
+            Id = x.Id,
+            Index = index + 1,
+            StudentImg = x.StudentImg,
+            FullName = x.FullName,
+            Dob = $"{x.Dob:yyyy-MM-dd}",
+            Gender = x.Gender ? "Male" : "Female",
+            ParentName = x.ParentName,
+            Phone = x.Phone,
+            TotalTuitions = x.Tuitions.Sum(y => y.ActualAmount)
+        }).ToList();
         return result;
     }
 
