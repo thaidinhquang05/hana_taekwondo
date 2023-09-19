@@ -16,6 +16,7 @@ namespace StudentManagement.Models
         {
         }
 
+        public virtual DbSet<Attendance> Attendances { get; set; } = null!;
         public virtual DbSet<Class> Classes { get; set; } = null!;
         public virtual DbSet<ClassTimetable> ClassTimetables { get; set; } = null!;
         public virtual DbSet<Slot> Slots { get; set; } = null!;
@@ -31,13 +32,42 @@ namespace StudentManagement.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("server = localhost; database = hana_taekwondo; uid = sa; password = 123456789; TrustServerCertificate = True");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Attendance>(entity =>
+            {
+                entity.ToTable("attendance");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.ClassId).HasColumnName("class_id");
+
+                entity.Property(e => e.Date)
+                    .HasColumnType("datetime")
+                    .HasColumnName("date");
+
+                entity.Property(e => e.IsAttendance).HasColumnName("is_attendance");
+
+                entity.Property(e => e.Note).HasColumnName("note");
+
+                entity.Property(e => e.StudentId).HasColumnName("student_id");
+
+                entity.HasOne(d => d.Class)
+                    .WithMany(p => p.Attendances)
+                    .HasForeignKey(d => d.ClassId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("attendance_class_id_fk");
+
+                entity.HasOne(d => d.Student)
+                    .WithMany(p => p.Attendances)
+                    .HasForeignKey(d => d.StudentId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("attendance_student_id_fk");
+            });
+
             modelBuilder.Entity<Class>(entity =>
             {
                 entity.ToTable("class");

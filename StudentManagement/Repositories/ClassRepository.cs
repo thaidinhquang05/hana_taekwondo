@@ -8,7 +8,6 @@ namespace StudentManagement.Repositories;
 
 public class ClassRepository : Repository<Class>, IClassRepository
 {
-
     private readonly hana_taekwondoContext _context;
 
     public ClassRepository(hana_taekwondoContext context) : base(context)
@@ -40,9 +39,10 @@ public class ClassRepository : Repository<Class>, IClassRepository
         }
     }
 
-    public void RemoveStudentFromClass(int _studentId,int _classId)
+    public void RemoveStudentFromClass(int _studentId, int _classId)
     {
-        var studentClass = _context.StudentClasses.Where(sc => sc.StudentId == _studentId && sc.ClassId == _classId).FirstOrDefault();
+        var studentClass = _context.StudentClasses.Where(sc => sc.StudentId == _studentId && sc.ClassId == _classId)
+            .FirstOrDefault();
         _context.StudentClasses.Remove(studentClass);
         _context.SaveChanges();
     }
@@ -55,16 +55,16 @@ public class ClassRepository : Repository<Class>, IClassRepository
     public List<ClassInfoOutput> GetClassesByStudentId(int studentId)
     {
         var result = _context.StudentClasses
-        .Include(x => x.Class)
-        .Where(x => x.StudentId == studentId)
-        .Select(x => new ClassInfoOutput
-        {
-            Name = x.Class.Name,
-            Desc = x.Class.Desc,
-            StartDate = x.Class.StartDate.ToShortDateString(),
-            DueDate = x.Class.DueDate.ToShortDateString()
-        })
-        .ToList();
+            .Include(x => x.Class)
+            .Where(x => x.StudentId == studentId)
+            .Select(x => new ClassInfoOutput
+            {
+                Name = x.Class.Name,
+                Desc = x.Class.Desc,
+                StartDate = x.Class.StartDate.ToShortDateString(),
+                DueDate = x.Class.DueDate.ToShortDateString()
+            })
+            .ToList();
         return result;
     }
 
@@ -77,11 +77,12 @@ public class ClassRepository : Repository<Class>, IClassRepository
     public void DeleteClass(int classId)
     {
         var _classStudent = _context.StudentClasses.Where(sc => sc.ClassId == classId).ToList();
-        if( _classStudent != null )
+        if (_classStudent != null)
         {
             _context.StudentClasses.RemoveRange(_classStudent);
             _context.SaveChanges();
         }
+
         var _class = _context.Classes.FirstOrDefault(c => c.Id == classId);
         _context.Classes.Remove(_class);
         _context.SaveChanges();
@@ -90,15 +91,23 @@ public class ClassRepository : Repository<Class>, IClassRepository
     public void AddNewClass(NewClassInput newClassInput)
     {
         Class _class = new Class
-        { 
-            Name = newClassInput.Name, 
-            Desc = newClassInput.Desc, 
-            CreatedAt = DateTime.Now, 
-            DueDate = newClassInput.DueDate, 
+        {
+            Name = newClassInput.Name,
+            Desc = newClassInput.Desc,
+            CreatedAt = DateTime.Now,
+            DueDate = newClassInput.DueDate,
             ModifiedAt = DateTime.Now,
             StartDate = newClassInput.StartDate
         };
         _context.Classes.Add(_class);
         _context.SaveChanges();
+    }
+
+    public List<Class> GetClassesByDate(DateTime date)
+    {
+        var result = _context.Classes
+            .Where(x => x.StartDate <= date && x.DueDate >= date)
+            .ToList();
+        return result;
     }
 }

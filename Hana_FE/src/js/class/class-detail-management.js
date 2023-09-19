@@ -36,7 +36,7 @@ function loadStudent(classId) {
 		},
 		destroy: true,
 		columns: [
-			{ data: "id" },
+			{ data: "index" },
 			{ data: "fullName" },
 			{ data: "dob", orderable: false },
 			{ data: "gender", orderable: false },

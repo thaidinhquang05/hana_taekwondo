@@ -42,7 +42,7 @@ public class ClassController : Controller
     }
 
     [HttpPost]
-    public ActionResult<ApiResponseModel> AddStudentToClass([FromBody]StudentClassInput studentClass)
+    public ActionResult<ApiResponseModel> AddStudentToClass([FromBody] StudentClassInput studentClass)
     {
         try
         {
@@ -105,11 +105,11 @@ public class ClassController : Controller
     }
 
     [HttpDelete("{studentId:int},{classId:int}")]
-    public ActionResult<ApiResponseModel> RemoveStudent(int studentId,int classId)
+    public ActionResult<ApiResponseModel> RemoveStudent(int studentId, int classId)
     {
         try
         {
-            var result = _classService.RemoveStudentFromClass(studentId,classId);
+            var result = _classService.RemoveStudentFromClass(studentId, classId);
             return Ok(result);
         }
         catch (Exception ex)
@@ -124,12 +124,37 @@ public class ClassController : Controller
     }
 
     [HttpPost]
-    public ActionResult<ApiResponseModel> AddNewClass([FromBody]NewClassInput newClassInput)
+    public ActionResult<ApiResponseModel> AddNewClass([FromBody] NewClassInput newClassInput)
     {
         try
         {
             var result = _classService.AddNewClass(newClassInput);
             return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return Conflict(new ApiResponseModel
+            {
+                Code = StatusCodes.Status409Conflict,
+                Message = ex.Message,
+                IsSuccess = false
+            });
+        }
+    }
+
+    [HttpGet]
+    public ActionResult<ApiResponseModel> GetClassesByDate(DateTime date)
+    {
+        try
+        {
+            var result = _classService.GetClassesByDate(date);
+            return Ok(new ApiResponseModel
+            {
+                Code = StatusCodes.Status200OK,
+                Message = "Get Classes successfully",
+                IsSuccess = true,
+                Data = result
+            });
         }
         catch (Exception ex)
         {
