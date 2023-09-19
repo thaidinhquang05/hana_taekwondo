@@ -7,6 +7,7 @@ namespace StudentManagement.Models
     {
         public Student()
         {
+            Attendances = new HashSet<Attendance>();
             StudentClasses = new HashSet<StudentClass>();
             StudentTimetables = new HashSet<StudentTimetable>();
             Tuitions = new HashSet<Tuition>();
@@ -22,6 +23,7 @@ namespace StudentManagement.Models
         public DateTime? ModifiedAt { get; set; }
         public string? StudentImg { get; set; }
 
+        public virtual ICollection<Attendance> Attendances { get; set; }
         public virtual ICollection<StudentClass> StudentClasses { get; set; }
         public virtual ICollection<StudentTimetable> StudentTimetables { get; set; }
         public virtual ICollection<Tuition> Tuitions { get; set; }
