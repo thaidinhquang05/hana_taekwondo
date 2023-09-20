@@ -52,7 +52,7 @@ function loadClassList() {
 		},
 		destroy: true,
 		columns: [
-			{ data: "id" },
+			{ data: "index" },
 			{ data: "name" },
 			{ data: "startDate", orderable: false },
 			{ data: "dueDate", orderable: false },
@@ -61,11 +61,11 @@ function loadClassList() {
 				orderable: false,
 				render: (id) =>
 					`<a href='class-detail-management.html?id=${id}'>
-                        <i class="fas fa-edit"></i>
-                    </a>
-                    <a href='javascript:void(0)' style="color: red; margin-left: 10px" onclick='deleteClass(${id})'>
-                        <i class="fas fa-trash"></i>
-                    </a>`,
+						<i class="fas fa-edit"></i>
+					</a>
+					<a href='javascript:void(0)' style="color: red; margin-left: 10px" onclick='deleteClass(${id})'>
+						<i class="fas fa-trash"></i>
+					</a>`,
 			},
 		],
 		columnDefs: [

@@ -91,6 +91,20 @@ class Sidebar extends HTMLElement {
 					>
 				</li>
 
+                <!-- Divider -->
+                <hr class="sidebar-divider" />
+
+                <!-- Heading -->
+				<div class="sidebar-heading">Attendance</div>
+
+                <!-- Nav Item - Spending -->
+				<li class="nav-item">
+					<a class="nav-link" href="../../public/attendance/take-attendance.html">
+                        <i class="fas fa-id-card"></i>
+						<span>Take Attendance</span></a
+					>
+				</li>
+
                 <!-- Sidebar Toggler (Sidebar) -->
                 <div class="text-center d-none d-md-inline">
                     <button

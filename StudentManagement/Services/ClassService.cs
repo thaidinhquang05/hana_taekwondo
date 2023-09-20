@@ -2,7 +2,6 @@
 using StudentManagement.DTOs.Input;
 using StudentManagement.DTOs.Output;
 using StudentManagement.Models;
-using StudentManagement.Repositories;
 using StudentManagement.Repositories.Interfaces;
 using StudentManagement.Services.Interfaces;
 
@@ -68,7 +67,15 @@ namespace StudentManagement.Services
         public List<ClassInfoOutput> GetAllClasses()
         {
             var classList = _classRepository.GetAllClasses();
-            var result = _mapper.Map<List<ClassInfoOutput>>(classList);
+            var result = classList.Select((x, index) => new ClassInfoOutput
+            {
+                Index = index + 1,
+                Id = x.Id,
+                Name = x.Name,
+                Desc = x.Desc,
+                StartDate = $"{x.StartDate: yyyy-MM-dd}",
+                DueDate = $"{x.DueDate: yyyy-MM-dd}"
+            }).ToList();
             return result;
         }
 
@@ -123,6 +130,26 @@ namespace StudentManagement.Services
                     IsSuccess = false
                 };
             }
+        }
+
+        public List<ClassByDateItem> GetClassesByDate(DateTime date)
+        {
+            var classes = _classRepository.GetClassesByDate(date);
+            var result = classes.Select((x, index) => new ClassByDateItem
+            {
+                Index = index + 1,
+                Id = x.Id,
+                ClassName = x.Name,
+                Desc = x.Desc
+            })
+                .ToList();
+            return result;
+        }
+
+        public List<StudentAttendanceOutput> GetStudentByClassAndDate(int classId, DateTime date)
+        {
+            var result = _classRepository.GetStudentByClassAndDate(classId, date);
+            return result;
         }
     }
 }
