@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using StudentManagement.DTOs.Input;
 using StudentManagement.DTOs.Output;
-using StudentManagement.Models;
 using StudentManagement.Repositories.Interfaces;
 using StudentManagement.Services.Interfaces;
 
@@ -136,12 +135,12 @@ namespace StudentManagement.Services
         {
             var classes = _classRepository.GetClassesByDate(date);
             var result = classes.Select((x, index) => new ClassByDateItem
-            {
-                Index = index + 1,
-                Id = x.Id,
-                ClassName = x.Name,
-                Desc = x.Desc
-            })
+                {
+                    Index = index + 1,
+                    Id = x.Id,
+                    ClassName = x.Name,
+                    Desc = x.Desc
+                })
                 .ToList();
             return result;
         }
@@ -152,7 +151,8 @@ namespace StudentManagement.Services
             return result;
         }
 
-        public ApiResponseModel TakeAttendance(int classId, DateTime date, List<StudentAttendanceInput> studentAttendanceInputs)
+        public ApiResponseModel TakeAttendance(int classId, DateTime date,
+            List<StudentAttendanceInput> studentAttendanceInputs)
         {
             try
             {
