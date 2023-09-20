@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DocumentFormat.OpenXml.Wordprocessing;
+using Microsoft.EntityFrameworkCore;
 using StudentManagement.DTOs.Input;
 using StudentManagement.DTOs.Output;
 using StudentManagement.Models;
@@ -127,7 +128,7 @@ public class ClassRepository : Repository<Class>, IClassRepository
             studentAttendanceOutput.StudentImg = item.StudentImg;
             studentAttendanceOutput.Gender = item.Gender ? "Male" : "Female";
 
-            var attend = item.Attendances.FirstOrDefault(a => a.Date == date);
+            var attend = _context.Attendances.Where(a => a.Date == date && a.ClassId == classId && a.StudentId == item.Id).FirstOrDefault();
 
             if (attend != null)
             {
@@ -145,5 +146,36 @@ public class ClassRepository : Repository<Class>, IClassRepository
         }
 
         return result;
+    }
+
+    public void TakeAttendance(int classId, DateTime date, List<StudentAttendanceInput> studentAttendanceInputs)
+    {
+
+        foreach (var item in studentAttendanceInputs)
+        {
+            var attendance = _context.Attendances.Where(a => a.ClassId == classId && a.Date == date && a.StudentId == item.Id).FirstOrDefault();
+
+            if (attendance == null)
+            {
+                Attendance newAttendance = new Attendance();
+                newAttendance.ClassId = classId;
+                newAttendance.Date = date;
+                newAttendance.StudentId = item.Id;
+                newAttendance.Student = _context.Students.Where(s => s.Id == item.Id).FirstOrDefault();
+                newAttendance.IsAttendance = item.IsAttend;
+                newAttendance.Class = _context.Classes.Where(s => s.Id == classId).FirstOrDefault();
+                newAttendance.ClassId = classId;
+                newAttendance.Note = item.Note;
+                _context.Attendances.Add(newAttendance);
+                _context.SaveChanges();
+            }
+            else
+            {
+                attendance.Note = item.Note;
+                attendance.IsAttendance = item.IsAttend;
+                _context.Attendances.Update(attendance);
+                _context.SaveChanges();
+            }
+        }
     }
 }

@@ -151,5 +151,28 @@ namespace StudentManagement.Services
             var result = _classRepository.GetStudentByClassAndDate(classId, date);
             return result;
         }
+
+        public ApiResponseModel TakeAttendance(int classId, DateTime date, List<StudentAttendanceInput> studentAttendanceInputs)
+        {
+            try
+            {
+                _classRepository.TakeAttendance(classId, date, studentAttendanceInputs);
+                return new ApiResponseModel
+                {
+                    Code = StatusCodes.Status200OK,
+                    Message = "take attendance successfully!",
+                    IsSuccess = true
+                };
+            }
+            catch
+            {
+                return new ApiResponseModel
+                {
+                    Code = StatusCodes.Status409Conflict,
+                    Message = "Have something wrong when take attendance!",
+                    IsSuccess = false
+                };
+            }
+        }
     }
 }

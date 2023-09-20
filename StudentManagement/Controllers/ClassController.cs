@@ -191,4 +191,23 @@ public class ClassController : Controller
             });
         }
     }
+
+    [HttpPost]
+    public ActionResult<ApiResponseModel> TakeAttendance(int classId, DateTime date, List<StudentAttendanceInput> studentAttendanceInputs)
+    {
+        try
+        {
+            var result = _classService.TakeAttendance(classId, date, studentAttendanceInputs);
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return Conflict(new ApiResponseModel
+            {
+                Code = StatusCodes.Status409Conflict,
+                Message = ex.Message,
+                IsSuccess = false
+            });
+        }
+    }
 }

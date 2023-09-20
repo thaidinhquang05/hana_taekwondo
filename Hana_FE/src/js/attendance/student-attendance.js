@@ -13,8 +13,10 @@ $(() => {
 
     loadStudentList(classId, date);
 
-    $("#save-btn").on("click", () => {
-        loadClassList($("#attendant-date").val());
+    getInfoClass(classId);
+
+    $("#attendance-form").on("submit", function (event) {
+        submitAttend(event, classId, date);
     });
 });
 
@@ -52,7 +54,7 @@ function loadStudentList(classId, date) {
             {
                 data: "isAttend",
                 orderable: false,
-                render: function (isAttend) {
+                render: function (isAttend, _, rowData) {
                     var isAbsent = null;
                     if (isAttend === null || isAttend === false) {
                         isAbsent = true;
@@ -63,13 +65,13 @@ function loadStudentList(classId, date) {
                     }
 
                     return `
-                        <input ${
-                            isAbsent ? "checked" : ""
-                        } name="checkAttend" value="Absent" type="radio" checked/>
+                        <input ${isAbsent ? "checked" : ""} name="checkAttend${
+                        rowData.id
+                    }" value="Absent" type="radio" style="cursor:pointer;"/>
                         <label>Absent</label>
-                        <input ${
-                            isAttend ? "checked" : ""
-                        } name="checkAttend" value="Attend" type="radio"/>
+                        <input ${isAttend ? "checked" : ""} name="checkAttend${
+                        rowData.id
+                    }" value="Attend" type="radio" style="cursor:pointer;"/>
                         <label>Attend</label>
                     `;
                 },
@@ -100,5 +102,76 @@ function loadStudentList(classId, date) {
                 className: "text-center",
             },
         ],
+    });
+}
+
+function submitAttend(event, classId, date) {
+    event.preventDefault();
+
+    const rowData = [];
+
+    $("#dataTable tbody tr").each(function () {
+        const row = $(this);
+        const id = row
+            .find('input[name^="checkAttend"]')
+            .attr("name")
+            .replace("checkAttend", "");
+        const isAttend = row.find('input[name^="checkAttend"]:checked').val();
+        const note = row.find("textarea").val();
+        rowData.push({
+            id: id,
+            isAttend: isAttend === "Attend",
+            note: note,
+        });
+    });
+    $.ajax({
+        url: `${API_START_URL}/api/Class/TakeAttendance?classId=${classId}&date=${date}`,
+        method: "POST",
+        data: JSON.stringify(rowData),
+        contentType: "application/json",
+        success: function (response) {
+            $.toast({
+                heading: "Take Attendance Successfully!",
+                text: response.message,
+                icon: "success",
+                position: "top-right",
+                showHideTransition: "plain",
+            });
+            setTimeout(() => {
+                window.location.href = "../attendance/take-attendance.html";
+            }, 2000);
+        },
+        error: function (xhr) {
+            $.toast({
+                heading: "Error",
+                text: xhr.responseJSON.message,
+                icon: "error",
+                position: "top-right",
+                showHideTransition: "plain",
+            });
+        },
+    });
+}
+
+function getInfoClass(classId) {
+    $.ajax({
+        url: `${API_START_URL}/api/Class/GetClassById/${classId}`,
+        method: "GET",
+        contentType: "application/json",
+        success: function (data) {
+            $("#class-name").text(data.data.name);
+            $("#class-description").text(data.data.desc);
+            $("#start-date").text(data.data.startDate);
+            $("#end-date").text(data.data.dueDate);
+        },
+        error: function (xhr) {
+            $.toast({
+                heading: "Error",
+                text: xhr.responseJSON.message,
+                icon: "error",
+                position: "top-right",
+                showHideTransition: "plain",
+            });
+        },
     });
 }
