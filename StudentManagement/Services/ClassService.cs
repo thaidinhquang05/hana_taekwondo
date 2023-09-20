@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using StudentManagement.DTOs.Input;
 using StudentManagement.DTOs.Output;
+using StudentManagement.Models;
 using StudentManagement.Repositories.Interfaces;
 using StudentManagement.Services.Interfaces;
 
@@ -135,14 +136,43 @@ namespace StudentManagement.Services
         {
             var classes = _classRepository.GetClassesByDate(date);
             var result = classes.Select((x, index) => new ClassByDateItem
-                {
-                    Index = index + 1,
-                    Id = x.Id,
-                    ClassName = x.Name,
-                    Desc = x.Desc
-                })
+            {
+                Index = index + 1,
+                Id = x.Id,
+                ClassName = x.Name,
+                Desc = x.Desc
+            })
                 .ToList();
             return result;
+        }
+
+        public List<StudentAttendanceOutput> GetStudentByClassAndDate(int classId, DateTime date)
+        {
+            var result = _classRepository.GetStudentByClassAndDate(classId, date);
+            return result;
+        }
+
+        public ApiResponseModel TakeAttendance(int classId, DateTime date, List<StudentAttendanceInput> studentAttendanceInputs)
+        {
+            try
+            {
+                _classRepository.TakeAttendance(classId, date, studentAttendanceInputs);
+                return new ApiResponseModel
+                {
+                    Code = StatusCodes.Status200OK,
+                    Message = "take attendance successfully!",
+                    IsSuccess = true
+                };
+            }
+            catch
+            {
+                return new ApiResponseModel
+                {
+                    Code = StatusCodes.Status409Conflict,
+                    Message = "Have something wrong when take attendance!",
+                    IsSuccess = false
+                };
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using StudentManagement.DTOs.Input;
 using StudentManagement.DTOs.Output;
+using StudentManagement.Models;
 
 namespace StudentManagement.Services.Interfaces
 {
@@ -18,5 +19,9 @@ namespace StudentManagement.Services.Interfaces
         ApiResponseModel AddNewClass(NewClassInput newClassInput);
 
         List<ClassByDateItem> GetClassesByDate(DateTime date);
+
+        List<StudentAttendanceOutput> GetStudentByClassAndDate(int classId,DateTime date);
+
+        ApiResponseModel TakeAttendance(int classId, DateTime date, List<StudentAttendanceInput> studentAttendanceInputs);
     }
 }

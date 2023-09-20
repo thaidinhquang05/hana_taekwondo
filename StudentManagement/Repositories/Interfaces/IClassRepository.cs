@@ -23,5 +23,9 @@ namespace StudentManagement.Repositories.Interfaces
         public void AddNewClass(NewClassInput newClassInput);
 
         List<Class> GetClassesByDate(DateTime date);
+
+        List<StudentAttendanceOutput> GetStudentByClassAndDate(int classId, DateTime date);
+
+        void TakeAttendance(int classId, DateTime date, List<StudentAttendanceInput> studentAttendanceInputs);
     }
 }
