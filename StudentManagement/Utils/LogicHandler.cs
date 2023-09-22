@@ -1,6 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Text.RegularExpressions;
 using Microsoft.IdentityModel.Tokens;
 using StudentManagement.Utils.Interfaces;
 
@@ -50,7 +51,8 @@ public class LogicHandler : ILogicHandler
             }
 
             var r = new Random();
-            var imageNameFile = r.Next() + imageFile.FileName;
+            var sWhitespace = new Regex(@"\s+");
+            var imageNameFile = r.Next() + sWhitespace.Replace(imageFile.FileName, "_");
             var newImagePath = Path.Combine(TargetFolder, imageNameFile);
 
             using var stream = new FileStream(newImagePath, FileMode.Create);
