@@ -1,10 +1,10 @@
 class Topbar extends HTMLElement {
-	constructor() {
-		super();
-	}
+    constructor() {
+        super();
+    }
 
-	connectedCallback() {
-		this.innerHTML = `<nav
+    connectedCallback() {
+        this.innerHTML = `<nav
                 class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"
             >
                 <!-- Sidebar Toggle (Topbar) -->
@@ -171,48 +171,51 @@ class Topbar extends HTMLElement {
                 </div>
             </div>`;
 
-		$("#sidebarToggleTop").on("click", function (e) {
-			$("body").toggleClass("sidebar-toggled");
-			$(".sidebar").toggleClass("toggled");
-			if ($(".sidebar").hasClass("toggled")) {
-				$(".sidebar .collapse").collapse("hide");
-			}
-		});
+        $("#sidebarToggleTop").on("click", function (e) {
+            $("body").toggleClass("sidebar-toggled");
+            $(".sidebar").toggleClass("toggled");
+            if ($(".sidebar").hasClass("toggled")) {
+                $(".sidebar .collapse").collapse("hide");
+            }
+        });
 
-		const token = localStorage.getItem("token");
-		if (token === null) {
-			window.location.href = "../../public/login.html";
-		} else {
-			let decoded = jwt_decode(token);
-			let username =
-				decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
-			$(".username").append(username.toUpperCase());
+        const token = localStorage.getItem("token");
+        if (token === null) {
+            window.location.href = "../../public/login.html";
+        } else {
+            let decoded = jwt_decode(token);
+            let username =
+                decoded[
+                    "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
+                ];
+            $(".username").append(username.toUpperCase());
 
-			let exp = decoded["exp"];
-			if (Date.now() >= exp * 1000) {
-				localStorage.removeItem("token");
-				window.location.href = "../../public/login.html";
-			}
-		}
+            let exp = decoded["exp"];
+            if (Date.now() >= exp * 1000) {
+                localStorage.removeItem("token");
+                window.location.href = "../../public/login.html";
+            }
+        }
 
-		$("#logout-btn").on("click", (e) => {
-			e.preventDefault();
-			localStorage.removeItem("token");
-			window.location.href = "../../public/login.html";
-		});
+        $("#logout-btn").on("click", (e) => {
+            e.preventDefault();
+            localStorage.removeItem("token");
+            localStorage.removeItem("Year");
+            window.location.href = "../../public/login.html";
+        });
 
-		let totalNotifications = 0;
-		$.ajax({
-			url: `${API_START_URL}/api/Tuition/GetDeadlineTutions`,
-			type: "GET",
-			contentType: "application/json",
-			success: function (data) {
-				const students = data.data;
-				totalNotifications = students.length;
-				$("#totalNotifications").text(totalNotifications);
-			},
-		});
-	}
+        let totalNotifications = 0;
+        $.ajax({
+            url: `${API_START_URL}/api/Tuition/GetDeadlineTutions`,
+            type: "GET",
+            contentType: "application/json",
+            success: function (data) {
+                const students = data.data;
+                totalNotifications = students.length;
+                $("#totalNotifications").text(totalNotifications);
+            },
+        });
+    }
 }
 
 customElements.define("topbar-component", Topbar);

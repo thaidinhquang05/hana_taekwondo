@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using DocumentFormat.OpenXml.VariantTypes;
 using Newtonsoft.Json;
 using StudentManagement.DTOs.Input;
 using StudentManagement.DTOs.Output;
 using StudentManagement.Models;
+using StudentManagement.Repositories;
 using StudentManagement.Repositories.Interfaces;
 using StudentManagement.Services.Interfaces;
 using StudentManagement.Utils.Interfaces;
@@ -30,17 +32,17 @@ public class StudentService : IStudentService
         var studentList = _studentRepository.GetAllStudents();
         // var result = _mapper.Map<List<StudentOutput>>(studentList);
         var result = studentList.Select((x, i) => new StudentOutput
-            {
-                Id = x.Id,
-                Index = i + 1,
-                StudentImg = x.StudentImg,
-                FullName = x.FullName,
-                Dob = $"{x.Dob:yyyy-MM-dd}",
-                Gender = x.Gender ? "Male" : "Female",
-                ParentName = x.ParentName,
-                Phone = x.Phone,
-                TotalTuitions = x.Tuitions.Sum(y => y.ActualAmount)
-            })
+        {
+            Id = x.Id,
+            Index = i + 1,
+            StudentImg = x.StudentImg,
+            FullName = x.FullName,
+            Dob = $"{x.Dob:yyyy-MM-dd}",
+            Gender = x.Gender ? "Male" : "Female",
+            ParentName = x.ParentName,
+            Phone = x.Phone,
+            TotalTuitions = x.Tuitions.Sum(y => y.ActualAmount)
+        })
             .ToList();
         return result;
     }
@@ -200,5 +202,30 @@ public class StudentService : IStudentService
         var studentList = _studentRepository.GetStudentToAddClass(classId);
         var result = _mapper.Map<List<StudentOutput>>(studentList);
         return result;
+    }
+
+    public ApiResponseModel GetAttendanceHistory(int year)
+    {
+        try
+        {
+            var result = _studentRepository.GetAttendanceHistory(year);
+            return new ApiResponseModel
+            {
+                Code = StatusCodes.Status200OK,
+                Data = result,
+                Message = "Take history successfully!",
+                IsSuccess = true
+            };
+        }
+        catch
+        {
+            return new ApiResponseModel
+            {
+                Code = StatusCodes.Status409Conflict,
+                Message = "Have something wrong when take history!",
+                IsSuccess = false
+            };
+        }
+
     }
 }

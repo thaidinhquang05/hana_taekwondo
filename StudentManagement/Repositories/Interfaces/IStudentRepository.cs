@@ -1,4 +1,5 @@
-﻿using StudentManagement.Models;
+﻿using StudentManagement.DTOs.Output;
+using StudentManagement.Models;
 
 namespace StudentManagement.Repositories.Interfaces;
 
@@ -22,9 +23,10 @@ public interface IStudentRepository : IRepository<Student>
 
     void DeleteStudentTimetables(List<StudentTimetable> items);
 
-    public List<Student> GetStudentByClass(int classId);
+    List<Student> GetStudentByClass(int classId);
 
-    public List<Student> GetStudentToAddClass(int classId);
+    List<Student> GetStudentToAddClass(int classId);
 
-    public List<Student> GetUpcomingDeadlinesStudent();
+    List<Student> GetUpcomingDeadlinesStudent();
+    List<AttendanceHistoryOutput> GetAttendanceHistory(int year);
 }
