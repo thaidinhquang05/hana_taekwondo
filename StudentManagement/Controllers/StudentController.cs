@@ -4,6 +4,7 @@ using ClosedXML.Excel;
 using Microsoft.AspNetCore.Mvc;
 using StudentManagement.DTOs.Input;
 using StudentManagement.DTOs.Output;
+using StudentManagement.Services;
 using StudentManagement.Services.Interfaces;
 
 namespace StudentManagement.Controllers;
@@ -214,5 +215,24 @@ public class StudentController : Controller
 
         const string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
         return File(ms.ToArray(), contentType, "StudentRecords.xlsx");
+    }
+
+    [HttpGet]
+    public ActionResult<ApiResponseModel> GetAttendanceHistory(int year)
+    {
+        try
+        {
+            var result = _studentService.GetAttendanceHistory(year);
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return Conflict(new ApiResponseModel
+            {
+                Code = StatusCodes.Status409Conflict,
+                Message = ex.Message,
+                IsSuccess = false
+            });
+        }
     }
 }

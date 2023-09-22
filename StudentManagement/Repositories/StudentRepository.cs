@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DocumentFormat.OpenXml.Office.CustomUI;
+using Microsoft.EntityFrameworkCore;
+using StudentManagement.DTOs.Output;
 using StudentManagement.Models;
 using StudentManagement.Repositories.Interfaces;
 
@@ -117,6 +119,37 @@ public class StudentRepository : Repository<Student>, IStudentRepository
                     result.Add(student);
                 }
             }
+        }
+
+        return result;
+    }
+
+    public List<AttendanceHistoryOutput> GetAttendanceHistory(int year)
+    {
+        var students = _context.Students.ToList();
+        var result = students.Select((s, indx) => new AttendanceHistoryOutput()
+        {
+            Id = s.Id,
+            Index = indx + 1,
+            FullName = s.FullName,
+        }).ToList();
+
+        var attendance = _context.Attendances.Where(a => a.Date.Year == year).ToList();
+
+        foreach (var item in result)
+        {
+            item.Jan = attendance.Count(a => a.Date.Month == 1 && a.StudentId == item.Id);
+            item.Feb = attendance.Count(a => a.Date.Month == 2 && a.StudentId == item.Id);
+            item.Mar = attendance.Count(a => a.Date.Month == 3 && a.StudentId == item.Id);
+            item.Apr = attendance.Count(a => a.Date.Month == 4 && a.StudentId == item.Id);
+            item.May = attendance.Count(a => a.Date.Month == 5 && a.StudentId == item.Id);
+            item.Jun = attendance.Count(a => a.Date.Month == 6 && a.StudentId == item.Id);
+            item.Jul = attendance.Count(a => a.Date.Month == 7 && a.StudentId == item.Id);
+            item.Aug = attendance.Count(a => a.Date.Month == 8 && a.StudentId == item.Id);
+            item.Sep = attendance.Count(a => a.Date.Month == 9 && a.StudentId == item.Id);
+            item.Oct = attendance.Count(a => a.Date.Month == 10 && a.StudentId == item.Id);
+            item.Nov = attendance.Count(a => a.Date.Month == 11 && a.StudentId == item.Id);
+            item.Dec = attendance.Count(a => a.Date.Month == 12 && a.StudentId == item.Id);
         }
 
         return result;

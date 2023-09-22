@@ -1,10 +1,10 @@
 class Sidebar extends HTMLElement {
-	constructor() {
-		super();
-	}
+    constructor() {
+        super();
+    }
 
-	connectedCallback() {
-		this.innerHTML = `<ul
+    connectedCallback() {
+        this.innerHTML = `<ul
                 class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
                 id="accordionSidebar"
             >
@@ -105,6 +105,14 @@ class Sidebar extends HTMLElement {
 					>
 				</li>
 
+                <!-- Nav Item - Spending -->
+				<li class="nav-item">
+					<a class="nav-link" href="../../public/attendance/attendance-report.html">
+                        <i class="fas fa-id-card"></i>
+						<span>Attendance Report</span></a
+					>
+				</li>
+
                 <!-- Sidebar Toggler (Sidebar) -->
                 <div class="text-center d-none d-md-inline">
                     <button
@@ -114,14 +122,14 @@ class Sidebar extends HTMLElement {
                 </div>
             </ul>`;
 
-		$("#sidebarToggle").on("click", function (e) {
-			$("body").toggleClass("sidebar-toggled");
-			$(".sidebar").toggleClass("toggled");
-			if ($(".sidebar").hasClass("toggled")) {
-				$(".sidebar .collapse").collapse("hide");
-			}
-		});
-	}
+        $("#sidebarToggle").on("click", function (e) {
+            $("body").toggleClass("sidebar-toggled");
+            $(".sidebar").toggleClass("toggled");
+            if ($(".sidebar").hasClass("toggled")) {
+                $(".sidebar .collapse").collapse("hide");
+            }
+        });
+    }
 }
 
 customElements.define("sidebar-component", Sidebar);
