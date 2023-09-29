@@ -7,7 +7,6 @@ namespace StudentManagement.Models
     {
         public Class()
         {
-            Attendances = new HashSet<Attendance>();
             ClassTimetables = new HashSet<ClassTimetable>();
             StudentClasses = new HashSet<StudentClass>();
         }
@@ -20,7 +19,6 @@ namespace StudentManagement.Models
         public DateTime StartDate { get; set; }
         public DateTime DueDate { get; set; }
 
-        public virtual ICollection<Attendance> Attendances { get; set; }
         public virtual ICollection<ClassTimetable> ClassTimetables { get; set; }
         public virtual ICollection<StudentClass> StudentClasses { get; set; }
     }

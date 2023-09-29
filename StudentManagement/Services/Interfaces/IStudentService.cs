@@ -18,5 +18,6 @@ public interface IStudentService
     List<StudentOutput> GetStudentByClass(int classId);
     
     public List<StudentOutput> GetStudentToAddClass(int classId);
+    
     ApiResponseModel GetAttendanceHistory(int year);
 }

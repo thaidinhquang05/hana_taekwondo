@@ -31,8 +31,7 @@ namespace StudentManagement.Models
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
-            {
-            }
+            {}
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -43,8 +42,6 @@ namespace StudentManagement.Models
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.ClassId).HasColumnName("class_id");
-
                 entity.Property(e => e.Date)
                     .HasColumnType("datetime")
                     .HasColumnName("date");
@@ -53,13 +50,15 @@ namespace StudentManagement.Models
 
                 entity.Property(e => e.Note).HasColumnName("note");
 
+                entity.Property(e => e.SlotId).HasColumnName("slot_id");
+
                 entity.Property(e => e.StudentId).HasColumnName("student_id");
 
-                entity.HasOne(d => d.Class)
+                entity.HasOne(d => d.Slot)
                     .WithMany(p => p.Attendances)
-                    .HasForeignKey(d => d.ClassId)
+                    .HasForeignKey(d => d.SlotId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("attendance_class_id_fk");
+                    .HasConstraintName("FK_attendance_slot");
 
                 entity.HasOne(d => d.Student)
                     .WithMany(p => p.Attendances)
