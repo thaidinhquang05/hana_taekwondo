@@ -1,10 +1,10 @@
 class Sidebar extends HTMLElement {
-    constructor() {
-        super();
-    }
+	constructor() {
+		super();
+	}
 
-    connectedCallback() {
-        this.innerHTML = `<ul
+	connectedCallback() {
+		this.innerHTML = `<ul
                 class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
                 id="accordionSidebar"
             >
@@ -97,21 +97,22 @@ class Sidebar extends HTMLElement {
                 <!-- Heading -->
 				<div class="sidebar-heading">Attendance</div>
 
-                <!-- Nav Item - Spending -->
-				<li class="nav-item">
-					<a class="nav-link" href="../../public/attendance/take-attendance.html">
+                <!-- Nav Item - Attendance Management Collapse Menu -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAttendance"
+                        aria-expanded="true" aria-controls="collapseAttendance">
                         <i class="fas fa-id-card"></i>
-						<span>Take Attendance</span></a
-					>
-				</li>
-
-                <!-- Nav Item - Spending -->
-				<li class="nav-item">
-					<a class="nav-link" href="../../public/attendance/attendance-report.html">
-                        <i class="fas fa-id-card"></i>
-						<span>Attendance Report</span></a
-					>
-				</li>
+                        <span>Attendance</span>
+                    </a>
+                    <div id="collapseAttendance" class="collapse" aria-labelledby="headingUtilities"
+                        data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Attendance Management:</h6>
+                            <a class="collapse-item" href="../../public/attendance/take-attendance.html">Take Attendance</a>
+                            <a class="collapse-item" href="../../public/attendance/attendance-report.html">Attendance Report</a>
+                        </div>
+                    </div>
+                </li>
 
                 <!-- Sidebar Toggler (Sidebar) -->
                 <div class="text-center d-none d-md-inline">
@@ -122,14 +123,14 @@ class Sidebar extends HTMLElement {
                 </div>
             </ul>`;
 
-        $("#sidebarToggle").on("click", function (e) {
-            $("body").toggleClass("sidebar-toggled");
-            $(".sidebar").toggleClass("toggled");
-            if ($(".sidebar").hasClass("toggled")) {
-                $(".sidebar .collapse").collapse("hide");
-            }
-        });
-    }
+		$("#sidebarToggle").on("click", function (e) {
+			$("body").toggleClass("sidebar-toggled");
+			$(".sidebar").toggleClass("toggled");
+			if ($(".sidebar").hasClass("toggled")) {
+				$(".sidebar .collapse").collapse("hide");
+			}
+		});
+	}
 }
 
 customElements.define("sidebar-component", Sidebar);
