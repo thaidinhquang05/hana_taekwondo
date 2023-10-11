@@ -11,17 +11,17 @@ $(() => {
 	let slotId = urlParam.get("id");
 	let date = urlParam.get("date");
 
-	loadStudentList(slotId, date);
+	loadStudentList(date);
 
 	$("#attendance-form").on("submit", function (event) {
 		submitAttend(event, slotId, date);
 	});
 });
 
-function loadStudentList(slotId, date) {
+function loadStudentList(date) {
 	$("#dataTable").DataTable({
 		ajax: {
-			url: `${API_START_URL}/api/Class/GetStudentBySlotAndDate?slotId=${slotId}&date=${date}`,
+			url: `${API_START_URL}/api/Class/GetStudentMakeUpBySlotAndDate?date=${date}`,
 			type: "GET",
 			contentType: "application/json",
 			error: function (xhr) {
@@ -126,7 +126,7 @@ function submitAttend(event, slotId, date) {
 		});
 	});
 	$.ajax({
-		url: `${API_START_URL}/api/Class/TakeAttendance?slotId=${slotId}&date=${date}`,
+		url: `${API_START_URL}/api/Class/TakeMakeUpAttendance?slotId=${slotId}&date=${date}`,
 		method: "POST",
 		data: JSON.stringify(rowData),
 		contentType: "application/json",

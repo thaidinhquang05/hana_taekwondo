@@ -49,6 +49,10 @@ function loadSlots(date) {
 					<a href='student-attendance.html?id=${id}&date=${date}'>
 						Take Attendance
 					</a>
+					|
+					<a href='makeup-attendance.html?id=${id}&date=${date}'>
+						Make Up Attendance
+					</a>
 				`,
 			},
 		],

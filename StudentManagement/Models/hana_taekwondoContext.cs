@@ -32,6 +32,8 @@ namespace StudentManagement.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("server = localhost; database = hana_taekwondo; uid = sa; pwd = 123;");
             }
         }
 
@@ -43,8 +45,6 @@ namespace StudentManagement.Models
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.ClassId).HasColumnName("class_id");
-
                 entity.Property(e => e.Date)
                     .HasColumnType("datetime")
                     .HasColumnName("date");
@@ -53,13 +53,15 @@ namespace StudentManagement.Models
 
                 entity.Property(e => e.Note).HasColumnName("note");
 
+                entity.Property(e => e.SlotId).HasColumnName("slot_id");
+
                 entity.Property(e => e.StudentId).HasColumnName("student_id");
 
-                entity.HasOne(d => d.Class)
+                entity.HasOne(d => d.Slot)
                     .WithMany(p => p.Attendances)
-                    .HasForeignKey(d => d.ClassId)
+                    .HasForeignKey(d => d.SlotId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("attendance_class_id_fk");
+                    .HasConstraintName("FK_attendance_slot");
 
                 entity.HasOne(d => d.Student)
                     .WithMany(p => p.Attendances)

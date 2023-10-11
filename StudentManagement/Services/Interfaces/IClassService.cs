@@ -20,8 +20,11 @@ namespace StudentManagement.Services.Interfaces
 
         List<ClassByDateItem> GetClassesByDate(DateTime date);
 
-        List<StudentAttendanceOutput> GetStudentByClassAndDate(int classId,DateTime date);
+        List<StudentAttendanceOutput> GetStudentBySlotAndDate(int slotId,DateTime date);
 
-        ApiResponseModel TakeAttendance(int classId, DateTime date, List<StudentAttendanceInput> studentAttendanceInputs);
+        ApiResponseModel TakeAttendance(int slotId, DateTime date, List<StudentAttendanceInput> studentAttendanceInputs);
+        List<StudentAttendanceOutput> GetStudentMakeUpBySlotAndDate(DateTime date);
+
+        ApiResponseModel TakeMakeUpAttendance(int slotId, DateTime date, List<StudentAttendanceInput> studentAttendanceInputs);
     }
 }
