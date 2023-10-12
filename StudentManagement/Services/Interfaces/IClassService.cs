@@ -1,6 +1,7 @@
 ﻿using StudentManagement.DTOs.Input;
 using StudentManagement.DTOs.Output;
 using StudentManagement.Models;
+using System;
 
 namespace StudentManagement.Services.Interfaces
 {
@@ -20,7 +21,7 @@ namespace StudentManagement.Services.Interfaces
 
         List<ClassByDateItem> GetClassesByDate(DateTime date);
 
-        List<StudentAttendanceOutput> GetStudentBySlotAndDate(int slotId,DateTime date);
+        List<StudentAttendanceOutput> GetStudentBySlotAndDate(int slotId, DateTime date, string daysOfWeek);
 
         ApiResponseModel TakeAttendance(int slotId, DateTime date, List<StudentAttendanceInput> studentAttendanceInputs);
         List<StudentAttendanceOutput> GetStudentMakeUpBySlotAndDate(DateTime date);

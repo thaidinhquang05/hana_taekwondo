@@ -13,16 +13,27 @@ $(() => {
 	let currentYear = date.getFullYear();
 	let currentDate = `${currentYear}-${currentMonth}-${currentDay}`;
 
+	const dayOfWeek = date.getDay();
+
+	const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+	const currentDayOfWeek = daysOfWeek[dayOfWeek];
+
 	$("#attendant-date").val(currentDate);
 
-	loadSlots($("#attendant-date").val());
+	loadSlots($("#attendant-date").val(), currentDayOfWeek);
 
 	$("#pick-date-btn").on("click", () => {
-		// loadSlots($("#attendant-date").val());
+		debugger;
+		let dateChoose = new Date($("#attendant-date").val());
+		const dayOfWeek = dateChoose.getDay();
+
+		const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+		const currentDayOfWeek = daysOfWeek[dayOfWeek];
+		loadSlots($("#attendant-date").val(), currentDayOfWeek);
 	});
 });
 
-function loadSlots(date) {
+function loadSlots(date, currentDayOfWeek) {
 	$("#dataTable").DataTable({
 		ajax: {
 			url: `${API_START_URL}/api/Slot/GetSlots`,
@@ -46,7 +57,7 @@ function loadSlots(date) {
 				data: "id",
 				orderable: false,
 				render: (id) => `
-					<a href='student-attendance.html?id=${id}&date=${date}'>
+					<a href='student-attendance.html?id=${id}&date=${date}&daysOfWeek=${currentDayOfWeek}'>
 						Take Attendance
 					</a>
 					|

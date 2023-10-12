@@ -2,6 +2,7 @@
 using StudentManagement.DTOs.Input;
 using StudentManagement.DTOs.Output;
 using StudentManagement.Services.Interfaces;
+using System;
 
 namespace StudentManagement.Controllers;
 
@@ -168,11 +169,11 @@ public class ClassController : Controller
     }
 
     [HttpGet]
-    public ActionResult<ApiResponseModel> GetStudentBySlotAndDate(int slotId, DateTime date)
+    public ActionResult<ApiResponseModel> GetStudentBySlotAndDate(int slotId, DateTime date, string daysOfWeek)
     {
         try
         {
-            var result = _classService.GetStudentBySlotAndDate(slotId, date);
+            var result = _classService.GetStudentBySlotAndDate(slotId, date, daysOfWeek);
             return Ok(new ApiResponseModel
             {
                 Code = StatusCodes.Status200OK,
@@ -218,11 +219,11 @@ public class ClassController : Controller
     }
 
     [HttpPost]
-    public ActionResult<ApiResponseModel> TakeAttendance(int classId, DateTime date, List<StudentAttendanceInput> studentAttendanceInputs)
+    public ActionResult<ApiResponseModel> TakeAttendance(int slotId, DateTime date, List<StudentAttendanceInput> studentAttendanceInputs)
     {
         try
         {
-            var result = _classService.TakeAttendance(classId, date, studentAttendanceInputs);
+            var result = _classService.TakeAttendance(slotId, date, studentAttendanceInputs);
             return Ok(result);
         }
         catch (Exception ex)
