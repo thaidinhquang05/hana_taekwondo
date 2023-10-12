@@ -24,8 +24,10 @@ namespace StudentManagement.Repositories.Interfaces
 
         List<Class> GetClassesByDate(DateTime date);
 
-        List<StudentAttendanceOutput> GetStudentByClassAndDate(int classId, DateTime date);
+        List<StudentAttendanceOutput> GetStudentBySlotAndDate(int slotId, DateTime date);
 
-        void TakeAttendance(int classId, DateTime date, List<StudentAttendanceInput> studentAttendanceInputs);
+        void TakeAttendance(int slotId, DateTime date, List<StudentAttendanceInput> studentAttendanceInputs);
+        void TakeMakeUpAttendance(int slotId, DateTime date, List<StudentAttendanceInput> studentAttendanceInputs);
+        List<StudentAttendanceOutput> GetStudentMakeUpBySlotAndDate(DateTime date);
     }
 }

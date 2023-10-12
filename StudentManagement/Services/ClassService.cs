@@ -135,28 +135,58 @@ namespace StudentManagement.Services
         {
             var classes = _classRepository.GetClassesByDate(date);
             var result = classes.Select((x, index) => new ClassByDateItem
-                {
-                    Index = index + 1,
-                    Id = x.Id,
-                    ClassName = x.Name,
-                    Desc = x.Desc
-                })
+            {
+                Index = index + 1,
+                Id = x.Id,
+                ClassName = x.Name,
+                Desc = x.Desc
+            })
                 .ToList();
             return result;
         }
 
-        public List<StudentAttendanceOutput> GetStudentByClassAndDate(int classId, DateTime date)
+        public List<StudentAttendanceOutput> GetStudentBySlotAndDate(int slotId, DateTime date)
         {
-            var result = _classRepository.GetStudentByClassAndDate(classId, date);
+            var result = _classRepository.GetStudentBySlotAndDate(slotId, date);
             return result;
         }
 
-        public ApiResponseModel TakeAttendance(int classId, DateTime date,
+        public List<StudentAttendanceOutput> GetStudentMakeUpBySlotAndDate(DateTime date)
+        {
+            var result = _classRepository.GetStudentMakeUpBySlotAndDate(date);
+            return result;
+        }
+
+        public ApiResponseModel TakeAttendance(int slotId, DateTime date,
             List<StudentAttendanceInput> studentAttendanceInputs)
         {
             try
             {
-                _classRepository.TakeAttendance(classId, date, studentAttendanceInputs);
+                _classRepository.TakeAttendance(slotId, date, studentAttendanceInputs);
+                return new ApiResponseModel
+                {
+                    Code = StatusCodes.Status200OK,
+                    Message = "take attendance successfully!",
+                    IsSuccess = true
+                };
+            }
+            catch
+            {
+                return new ApiResponseModel
+                {
+                    Code = StatusCodes.Status409Conflict,
+                    Message = "Have something wrong when take attendance!",
+                    IsSuccess = false
+                };
+            }
+        }
+
+        public ApiResponseModel TakeMakeUpAttendance(int slotId, DateTime date,
+            List<StudentAttendanceInput> studentAttendanceInputs)
+        {
+            try
+            {
+                _classRepository.TakeMakeUpAttendance(slotId, date, studentAttendanceInputs);
                 return new ApiResponseModel
                 {
                     Code = StatusCodes.Status200OK,

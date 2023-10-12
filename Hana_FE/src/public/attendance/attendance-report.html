@@ -1,158 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1, shrink-to-fit=no"
-        />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1, shrink-to-fit=no"
+		/>
+		<meta name="description" content="" />
+		<meta name="author" content="" />
 
-        <title>Hana Taekwondo - Homepage</title>
+		<title>Hana Taekwondo - Homepage</title>
 
-        <!-- Custom fonts for this template-->
-        <link
-            href="../../vendor/fontawesome-free/css/all.min.css"
-            rel="stylesheet"
-            type="text/css"
-        />
-        <link
-            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-            rel="stylesheet"
-        />
+		<!-- Custom fonts for this template-->
+		<link
+			href="../../vendor/fontawesome-free/css/all.min.css"
+			rel="stylesheet"
+			type="text/css"
+		/>
+		<link
+			href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+			rel="stylesheet"
+		/>
 
-        <!-- Custom styles for this template -->
-        <link href="../../css/sb-admin-2.min.css" rel="stylesheet" />
+		<!-- Custom styles for this template -->
+		<link href="../../css/sb-admin-2.min.css" rel="stylesheet" />
 
-        <!-- Custom styles for this page -->
-        <link
-            href="../../vendor/datatables/dataTables.bootstrap4.min.css"
-            rel="stylesheet"
-        />
-        <link
-            href="../../vendor/toaster/jquery.toast.min.css"
-            rel="stylesheet"
-        />
-    </head>
+		<!-- Custom styles for this page -->
+		<link
+			href="../../vendor/datatables/dataTables.bootstrap4.min.css"
+			rel="stylesheet"
+		/>
+		<link href="../../vendor/toaster/jquery.toast.min.css" rel="stylesheet" />
+	</head>
 
-    <body id="page-top">
-        <!-- Page Wrapper -->
-        <div id="wrapper">
-            <!-- Sidebar -->
-            <sidebar-component></sidebar-component>
-            <!-- End of Sidebar -->
+	<body id="page-top">
+		<!-- Page Wrapper -->
+		<div id="wrapper">
+			<!-- Sidebar -->
+			<sidebar-component></sidebar-component>
+			<!-- End of Sidebar -->
 
-            <!-- Content Wrapper -->
-            <div id="content-wrapper" class="d-flex flex-column">
-                <!-- Main Content -->
-                <div id="content">
-                    <!-- Topbar -->
-                    <topbar-component></topbar-component>
-                    <!-- End of Topbar -->
+			<!-- Content Wrapper -->
+			<div id="content-wrapper" class="d-flex flex-column">
+				<!-- Main Content -->
+				<div id="content">
+					<!-- Topbar -->
+					<topbar-component></topbar-component>
+					<!-- End of Topbar -->
 
-                    <!-- Begin Page Content -->
-                    <div class="container-fluid">
-                        <!-- <div class="loading-div">
+					<!-- Begin Page Content -->
+					<div class="container-fluid">
+						<!-- <div class="loading-div">
                             <img src="../../img/Rolling-1s-200px.gif" />
                         </div> -->
-                        <!-- Page Heading -->
-                        <div
-                            class="d-sm-flex align-items-center justify-content-between mb-4"
-                        >
-                            <h1 class="h3 mb-0 text-gray-800">
-                                ATTENDANCE REPORT
-                            </h1>
-                        </div>
+						<!-- Page Heading -->
+						<div
+							class="d-sm-flex align-items-center justify-content-between mb-4"
+						>
+							<h1 class="h3 mb-0 text-gray-800">ATTENDANCE REPORT</h1>
+						</div>
 
-                        <div class="card shadow mb-4">
-                            <div class="card-body">
-                                <div class="dropdown mb-4">
-                                    <button
-                                        class="btn btn-primary dropdown-toggle"
-                                        type="button"
-                                        id="yearDropdown"
-                                        data-toggle="dropdown"
-                                        aria-haspopup="true"
-                                        aria-expanded="false"
-                                    >
-                                        Year
-                                    </button>
-                                    <div
-                                        class="dropdown-menu animated--fade-in"
-                                        aria-labelledby="yearDropdown"
-                                        id="yearOptions"
-                                    ></div>
-                                </div>
-                                <div class="table-responsive">
-                                    <table
-                                        class="table table-bordered"
-                                        id="dataTable"
-                                        width="100%"
-                                        cellspacing="0"
-                                    >
-                                        <thead>
-                                            <tr>
-                                                <th style="width: 100px">Id</th>
-                                                <th>Student Name</th>
-                                                <th>January</th>
-                                                <th>February</th>
-                                                <th>March</th>
-                                                <th>April</th>
-                                                <th>May</th>
-                                                <th>June</th>
-                                                <th>July</th>
-                                                <th>August</th>
-                                                <th>September</th>
-                                                <th>October</th>
-                                                <th>November</th>
-                                                <th>December</th>
-                                            </tr>
-                                        </thead>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.container-fluid -->
-                </div>
-                <!-- End of Main Content -->
+						<div class="card shadow mb-4">
+							<div class="card-body">
+								<div class="dropdown mb-4">
+									<button
+										class="btn btn-primary dropdown-toggle"
+										type="button"
+										id="yearDropdown"
+										data-toggle="dropdown"
+										aria-haspopup="true"
+										aria-expanded="false"
+									>
+										Year
+									</button>
+									<div
+										class="dropdown-menu animated--fade-in"
+										aria-labelledby="yearDropdown"
+										id="yearOptions"
+									></div>
+								</div>
+								<div class="table-responsive">
+									<table
+										class="table table-bordered"
+										id="dataTable"
+										width="100%"
+										cellspacing="0"
+									>
+										<thead>
+											<tr>
+												<th style="width: 100px">Id</th>
+												<th>Student Name</th>
+												<th>January</th>
+												<th>February</th>
+												<th>March</th>
+												<th>April</th>
+												<th>May</th>
+												<th>June</th>
+												<th>July</th>
+												<th>August</th>
+												<th>September</th>
+												<th>October</th>
+												<th>November</th>
+												<th>December</th>
+											</tr>
+										</thead>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /.container-fluid -->
+				</div>
+				<!-- End of Main Content -->
 
-                <!-- Footer -->
-                <footer-component></footer-component>
-                <!-- End of Footer -->
-            </div>
-            <!-- End of Content Wrapper -->
-        </div>
-        <!-- End of Page Wrapper -->
+				<!-- Footer -->
+				<footer-component></footer-component>
+				<!-- End of Footer -->
+			</div>
+			<!-- End of Content Wrapper -->
+		</div>
+		<!-- End of Page Wrapper -->
 
-        <!-- Scroll to Top Button-->
-        <a class="scroll-to-top rounded" href="#page-top">
-            <i class="fas fa-angle-up"></i>
-        </a>
+		<!-- Scroll to Top Button-->
+		<a class="scroll-to-top rounded" href="#page-top">
+			<i class="fas fa-angle-up"></i>
+		</a>
 
-        <!-- Bootstrap core JavaScript-->
-        <script src="../../vendor/jquery/jquery.min.js"></script>
-        <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="../../vendor/chart.js/Chart.min.js"></script>
+		<!-- Bootstrap core JavaScript-->
+		<script src="../../vendor/jquery/jquery.min.js"></script>
+		<script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<script src="../../vendor/chart.js/Chart.min.js"></script>
 
-        <!-- Core plugin JavaScript-->
-        <script src="../../vendor/jquery-easing/jquery.easing.min.js"></script>
+		<!-- Core plugin JavaScript-->
+		<script src="../../vendor/jquery-easing/jquery.easing.min.js"></script>
 
-        <!-- Custom scripts for all pages-->
-        <script src="../../js/sb-admin-2.js"></script>
-        <script src="../../js/jwt-decode.js"></script>
+		<!-- Custom scripts for all pages-->
+		<script src="../../js/sb-admin-2.js"></script>
+		<script src="../../js/jwt-decode.js"></script>
 
-        <!-- custom element -->
-        <script src="../../vendor/datatables/jquery.dataTables.min.js"></script>
-        <script src="../../vendor/datatables/dataTables.bootstrap4.min.js"></script>
-        <script src="../../vendor/toaster/jquery.toast.min.js"></script>
-        <script src="../../js/constants.js"></script>
-        <script src="../../js/components/sidebar.js"></script>
-        <script src="../../js/components/topbar.js"></script>
-        <script src="../../js/components/footer.js"></script>
+		<!-- custom element -->
+		<script src="../../vendor/datatables/jquery.dataTables.min.js"></script>
+		<script src="../../vendor/datatables/dataTables.bootstrap4.min.js"></script>
+		<script src="../../vendor/toaster/jquery.toast.min.js"></script>
+		<script src="../../js/constants.js"></script>
+		<script src="../../js/components/sidebar.js"></script>
+		<script src="../../js/components/topbar.js"></script>
+		<script src="../../js/components/footer.js"></script>
 
-        <script src="../../js/attendance/attendance-report.js"></script>
-    </body>
+		<script src="../../js/attendance/attendance-report.js"></script>
+	</body>
 </html>

@@ -168,11 +168,36 @@ public class ClassController : Controller
     }
 
     [HttpGet]
-    public ActionResult<ApiResponseModel> GetStudentByClassAndDate(int classId, DateTime date)
+    public ActionResult<ApiResponseModel> GetStudentBySlotAndDate(int slotId, DateTime date)
     {
         try
         {
-            var result = _classService.GetStudentByClassAndDate(classId, date);
+            var result = _classService.GetStudentBySlotAndDate(slotId, date);
+            return Ok(new ApiResponseModel
+            {
+                Code = StatusCodes.Status200OK,
+                Message = "Get Students successfully",
+                IsSuccess = true,
+                Data = result
+            });
+        }
+        catch (Exception ex)
+        {
+            return Conflict(new ApiResponseModel
+            {
+                Code = StatusCodes.Status409Conflict,
+                Message = ex.Message,
+                IsSuccess = false
+            });
+        }
+    }
+
+    [HttpGet]
+    public ActionResult<ApiResponseModel> GetStudentMakeUpBySlotAndDate(DateTime date)
+    {
+        try
+        {
+            var result = _classService.GetStudentMakeUpBySlotAndDate(date);
             return Ok(new ApiResponseModel
             {
                 Code = StatusCodes.Status200OK,
@@ -198,6 +223,25 @@ public class ClassController : Controller
         try
         {
             var result = _classService.TakeAttendance(classId, date, studentAttendanceInputs);
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return Conflict(new ApiResponseModel
+            {
+                Code = StatusCodes.Status409Conflict,
+                Message = ex.Message,
+                IsSuccess = false
+            });
+        }
+    }
+
+    [HttpPost]
+    public ActionResult<ApiResponseModel> TakeMakeUpAttendance(int slotId, DateTime date, List<StudentAttendanceInput> studentAttendanceInputs)
+    {
+        try
+        {
+            var result = _classService.TakeMakeUpAttendance(slotId, date, studentAttendanceInputs);
             return Ok(result);
         }
         catch (Exception ex)

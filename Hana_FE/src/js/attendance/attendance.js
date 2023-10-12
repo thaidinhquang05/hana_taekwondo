@@ -17,8 +17,14 @@ $(() => {
 
 	loadSlots($("#attendant-date").val());
 
+	const dayOfWeek = date.getDay();
+
+	const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+	const currentDayOfWeek = daysOfWeek[dayOfWeek];
+	console.log(currentDayOfWeek);
+
 	$("#pick-date-btn").on("click", () => {
-		// loadSlots($("#attendant-date").val());
+		loadSlots($("#attendant-date").val());
 	});
 });
 
@@ -48,6 +54,10 @@ function loadSlots(date) {
 				render: (id) => `
 					<a href='student-attendance.html?id=${id}&date=${date}'>
 						Take Attendance
+					</a>
+					|
+					<a href='makeup-attendance.html?id=${id}&date=${date}'>
+						Make Up Attendance
 					</a>
 				`,
 			},

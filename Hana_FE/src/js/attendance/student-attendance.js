@@ -8,22 +8,20 @@ $(() => {
 	});
 
 	let urlParam = new URLSearchParams(window.location.search);
-	let classId = urlParam.get("id");
+	let slotId = urlParam.get("id");
 	let date = urlParam.get("date");
 
-	loadStudentList(classId, date);
-
-	getInfoClass(classId);
+	loadStudentList(slotId, date);
 
 	$("#attendance-form").on("submit", function (event) {
-		submitAttend(event, classId, date);
+		submitAttend(event, slotId, date);
 	});
 });
 
-function loadStudentList(classId, date) {
+function loadStudentList(slotId, date) {
 	$("#dataTable").DataTable({
 		ajax: {
-			url: `${API_START_URL}/api/Class/GetStudentByClassAndDate?classId=${classId}&date=${date}`,
+			url: `${API_START_URL}/api/Class/GetStudentBySlotAndDate?slotId=${slotId}&date=${date}`,
 			type: "GET",
 			contentType: "application/json",
 			error: function (xhr) {
@@ -108,7 +106,7 @@ function loadStudentList(classId, date) {
 	});
 }
 
-function submitAttend(event, classId, date) {
+function submitAttend(event, slotId, date) {
 	event.preventDefault();
 
 	const rowData = [];
@@ -128,7 +126,7 @@ function submitAttend(event, classId, date) {
 		});
 	});
 	$.ajax({
-		url: `${API_START_URL}/api/Class/TakeAttendance?classId=${classId}&date=${date}`,
+		url: `${API_START_URL}/api/Class/TakeAttendance?slotId=${slotId}&date=${date}`,
 		method: "POST",
 		data: JSON.stringify(rowData),
 		contentType: "application/json",
@@ -143,29 +141,6 @@ function submitAttend(event, classId, date) {
 			setTimeout(() => {
 				window.location.href = "../attendance/take-attendance.html";
 			}, 2000);
-		},
-		error: function (xhr) {
-			$.toast({
-				heading: "Error",
-				text: xhr.responseJSON.message,
-				icon: "error",
-				position: "top-right",
-				showHideTransition: "plain",
-			});
-		},
-	});
-}
-
-function getInfoClass(classId) {
-	$.ajax({
-		url: `${API_START_URL}/api/Class/GetClassById/${classId}`,
-		method: "GET",
-		contentType: "application/json",
-		success: function (data) {
-			$("#class-name").text(data.data.name);
-			$("#class-description").text(data.data.desc);
-			$("#start-date").text(data.data.startDate);
-			$("#end-date").text(data.data.dueDate);
 		},
 		error: function (xhr) {
 			$.toast({
