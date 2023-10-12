@@ -10,7 +10,7 @@
 		<meta name="description" content="" />
 		<meta name="author" content="" />
 
-		<title>Hana Taekwondo - Homepage</title>
+		<title>Hana Taekwondo - Student Attendance Detail Report</title>
 
 		<!-- Custom fonts for this template-->
 		<link
@@ -51,37 +51,23 @@
 
 					<!-- Begin Page Content -->
 					<div class="container-fluid">
-						<div class="loading-div">
+						<!-- <div class="loading-div">
 							<img src="../../img/Rolling-1s-200px.gif" />
-						</div>
+						</div> -->
 
 						<!-- Page Heading -->
 						<div
 							class="d-sm-flex align-items-center justify-content-between mb-4"
 						>
-							<h1 class="h3 mb-0 text-gray-800">Take Attendance</h1>
+							<h1 class="h3 mb-0 text-gray-800">
+								Student Attendance Detail Report
+							</h1>
 						</div>
 
 						<div class="card shadow mb-4">
 							<div class="card-header py-3">
-								<form>
-									<div class="row">
-										<div class="col-md-4">
-											<input
-												class="form-control"
-												id="attendant-date"
-												type="date"
-											/>
-										</div>
-										<button
-											id="pick-date-btn"
-											class="btn btn-primary"
-											type="button"
-										>
-											Submit
-										</button>
-									</div>
-								</form>
+								Student Name:
+								<h2 style="color: #395fcf"></h2>
 							</div>
 							<div class="card-body">
 								<div class="table-responsive">
@@ -95,7 +81,9 @@
 											<tr>
 												<th style="width: 100px">Id</th>
 												<th>Slot</th>
-												<th>Action</th>
+												<th>Date</th>
+												<th>Is Attendance</th>
+												<th>Note</th>
 											</tr>
 										</thead>
 									</table>
@@ -141,6 +129,6 @@
 		<script src="../../js/components/topbar.js"></script>
 		<script src="../../js/components/footer.js"></script>
 
-		<script src="../../js/attendance/attendance.js"></script>
+		<script src="../../js/attendance/student-attend-report.js"></script>
 	</body>
 </html>

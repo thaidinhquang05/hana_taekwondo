@@ -27,7 +27,9 @@ namespace StudentManagement.Repositories.Interfaces
         List<StudentAttendanceOutput> GetStudentBySlotAndDate(int slotId, DateTime date, string daysOfWeek);
 
         void TakeAttendance(int slotId, DateTime date, List<StudentAttendanceInput> studentAttendanceInputs);
+        
         void TakeMakeUpAttendance(int slotId, DateTime date, List<StudentAttendanceInput> studentAttendanceInputs);
+        
         List<StudentAttendanceOutput> GetStudentMakeUpBySlotAndDate(DateTime date);
     }
 }

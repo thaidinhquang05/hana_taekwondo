@@ -58,7 +58,14 @@ function loadHistory(year) {
 		destroy: true,
 		columns: [
 			{ data: "index" },
-			{ data: "fullName" },
+			{
+				data: "id",
+				orderable: false,
+				render: (id, type, row, meta) =>
+					`
+						<a href='student-attend-report.html?id=${id}'>${row.fullName}</a>
+					`,
+			},
 			{ data: "jan", orderable: false },
 			{ data: "feb", orderable: false },
 			{ data: "mar", orderable: false },

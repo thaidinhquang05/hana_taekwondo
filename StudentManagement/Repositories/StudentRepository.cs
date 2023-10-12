@@ -127,14 +127,15 @@ public class StudentRepository : Repository<Student>, IStudentRepository
     public List<AttendanceHistoryOutput> GetAttendanceHistory(int year)
     {
         var students = _context.Students.ToList();
-        var result = students.Select((s, indx) => new AttendanceHistoryOutput()
+        var result = students.Select((s, index) => new AttendanceHistoryOutput
         {
             Id = s.Id,
-            Index = indx + 1,
+            Index = index + 1,
             FullName = s.FullName,
         }).ToList();
 
-        var attendance = _context.Attendances.Where(a => a.Date.Year == year).ToList();
+        var attendance = _context.Attendances
+            .Where(a => a.Date.Year == year && a.IsAttendance == true).ToList();
 
         foreach (var item in result)
         {

@@ -28,5 +28,6 @@ public interface IStudentRepository : IRepository<Student>
     List<Student> GetStudentToAddClass(int classId);
 
     List<Student> GetUpcomingDeadlinesStudent();
+    
     List<AttendanceHistoryOutput> GetAttendanceHistory(int year);
 }

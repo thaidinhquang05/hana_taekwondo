@@ -23,7 +23,6 @@ $(() => {
 	loadSlots($("#attendant-date").val(), currentDayOfWeek);
 
 	$("#pick-date-btn").on("click", () => {
-		debugger;
 		let dateChoose = new Date($("#attendant-date").val());
 		const dayOfWeek = dateChoose.getDay();
 
