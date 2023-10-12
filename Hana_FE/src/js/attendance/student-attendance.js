@@ -6,22 +6,21 @@ $(() => {
 	$(document).ajaxStop(() => {
 		$(".loading-div").hide();
 	});
-
 	let urlParam = new URLSearchParams(window.location.search);
 	let slotId = urlParam.get("id");
 	let date = urlParam.get("date");
-
-	loadStudentList(slotId, date);
+	let daysOfWeek = urlParam.get("daysOfWeek");
+	loadStudentList(slotId, date, daysOfWeek);
 
 	$("#attendance-form").on("submit", function (event) {
 		submitAttend(event, slotId, date);
 	});
 });
 
-function loadStudentList(slotId, date) {
+function loadStudentList(slotId, date, daysOfWeek) {
 	$("#dataTable").DataTable({
 		ajax: {
-			url: `${API_START_URL}/api/Class/GetStudentBySlotAndDate?slotId=${slotId}&date=${date}`,
+			url: `${API_START_URL}/api/Class/GetStudentBySlotAndDate?slotId=${slotId}&date=${date}&daysOfWeek=${daysOfWeek}`,
 			type: "GET",
 			contentType: "application/json",
 			error: function (xhr) {
@@ -108,9 +107,7 @@ function loadStudentList(slotId, date) {
 
 function submitAttend(event, slotId, date) {
 	event.preventDefault();
-
 	const rowData = [];
-
 	$("#dataTable tbody tr").each(function () {
 		const row = $(this);
 		const id = row

@@ -111,12 +111,12 @@ public class ClassRepository : Repository<Class>, IClassRepository
         return result;
     }
 
-    public List<StudentAttendanceOutput> GetStudentBySlotAndDate(int slotId, DateTime date)
+    public List<StudentAttendanceOutput> GetStudentBySlotAndDate(int slotId, DateTime date, string daysOfWeek)
     {
         List<StudentAttendanceOutput> result = new List<StudentAttendanceOutput>();
         int index = 1;
 
-        var timetables = _context.Timetables.Where(s => s.SlotId == slotId).ToList();
+        var timetables = _context.Timetables.Where(s => s.SlotId == slotId && s.WeekDay.Equals(daysOfWeek)).ToList();
         List<Student> students = new List<Student>();
 
         foreach (var timetable in timetables)

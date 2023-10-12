@@ -145,9 +145,9 @@ namespace StudentManagement.Services
             return result;
         }
 
-        public List<StudentAttendanceOutput> GetStudentBySlotAndDate(int slotId, DateTime date)
+        public List<StudentAttendanceOutput> GetStudentBySlotAndDate(int slotId, DateTime date, string daysOfWeek)
         {
-            var result = _classRepository.GetStudentBySlotAndDate(slotId, date);
+            var result = _classRepository.GetStudentBySlotAndDate(slotId, date, daysOfWeek);
             return result;
         }
 
